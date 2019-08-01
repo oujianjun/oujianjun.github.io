@@ -62,6 +62,629 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-rabbtMQ" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/01/rabbtMQ/" class="article-date">
+  <time datetime="2019-08-01T09:20:19.000Z" itemprop="datePublished">2019-08-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/01/rabbtMQ/">&#39;rabbtMQ&#39;</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目录</p>
+<p>目录 目录一、昨日回顾1、知识点回顾二、学习目标三、RabbitMQ1、简介2、AMQP 是什么3、消息队列的类型四、安装1、RabbitMQ 所支持的平台2、windows 下安装2.1、安装 Erlang2.1.1、以管理员身份运行2.1.2、下一步2.1.3、下一步2.1.4、选择 Install2.1.5、等待安装2.1.6、点击完成安装2.1.7、检测是否安装成功2.2、安装 RabbitMQ2.2.1、以管理员身份运行2.2.2、下一步2.2.3、选择 Install2.2.4、等待安装2.2.5、下一步2.2.6、点击完成2.2.7、查看服务是否启动2.3、激活web管理页面2.3.1、激活管理插件2.3.2、添加用户2.3.3、浏览器中访问3、Linux下安装3.1、安装 Erlang3.1.1、安装依赖的底层库3.1.2、更新 yum 源3.1.1、下载 erlang 镜像源文件3.1.2、安装 erlang 镜像源3.1.3、安装3.1.4、检测是否安装成功3.2、安装 RabbitMQ3.2.1、输入密钥3.2.2、下载 rpm3.2.3、安装3.2.4、启动服务并查看状态3.3、激活web管理页面3.3.1、激活管理插件3.3.2、添加用户3.3.3、浏览器中访问五、PHP 中开启 RabbitMQ 扩展文件1、windows 安装扩展1.1、下载扩展文件1.2、解压文件1.3、复制php_amqp.dll文件到PHP扩展目录中1.4、复制rabbitmq.4.dll文件到php.exe同级目录下1.5、修改 php.ini 配置文件1.6、重启服务1.7、查看是否开启成功2、Linux 安装扩展2.1、rabbitmq-c 依赖库2.1.1、下载2.1.2、解压2.1.3、进入目录2.1.4、指定安装目录2.1.5、编译软件并且进行安装2.2、安装扩展文件2.2.1、下载扩展文件2.2.2、上传文件2.2.3、解压文件2.2.4、进入目录2.2.5、生成编译文件2.2.6、进行软件配置和环境检测2.2.7、编译软件并且进行安装2.2.8、修改 php.ini 文件2.2.9、重启服务2.2.10、查看是否开启成功六、PHP 操作 RabbitMQ1、安装 composer1.1、把PHP设置到环境变量中1.1.1、进入PHP目录1.1.2、设置系统环境变量2.1、安装2.1.1、下载 Composer-Setup.exe 文件安装2.1.2、使用 PHP 方式安装2.1.2.1、下载 composer-setup.php2.1.2.2、下载  composer.phar 文件2.1.2.3、删除 composer-setup.php 文件2.1.2.4、创建 composer.bat 文件2.1.3、切换镜像源2、下载RabbitMQ代码2.1、创建 composer.json 文件2.2、安装MQ项目(下载代码)3、Hello World模式3.1、客户端3.1.1、引入相关文件3.1.2、实例MQ对象3.1.3、创建一个队列3.1.4、发送消息与关闭队列(通道)与连接3.2、服务端3.2.1、引入相关的文件3.2.2、实例MQ对象3.2.3、创建队列3.2.4、接收消息4、路由(Routing)模式4.1、客户端4.1.1、引入相关的文件4.1.2、实例化MQ对象4.1.3、创建交换机4.1.4、发送消息与关闭队列(通道)与连接4.2、服务端4.2.1、引入相关的文件4.2.2、实例化MQ对象4.2.3、创建交换机4.2.4、创建队列与绑定交换机4.2.5、接收消息与关闭队列(通道)与连接七、推送消息模板1、创建一个消息模板2、推送微信模板消息八、总结</p>
+<p>一、昨日回顾</p>
+<p>1、知识点回顾</p>
+<p>Redis 有几种数据类型？</p>
+<pre><code>5种
+
+string
+
+    常用命令有哪些？
+
+    set、get、incrby、incr、decrby、decr
+
+hash
+
+    常用命令有哪些？
+
+    hset、hget、hmset、hmget、hgetall、hdel
+
+list
+
+    常用命令有哪些？
+
+    lpush、lpop、rpush、rpop、lrange、ltrim
+
+set
+
+    常用命令有哪些？
+
+    sadd、smembers、sdiff、sunion、sinter、scard
+
+zset
+
+    常用命令有哪些？
+
+    zadd、zrange、zrevrange</code></pre><p>快照与AOF持久化模式：</p>
+<pre><code>快照：将所数据保存到一个dump文件中
+
+AOF：将所有命令保存一个*.aof文件</code></pre><p>Redis 管理命令：</p>
+<pre><code>keys、type、del、expire、exists、ttl、ping、auth、select</code></pre><p>二、学习目标</p>
+<ul>
+<li>能够了解RabbitMQ的作用</li>
+<li>能够说出RabbitMQ有几种模式</li>
+<li>能够实现Linux与win系统上安装RabbitMQ服务</li>
+<li>能够实现Linux与win系统上PHP的RabbitMQ扩展安装</li>
+</ul>
+<p>三、RabbitMQ</p>
+<p>官方开发文档：<a href="https://www.rabbitmq.com/getstarted.html" target="_blank" rel="noopener">https://www.rabbitmq.com/getstarted.html</a></p>
+<p>中文开发文档：<a href="https://xiaoxiami.gitbook.io/rabbitmq_into_chinese_php/rabbitmq-jian-jie/description" target="_blank" rel="noopener">https://xiaoxiami.gitbook.io/rabbitmq_into_chinese_php/rabbitmq-jian-jie/description</a></p>
+<p>1、简介</p>
+<pre><code>RabbitMQ是一个消息代理、一个消息系统的媒介。它可以为你的应用提供一个通用的消息发送和接收平台，并且保证消息再传输过程中的安全。</code></pre><p>技术亮点</p>
+<ul>
+<li>可靠性</li>
+<li>灵活的路由</li>
+<li>集群</li>
+<li>高可用的队列</li>
+<li>多协议</li>
+<li>广泛的客户端</li>
+<li>可视化管理工具</li>
+<li>等</li>
+</ul>
+<p>安全和端口</p>
+<p>4369 (epmd)，25672 (Erlang distribution)</p>
+<p>5672，5671 (启用了 或者 未启用 TLS 的 AMQP 0-9-1)</p>
+<p>15672 (如果管理插件被启用)</p>
+<p>61613，61614 (如果 STOMP 被启用)</p>
+<p>1883，8883 (如果 MQTT 被启用)</p>
+<p>2、AMQP 是什么</p>
+<pre><code>AMQP（高级消息队列协议）是一个网络协议。它支持符合要求的客户端应用（application）和消息中间件代理（messaging middleware broker）之间进行通信。</code></pre><p>3、消息队列的类型</p>
+<p>中文PHP开发文档：<a href="https://xiaoxiami.gitbook.io/rabbitmq_into_chinese_php" target="_blank" rel="noopener">https://xiaoxiami.gitbook.io/rabbitmq_into_chinese_php</a></p>
+<p>官网：</p>
+<p>四、安装</p>
+<p>注意：</p>
+<pre><code>erlang与RabbitMQ版本的对应关系，如：RabbitMQ3.6.10，建议的erlang版本是19.3.x(安装前必看：https://www.rabbitmq.com/which-erlang.html)</code></pre><p>1、RabbitMQ 所支持的平台</p>
+<pre><code>RabbitMQ 有着运行在所有 Erlang 所支持的平台之上的潜力，从嵌入式系统到多核心集群还有基于云端的服务器。</code></pre><p>以下的平台是 Erlang 语言所支持的，因此 RabbitMQ 可以运行其上：</p>
+<ul>
+<li>Solaris</li>
+<li>BSD</li>
+<li>Linux</li>
+<li>Mac OS X</li>
+<li>TRU64</li>
+<li>Windows</li>
+<li>VxWorks</li>
+</ul>
+<p>RabbitMQ 的开源版本通常被部署在以下的平台上：</p>
+<ul>
+<li>Ubuntu 和其他基于 Debian 的 Linux 发行版</li>
+<li>Fedora 和其他基于 RPM 包管理方式的 Linux 发行版</li>
+<li>openSUSE 和衍生的发行版（包括 SLES 和 SLERT）</li>
+<li>Mac OS x</li>
+<li>windows XP 和后续版本</li>
+</ul>
+<p>2、windows 下安装</p>
+<p>2.1、安装 Erlang</p>
+<p>官网：<a href="http://www.erlang.org/" target="_blank" rel="noopener">http://www.erlang.org/</a></p>
+<p>下载地址：<a href="http://erlang.org/download/otp_win64_19.3.exe" target="_blank" rel="noopener">http://erlang.org/download/otp_win64_19.3.exe</a></p>
+<p>2.1.1、以管理员身份运行</p>
+<p>2.1.2、下一步</p>
+<p>2.1.3、下一步</p>
+<p>2.1.4、选择 Install</p>
+<p>2.1.5、等待安装</p>
+<p>2.1.6、点击完成安装</p>
+<p>2.1.7、检测是否安装成功</p>
+<p>先进入Erlang安装目录下的bin目录下</p>
+<p>在地址栏中输入 cmd 后，按回车键</p>
+<p>上面代表安装成功</p>
+<p>2.2、安装 RabbitMQ</p>
+<p>官网：<a href="https://www.rabbitmq.com" target="_blank" rel="noopener">https://www.rabbitmq.com</a></p>
+<p>下载地址：<a href="https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.7/rabbitmq-server-3.7.7.exe" target="_blank" rel="noopener">https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.7/rabbitmq-server-3.7.7.exe</a></p>
+<p>2.2.1、以管理员身份运行</p>
+<p>2.2.2、下一步</p>
+<p>2.2.3、选择 Install</p>
+<p>注意：不要安装到中文目录</p>
+<p>2.2.4、等待安装</p>
+<p>2.2.5、下一步</p>
+<p>2.2.6、点击完成</p>
+<p>2.2.7、查看服务是否启动</p>
+<p>2.3、激活web管理页面</p>
+<p>2.3.1、激活管理插件</p>
+<p>首先，进入RabbitMQ安装目录下的sbin目录</p>
+<p>然后，在地址栏中输入 cmd</p>
+<p>再然后，在 cmd 窗口中输入以下命令</p>
+<pre><code>rabbitmq-plugins enable rabbitmq_management</code></pre><p>2.3.2、添加用户</p>
+<p>默认用户名与密码为：guest</p>
+<p>例如：添加一个 php34的用户，密码设置为：php34</p>
+<pre><code>#添加用户rabbitmqctl  add_user username password
+rabbitmqctl  add_user php34 php34
+#设置用户为管理员rabbitmqctl set_user_tags username administrator
+rabbitmqctl set_user_tags php34 administrator
+#设置用户权限rabbitmqctl set_permissions -p / username &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+rabbitmqctl set_permissions -p / php34 &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</code></pre><p>2.3.3、浏览器中访问</p>
+<p>RabbitMQ Web服务的默认的端口为：15672</p>
+<p>请求格式：<a href="http://ip:15672" target="_blank" rel="noopener">http://ip:15672</a></p>
+<p>登陆成功后，效果如下图所示：</p>
+<p>3、Linux下安装</p>
+<p>学习目标：掌握在Linux安装RabbitMQ</p>
+<p>步骤</p>
+<ol>
+<li>安装Erlang<ol>
+<li>安装yum源(依赖库)</li>
+<li>更新yum源 yum -y update</li>
+</ol>
+</li>
+<li>安装RabbitMQ<ol>
+<li>输入密钥</li>
+<li>下载rpm包(yum安装源)</li>
+<li>启动服务并查看状态</li>
+</ol>
+</li>
+<li>激活web管理页面<ol>
+<li>激活web管理页面</li>
+<li>添加用户(默认的用户与密码也是：guest，Linux无法使用登陆)</li>
+<li>设置权限</li>
+</ol>
+</li>
+</ol>
+<p>3.1、安装 Erlang</p>
+<p>3.1.1、安装依赖的底层库</p>
+<pre><code>shell&gt;# yum install -y epel-release</code></pre><p>3.1.2、更新 yum 源</p>
+<pre><code>shell&gt;# yum -y update</code></pre><p>注意：更新成功后需要重启服务器 shell&gt;# reboot</p>
+<p>3.1.1、下载 erlang 镜像源文件</p>
+<p>注意：有可能提示没有wget这个，解决方案使用yum源安装：yum -y install wget</p>
+<pre><code>shell&gt;# wget http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm</code></pre><p>3.1.2、安装 erlang 镜像源</p>
+<pre><code>shell&gt;# rpm -Uvh erlang-solutions-1.0-1.noarch.rpm</code></pre><p>3.1.3、安装</p>
+<pre><code>shell&gt;# yum -y install erlang</code></pre><p>安装完成效果如下图所示：</p>
+<p>3.1.4、检测是否安装成功</p>
+<pre><code>shell&gt;# erl</code></pre><p>3.2、安装 RabbitMQ</p>
+<p>3.2.1、输入密钥</p>
+<pre><code>shell&gt;# rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc</code></pre><p>3.2.2、下载 rpm</p>
+<pre><code>shell&gt;# wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.8/rabbitmq-server-3.7.8-1.el6.noarch.rpm</code></pre><p>成功以下图所示：</p>
+<p>3.2.3、安装</p>
+<pre><code>shell&gt;# yum -y install rabbitmq-server-3.7.8-1.el6.noarch.rpm</code></pre><p>3.2.4、启动服务并查看状态</p>
+<pre><code># 启动服务
+shell&gt;# service rabbitmq-server start
+# 重启
+shell&gt;# service rabbitmq-server restart
+# 查看状态
+shell&gt;# service rabbitmq-server status
+# 停止
+shell&gt;# service rabbitmq-server stop</code></pre><p>启动成功如下图所示：</p>
+<p>有可能报以下错误：</p>
+<p>于是将bogon也加入到/etc/hosts 里面的127.0.0.1 bogon</p>
+<pre><code>shell&gt;# vim /etc/hosts</code></pre><p>在/etc/hosts文件添加一行，内容为：127.0.0.1 bogon</p>
+<p>注意：确保防火墙关闭状态</p>
+<p>service rabbitmq-server start 启动</p>
+<p>3.3、激活web管理页面</p>
+<p>3.3.1、激活管理插件</p>
+<pre><code>#使用rabbitmq-plplugins激活管理
+shell&gt;# /usr/sbin/rabbitmq-plugins enable rabbitmq_management</code></pre><p>有可能报以错误信息：</p>
+<p>解决方案：</p>
+<p>修改 hosts，添加 127.0.0.1 rabbit@localhost</p>
+<pre><code>shell&gt;# vim /etc/hosts</code></pre><p>将所有进程杀死：</p>
+<p>然后再启动服务</p>
+<p>3.3.2、添加用户</p>
+<p>默认用户名与密码为：guest</p>
+<p>例如：添加一个 php34 的用户，密码设置为：php34</p>
+<pre><code>#添加用户rabbitmqctl  add_user username password
+shell&gt;# rabbitmqctl  add_user php34 php34
+#设置用户未管理员rabbitmqctl set_user_tags username administrator
+shell&gt;# rabbitmqctl set_user_tags php34 administrator
+#设置用户权限rabbitmqctl set_permissions -p / username &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+shell&gt;# rabbitmqctl set_permissions -p / php34 &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</code></pre><p>解决使用 guset用户登陆问题</p>
+<pre><code>#进入目录
+shell&gt;# cd /usr/share/doc/rabbitmq-server-3.7.8/
+
+
+
+#复制配置文件
+shell&gt;# cp rabbitmq.config.example /etc/rabbitmq/rabbitmq.config
+
+
+
+#修改配置文件
+#将 {loopback_users, []} 内容写入配置文件[{rabbit,[ 后面
+shell&gt;# vim /etc/rabbitmq/rabbitmq.config
+
+
+
+#重启服务
+shell&gt;# service rabbitmq-server restart</code></pre><p>添加用户：</p>
+<p>设置权限</p>
+<p>3.3.3、浏览器中访问</p>
+<p>RabbitMQ Web服务的默认的端口为：15672</p>
+<p>请求格式：<a href="http://ip:15672" target="_blank" rel="noopener">http://ip:15672</a></p>
+<p>登陆成功后，效果如下图所示：</p>
+<p>五、PHP 中开启 RabbitMQ 扩展文件</p>
+<p>扩展文件下载地址：<a href="http://pecl.php.net/package/amqp" target="_blank" rel="noopener">http://pecl.php.net/package/amqp</a></p>
+<p>查看PHP版本号与位数、VC库、nts/ts</p>
+<p>1、windows 安装扩展</p>
+<p>1.1、下载扩展文件</p>
+<p>下载地址：<a href="http://pecl.php.net/package/amqp/1.9.4/windows" target="_blank" rel="noopener">http://pecl.php.net/package/amqp/1.9.4/windows</a></p>
+<p>1.2、解压文件</p>
+<p>1.3、复制php_amqp.dll文件到PHP扩展目录中</p>
+<p>1.4、复制rabbitmq.4.dll文件到php.exe同级目录下</p>
+<p>1.5、修改 php.ini 配置文件</p>
+<p>1.6、重启服务</p>
+<p>1.7、查看是否开启成功</p>
+<p>2、Linux 安装扩展</p>
+<p>2.1、rabbitmq-c 依赖库</p>
+<p>2.1.1、下载</p>
+<p>下载地址：<a href="https://github.com/alanxz/rabbitmq-c/archive/v0.9.0.tar.gz" target="_blank" rel="noopener">https://github.com/alanxz/rabbitmq-c/archive/v0.9.0.tar.gz</a></p>
+<p>2.1.2、解压</p>
+<pre><code>shell&gt;# tar -zxvf rabbitmq-c-0.9.0.tar.gz</code></pre><p>2.1.3、进入目录</p>
+<pre><code>shell&gt;# cd rabbitmq-c-0.9.0</code></pre><p>2.1.4、指定安装目录</p>
+<pre><code>shell&gt;# cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/librabbitmq</code></pre><p>2.1.5、编译软件并且进行安装</p>
+<pre><code>shell&gt;# make &amp;&amp; make install</code></pre><p>2.2、安装扩展文件</p>
+<p>2.2.1、下载扩展文件</p>
+<p>下载扩展文件：<a href="http://pecl.php.net/package/amqp" target="_blank" rel="noopener">http://pecl.php.net/package/amqp</a></p>
+<p>2.2.2、上传文件</p>
+<p>2.2.3、解压文件</p>
+<pre><code>shell&gt;# tar -zxvf amqp-1.9.4.tgz</code></pre><p>2.2.4、进入目录</p>
+<pre><code>shell&gt;# cd amqp-1.9.4</code></pre><p>2.2.5、生成编译文件</p>
+<pre><code>shell&gt;# /usr/local/php/bin/phpize</code></pre><p>2.2.6、进行软件配置和环境检测</p>
+<pre><code>shell&gt;# ./configure --with-php-config=/usr/local/php/bin/php-config --with-amqp --with-librabbitmq-dir=/usr/local/librabbitmq</code></pre><p>2.2.7、编译软件并且进行安装</p>
+<pre><code>shell&gt;# make &amp;&amp; make install</code></pre><p>成功如下图所示：</p>
+<p>有可能报以下错误信息：</p>
+<p>解决方案：</p>
+<p>进入 /usr/local/librabbitmq/ 目录下发现没有 lib 目录，只有 lib64</p>
+<pre><code>shell&gt;# cd /usr/local/librabbitmq</code></pre><p>将 /usr/local/librabbitmq/lib64 目录复制一份并生命名为 lib</p>
+<pre><code>shell&gt;# cp -R /usr/local/librabbitmq/lib64/ /usr/local/librabbitmq/lib</code></pre><p>然后再重复执行：</p>
+<pre><code>shell&gt;# cd /root/amqp-1.9.4
+shell&gt;# make &amp;&amp; make install</code></pre><p>2.2.8、修改 php.ini 文件</p>
+<pre><code>shell&gt;# vim /usr/local/php/etc/php.ini</code></pre><p>2.2.9、重启服务</p>
+<pre><code>shell&gt;# pkill -9 php-fpm
+shell&gt;# service php-fpm start</code></pre><p>2.2.10、查看是否开启成功</p>
+<p>六、PHP 操作 RabbitMQ</p>
+<p>1、安装 composer</p>
+<p>学习目标：掌握composer安装与使用</p>
+<p>概述</p>
+<pre><code>composer 是一个 PHP 的依赖管理器，专门用于给我们安装和卸载项目、框架和插件(安装包)，类似于 Linux 操作系统的 yum 包管理器。借助 composer 我们可以找到合适的安装包和框架进行安装。</code></pre><p>官网：<a href="http://www.getcomposer.org" target="_blank" rel="noopener">http://www.getcomposer.org</a></p>
+<p>中文：<a href="http://www.phpcomposer.com" target="_blank" rel="noopener">http://www.phpcomposer.com</a></p>
+<p>中国镜像源：<a href="https://pkg.phpcomposer.com/" target="_blank" rel="noopener">https://pkg.phpcomposer.com/</a>  (推荐使用)</p>
+<p>步骤</p>
+<ol>
+<li>将php设置到系统环境变量中<ol>
+<li>进入php目录</li>
+<li>复制路径</li>
+<li>设置系统环境变量</li>
+</ol>
+</li>
+<li>安装composer</li>
+<li>将composer设置到系统环境变量中</li>
+<li>切换镜像源</li>
+</ol>
+<p>1.1、把PHP设置到环境变量中</p>
+<p>1.1.1、进入PHP目录</p>
+<p>1.1.2、设置系统环境变量</p>
+<p>2.1、安装</p>
+<p>2.1.1、下载 Composer-Setup.exe 文件安装</p>
+<p>注意：</p>
+<pre><code>多得尝试几次；这种方式安装不够灵活，只能指定某个PHP使用</code></pre><p>2.1.2、使用 PHP 方式安装</p>
+<p>2.1.2.1、下载 composer-setup.php</p>
+<pre><code>C:\composer&gt; php -r &quot;copy(&apos;https://install.phpcomposer.com/installer&apos;, &apos;composer-setup.php&apos;);&quot;</code></pre><p>有可能报以下错误：</p>
+<p>没有开启 openssl 扩展文件</p>
+<p>2.1.2.2、下载  composer.phar 文件</p>
+<pre><code>C:\composer&gt; php composer-setup.php</code></pre><p>2.1.2.3、删除 composer-setup.php 文件</p>
+<pre><code>C:\composer&gt; php -r &quot;unlink(&apos;composer-setup.php&apos;);&quot;</code></pre><p>2.1.2.4、创建 composer.bat 文件</p>
+<pre><code>C:\composer&gt; echo @php &quot;%~dp0composer.phar&quot; %* &gt; composer.bat</code></pre><p>2.1.3、切换镜像源</p>
+<pre><code>C:\composer&gt; composer config -g repo.packagist composer https://packagist.phpcomposer.com</code></pre><p>2、下载RabbitMQ代码</p>
+<p>学习目标：掌握使用composer下载 RabbitMQ 代码</p>
+<p>概述</p>
+<pre><code>官方已经把RabbitMQ代码封装好，已托管在composer包管理站点上，我们直接使用composer下载就能直接使用或在其它PHP框架下载使用。</code></pre><p>步骤</p>
+<ol>
+<li>创建 composer.json 文件</li>
+<li>下载代码</li>
+</ol>
+<p>2.1、创建 composer.json 文件</p>
+<pre><code>{
+     &quot;require&quot;: {
+      &quot;php-amqplib/php-amqplib&quot;: &quot;2.6.1&quot;
+     }
+ }</code></pre><p>2.2、安装MQ项目(下载代码)</p>
+<pre><code>composer.json文件目录&gt; composer install</code></pre><p>3、Hello World模式</p>
+<p>学习目标：掌握RabbitMQ中的Hello World模式操作</p>
+<p>概述</p>
+<pre><code>RabbitMQ 是一个消息代理器。它的核心原理非常简单：接收和发送消息。你可以把它想像成一个邮局：你把信件放入邮箱，邮递员就会把信件投递到你的收件人处。在这个比喻中，RabbitMQ 就扮演着邮箱、邮局以及邮递员的角色。</code></pre><p>RabbitMQ 和邮局主要的区别是，它不是用来处理纸张的，它是用来接收、存储和发送消息这种二进制数据的。</p>
+<p>一般提到 RabbitMQ 和消息，都会用一些专有名词。</p>
+<ul>
+<li><p>生产(Producing)意思就是发送。发送消息的程序就是一个生产者(Producer)。我们一般用”P”来表示：</p>
+</li>
+<li><p>队列(queue)就是邮箱的名称。消息通过你的应用程序和 RabbitMQ 进行传输，它们能够只存储在一个队列(queue)中。队列(queue)没有任何限制，你要存储多少消息都可以一一基本上是一个无限的缓冲。多个生产者(Producers)能够把消息发送给同一个队列，同样，多个消费者(consumers)也能够从同一个队列(queue)中获取数据。队列可以绘制成这样(图上是队列的名称)：</p>
+</li>
+<li><p>消费(Consuming)和获取消息是一样的意思。一个消费者(consumer)就是一个等待获取消息的程序。我们把它绘制为”C”：</p>
+</li>
+</ul>
+<p>步骤</p>
+<ol>
+<li>客户端<ol>
+<li>引入相关文件</li>
+<li>实例MQ对象</li>
+<li>创建一个队列</li>
+<li>发送消息与闭关队列(通道)与连接</li>
+<li>测试代码</li>
+</ol>
+</li>
+<li>服务端<ol>
+<li>引入相关的文件</li>
+<li>实例MQ对象</li>
+<li>创建队列</li>
+<li>接收消息</li>
+</ol>
+</li>
+</ol>
+<p>3.1、客户端</p>
+<p>3.1.1、引入相关文件</p>
+<pre><code>&lt;?php
+    //引入自动加载类
+    require_once __DIR__ . &apos;/vendor/autoload.php&apos;;
+    //把类型命名空间
+    use PhpAmqpLib\Connection\AMQPStreamConnection; //创建队列信息类
+    use PhpAmqpLib\Message\AMQPMessage; //发送信息类</code></pre><p>3.1.2、实例MQ对象</p>
+<pre><code>//实例化MQ
+//设置配置信息
+$config = [
+    &apos;host&apos; =&gt; &apos;127.0.0.1&apos;,
+    &apos;port&apos; =&gt; 5672,
+    &apos;user&apos; =&gt; &apos;guest&apos;,
+    &apos;pass&apos; =&gt; &apos;guest&apos;
+];
+extract($config); // 从数组中将变量导入到当前的符号表
+$connection = new AMQPStreamConnection($host, $port, $user, $pass);
+$channel = $connection-&gt;channel(); // 创建一个MQ，如果这个对象已存在，就不创建，否则相反</code></pre><p>3.1.3、创建一个队列</p>
+<pre><code>//创建一个队列
+$channel-&gt;queue_declare(&apos;php34&apos;,false,false,false, false);</code></pre><p>3.1.4、发送消息与关闭队列(通道)与连接</p>
+<pre><code>//实例化发送消息类
+$msg = new AMQPMessage(&apos;我们再次探讨MQ...&apos;);
+//发送消息
+$channel-&gt;basic_publish($msg, &apos;&apos;, &apos;php34&apos;);
+
+//告诉用户发送请求成功
+echo &apos;亲，你发送消息，送出...&apos;;
+//关闭队列(通道)与连接
+$channel-&gt;close();
+$connection-&gt;close();</code></pre><p>3.2、服务端</p>
+<p>3.2.1、引入相关的文件</p>
+<pre><code>&lt;?php
+    //引入相关文件
+    require_once __DIR__ . &apos;/vendor/autoload.php&apos;; //自动加类
+    use PhpAmqpLib\Connection\AMQPStreamConnection; //创建队列信息类</code></pre><p>3.2.2、实例MQ对象</p>
+<pre><code>//实例化MQ
+//设置配置信息
+$config = [
+    &apos;host&apos; =&gt; &apos;127.0.0.1&apos;,
+    &apos;port&apos; =&gt; 5672,
+    &apos;user&apos; =&gt; &apos;guest&apos;,
+    &apos;pass&apos; =&gt; &apos;guest&apos;
+];
+extract($config); // 从数组中将变量导入到当前的符号表
+$connection = new AMQPStreamConnection($host, $port, $user, $pass);
+$channel = $connection-&gt;channel(); // 创建一个MQ对象，如果这个对象已存在，就不创建，否则相反</code></pre><p>3.2.3、创建队列</p>
+<pre><code>//创建队列
+$channel-&gt;queue_declare(&apos;php34&apos;, false,false, false,false);
+echo &apos; 想终止程序请按 CTRL + C&apos;, &quot;\n&quot;;</code></pre><p>3.2.4、接收消息</p>
+<pre><code>//接收消息
+$callback = function($msg) {
+    echo &quot;他(她)给您发送的消息：&quot;, $msg-&gt;body, &quot;\n&quot;;
+    //处理我们业务逻辑
+};
+
+//启动队列使用者(从php34队列获取消息)
+$channel-&gt;basic_consume(&apos;php34&apos;, &apos;&apos;, false, true, false, false, $callback);
+//死循环
+while(true) {
+    $channel-&gt;wait();
+}</code></pre><p>4、路由(Routing)模式</p>
+<p>学习目标：掌握RabbitMQ的路由(Routing)模式</p>
+<p>概述</p>
+<p>交换机的类别分别为：direct、headers、fanout、topic</p>
+<pre><code>我们将会使用直连交换机（direct exchange）来代替。路由的算法很简单 —— 交换机将会对绑定键（binding key）和路由键（routing key）进行精确匹配，从而确定消息该分发到哪个队列。
+
+
+
+在这个场景中，我们可以看到直连交换机 X 和两个队列进行了绑定。第一个队列使用orange作为绑定键，第二个队列有两个绑定，一个使用black作为绑定键，另外一个使用green。</code></pre><p>这样以来，当路由键为orange的消息发布到交换机，就会被路由到队列Q1。路由键为black或者green的消息就会路由到Q2。其他的所有消息都将会被丢弃。</p>
+<p>步骤</p>
+<ol>
+<li>客户端<ol>
+<li>引入相关的文件</li>
+<li>实例化MQ对象</li>
+<li>创建交换机</li>
+<li>发送消息与关闭队列(通道)与连接</li>
+</ol>
+</li>
+<li>服务端<ol>
+<li>引入相关的文件</li>
+<li>实例化MQ对象</li>
+<li>创建队列与绑定交换机</li>
+<li>接收消息与关闭队列(通道)与连接</li>
+</ol>
+</li>
+</ol>
+<p>4.1、客户端</p>
+<p>4.1.1、引入相关的文件</p>
+<pre><code>&lt;?php
+    //引入自动加载类
+    require_once __DIR__ . &apos;/vendor/autoload.php&apos;;
+    //引入类
+    use PhpAmqpLib\Connection\AMQPStreamConnection;
+    use PhpAmqpLib\Message\AMQPMessage;</code></pre><p>4.1.2、实例化MQ对象</p>
+<pre><code>//实例化MQ
+//设置配置信息
+$config = [
+    &apos;host&apos; =&gt; &apos;127.0.0.1&apos;,
+    &apos;port&apos; =&gt; 5672,
+    &apos;user&apos; =&gt; &apos;guest&apos;,
+    &apos;pass&apos; =&gt; &apos;guest&apos;
+];
+extract($config); // 从数组中将变量导入到当前的符号表
+$connection = new AMQPStreamConnection($host, $port, $user, $pass);
+$channel = $connection-&gt;channel();// 创建一个MQ，如果这个对象已存在，就不创建，否则相反</code></pre><p>4.1.3、创建交换机</p>
+<pre><code>$channel-&gt;exchange_declare(&apos;php36&apos;, &apos;direct&apos;, false, false, false);</code></pre><p>4.1.4、发送消息与关闭队列(通道)与连接</p>
+<pre><code>//发送消息
+$data = &quot;Hello World!&quot;;
+ //实例化发送消息类
+$msg = new AMQPMessage($data);
+//发送消息，参数说明：$msg需要发送的消息，$e_name交换机名称，$key_1路由key
+$channel-&gt;basic_publish($msg, $e_name, $key_1);
+echo &quot; [x] Sent {$key_1}:&quot;, $data, &quot;\n&quot;;
+//关闭队列(通道)与连接
+$channel-&gt;close();
+$connection-&gt;close();</code></pre><p>4.2、服务端</p>
+<p>4.2.1、引入相关的文件</p>
+<pre><code>&lt;?php
+    //引入自动加载类
+    require_once __DIR__ . &apos;/vendor/autoload.php&apos;;
+    //引入类
+    use PhpAmqpLib\Connection\AMQPStreamConnection;</code></pre><p>4.2.2、实例化MQ对象</p>
+<pre><code>//实例化MQ
+//设置配置信息
+$config = [
+    &apos;host&apos; =&gt; &apos;127.0.0.1&apos;,
+    &apos;port&apos; =&gt; 5672,
+    &apos;user&apos; =&gt; &apos;guest&apos;,
+    &apos;pass&apos; =&gt; &apos;guest&apos;
+];
+extract($config); // 从数组中将变量导入到当前的符号表
+$connection = new AMQPStreamConnection($host, $port, $user, $pass);
+$channel = $connection-&gt;channel();// 创建一个MQ，如果这个对象已存在，就不创建，否则相反</code></pre><p>4.2.3、创建交换机</p>
+<pre><code>//创建一个交换机，第一个参数：交换机名称；第二个参数：交换机类型
+$channel-&gt;exchange_declare(&apos;php36&apos;, &apos;direct&apos;, false, false, false);</code></pre><p>4.2.4、创建队列与绑定交换机</p>
+<pre><code>//创建一个队列
+$channel-&gt;queue_declare(&quot;php36&quot;, false, false, true, false);
+//交换机与队列绑定一个key
+$channel-&gt;queue_bind(&apos;php36&apos;, &apos;php36&apos;, &apos;key_1&apos;);
+echo &apos; [*] Waiting for logs. To exit press CTRL+C&apos;, &quot;\n&quot;;</code></pre><p>4.2.5、接收消息与关闭队列(通道)与连接</p>
+<pre><code>//回调
+$callback = function($msg){
+    //实现业务逻辑代码
+    echo &apos; [x] &apos;,$msg-&gt;delivery_info[&apos;routing_key&apos;], &apos;:&apos;, $msg-&gt;body, &quot;\n&quot;;
+};
+
+$channel-&gt;basic_consume(&apos;php36&apos;, &apos;&apos;, false, true, false, false, $callback);
+
+while(true) {
+    $channel-&gt;wait();
+}
+//关闭通道与连接
+$channel-&gt;close();
+$connection-&gt;close();</code></pre><p>七、推送消息模板</p>
+<p>1、创建一个消息模板</p>
+<pre><code>尊敬的{{user.DATA}}：
+
+您尾号{{num.DATA}}的招行信用卡最新交易信息
+
+交易时间：{{time.DATA}}
+交易类型：{{type.DATA}}
+交易金额：{{price.DATA}}
+
+截止至{{endTime.DATA}}，您招行个人信用卡账户可用额度为{{price1.DATA}}元</code></pre><p>2、推送微信模板消息</p>
+<p>获取token</p>
+<pre><code>&lt;?php
+    //获取token
+    function getToken(){
+        $url = &apos;https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=wx964c28e81dfaeb1c&amp;secret=1f6ac3fd2cfdb1c33057bede01ca84e7&apos;;
+        //连接Redis
+        $redis = new Redis();
+        //连接
+        $redis-&gt;connect(&apos;127.0.0.1&apos;, 6379);
+        //认证(win下不需要)
+        $redis-&gt;auth(&apos;123456&apos;);
+        $wx_token = $redis-&gt;get(&apos;wx_token&apos;);
+        if(!$wx_token){
+            //使用get方式请求
+            $wx_token = file_get_contents($url);
+            //存储到redis
+            $redis-&gt;set(&apos;wx_token&apos;, $wx_token);
+        }
+        return $wx_token;
+    }</code></pre><p>微信消息模板</p>
+<pre><code>&lt;?php
+//推送微信消息模板
+    function wx_tlp(){
+        /*$url = &quot;https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=&quot; . wx_token();*/
+        $url = &quot;https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=23_MaAGRbHca1MdqdDmABJqO8bVAoau78AshyjTjd_33p4tPndNS2Xljq2Q0gIP4bE4liILeDJfwstpu17zDLIbqn4fMcKEUr3Fmbj26HTOEDClbpsUBAyTwlWz1gYatmT9Z2FDfVKd0y1zg2p1AHUjAGADKX&quot;;
+
+        $array = [
+            &quot;touser&quot; =&gt; &quot;oju1w1eqeLcKhxWWFSmOKmnT4tew&quot;,
+            &quot;template_id&quot; =&gt; &quot;FwCMBNNeg4qBbK45C5F6V8drIxxBXdioETZaaUrI-OI&quot;,
+            &quot;url&quot; =&gt; &quot;http://weixin.qq.com/download&quot;,
+            &quot;topcolor&quot; =&gt; &quot;#FF0000&quot;,
+            &quot;data&quot; =&gt; [
+                //变量名=&gt;值
+                &quot;user&quot; =&gt; [
+                        &quot;value&quot; =&gt; &quot;测试&quot;,
+                        &quot;color&quot; =&gt; &quot;#173177&quot;
+                ],
+                &quot;time&quot; =&gt; [
+                    &quot;value&quot; =&gt; date(&apos;m月d日 H时i分&apos;), //date(&apos;Y-m-d H:i:s&apos;); 2019年07月15日
+                    &quot;color&quot; =&gt; &quot;#173177&quot;
+                ],
+
+                &quot;type&quot; =&gt; [
+                    &quot;value&quot; =&gt; &quot;消费&quot;,
+                    &quot;color&quot; =&gt; &quot;#173177&quot;
+                ],
+
+                &quot;price&quot; =&gt; [
+                    &quot;value&quot; =&gt; &quot;人民币0.2元&quot;,
+                    &quot;color&quot; =&gt; &quot;#173177&quot;
+                ]
+            ]
+        ];
+        return json_encode( http_curl($url,&apos;post&apos;, json_encode($array)) );
+    }</code></pre><p>CURL函数</p>
+<pre><code>&lt;?php
+    function http_curl($url,$type=&apos;get&apos;,$postdata=array(),$return_type=&apos;json&apos;){
+        $ch = curl_init();
+        // 设置请求相关的信息 请求方式、请求参数、请求地址、返回结果不输出
+        if($type ==&apos;post&apos;){
+            // 设置请求方式
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            // 设置请求携带的参数
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$postdata);
+        }
+        // 禁止服务端证书验证
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER ,FALSE);
+        // 设置请求地址
+        curl_setopt($ch,CURLOPT_URL,$url);
+        // 设置请求结果不输出
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
+        $json = curl_exec($ch);
+        curl_close($ch);
+        // 根据返回数据的类型格式化
+        if($return_type==&apos;json&apos;){
+            return json_decode($json,true);
+        }
+        return $json;
+    }</code></pre><p>八、总结</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="cjysgypd70004nouy3h5up6b4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-linux编译安装lanmp" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/01/linux编译安装lanmp/" class="article-date">
@@ -379,7 +1002,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjysf7hby0002zguy17196e2w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjysgypcq0002nouyuscrye1i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -532,7 +1155,7 @@ Apache版本为2.0 - 2.4,Centos默认安装版本就是这个版本，因为Apac
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjysf7h9g0001zguyc2qzln0m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjysgypbt0001nouyxv42i20o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1020,7 +1643,7 @@ grep php34 /etc/group</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjysf7hdp0004zguyjig8zhr6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjysgypdj0005nouyfbjqy05m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1429,7 +2052,7 @@ shell&gt;# yum install -y man</code></pre><p>注意：前提必须能上网</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjysf7hck0003zguyyx92zin4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjysgypd50003nouy00h9m7wv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2517,7 +3140,7 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjysf7hed0005zguywnxyyvz0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjysgypds0006nouys6a4fdqy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2621,7 +3244,7 @@ deploy:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjysf7h6i0000zguy2mqxfflz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjysgypaw0000nouy2nj1on0t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2662,6 +3285,10 @@ deploy:
       <ul>
         
           <li>
+            <a href="/2019/08/01/rabbtMQ/">&#39;rabbtMQ&#39;</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/01/linux编译安装lanmp/">&#39;linux编译安装lanmp&#39;</a>
           </li>
         
@@ -2675,10 +3302,6 @@ deploy:
         
           <li>
             <a href="/2019/08/01/linux系统搭建和命令的使用/">&#39;linux命令的使用&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/nginx/">&#39;nginx&#39;</a>
           </li>
         
       </ul>
