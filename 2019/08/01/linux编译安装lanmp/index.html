@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>&#39;linux编译安装lanmp&#39; | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="目录目录一、查看系统信息1、主机名2、服务器时间3、系统内核及位数4、虚拟内存二、WEB环境搭建1、底层软件库2、源码编译安装MySQL2.1、安装依赖库2.2、安装MySQL2.2.1、建立mysql安装目录和用户2.2.2、下载mysql2.2.3、解压并进入目录2.2.4、进行软件配置和环境检测2.2.5、编译软件并且进行安装2.3、配置2.3.1、使用递归，把mysql目录所有者设置为my">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&#39;linux编译安装lanmp&#39;">
+<meta property="og:url" content="http://yoursite.com/2019/08/01/linux编译安装lanmp/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录目录一、查看系统信息1、主机名2、服务器时间3、系统内核及位数4、虚拟内存二、WEB环境搭建1、底层软件库2、源码编译安装MySQL2.1、安装依赖库2.2、安装MySQL2.2.1、建立mysql安装目录和用户2.2.2、下载mysql2.2.3、解压并进入目录2.2.4、进行软件配置和环境检测2.2.5、编译软件并且进行安装2.3、配置2.3.1、使用递归，把mysql目录所有者设置为my">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-01T08:14:04.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="&#39;linux编译安装lanmp&#39;">
+<meta name="twitter:description" content="目录目录一、查看系统信息1、主机名2、服务器时间3、系统内核及位数4、虚拟内存二、WEB环境搭建1、底层软件库2、源码编译安装MySQL2.1、安装依赖库2.2、安装MySQL2.2.1、建立mysql安装目录和用户2.2.2、下载mysql2.2.3、解压并进入目录2.2.4、进行软件配置和环境检测2.2.5、编译软件并且进行安装2.3、配置2.3.1、使用递归，把mysql目录所有者设置为my">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux编译安装lanmp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/01/linux编译安装lanmp/" class="article-date">
+  <time datetime="2019-08-01T08:13:32.000Z" itemprop="datePublished">2019-08-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      &#39;linux编译安装lanmp&#39;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目录<br>目录<br>一、查看系统信息<br>1、主机名<br>2、服务器时间<br>3、系统内核及位数<br>4、虚拟内存<br>二、WEB环境搭建<br>1、底层软件库<br>2、源码编译安装MySQL<br>2.1、安装依赖库<br>2.2、安装MySQL<br>2.2.1、建立mysql安装目录和用户<br>2.2.2、下载mysql<br>2.2.3、解压并进入目录<br>2.2.4、进行软件配置和环境检测<br>2.2.5、编译软件并且进行安装<br>2.3、配置<br>2.3.1、使用递归，把mysql目录所有者设置为mysql这个用户<br>2.3.2、进入MySQL安装目录下<br>2.3.3、根据实际情况优化mysql配置<br>2.3.4、初始化和启动<br>2.3.4.1、初始化mysql的基本表<br>2.3.4.2、启动mysql<br>2.3.4.3、修改mysql的root密码<br>2.3.4.4、增加到开机启动<br>2.3.4.5、将mysql命令加入到环境变量里<br>2.3.4.6、如果需要对外开放 3306 端口<br>3、源码编译安装PHP<br>3.1、安装PHP<br>3.1.1、下载<br>3.1.2、解压并进入目录<br>3.1.3、将configure参数及详情解析另存为一个文件，以供学习参考用：<br>3.1.4、进行软件的配置和环境检测<br>3.1.5、编译软件并且进行安装<br>3.2、配置<br>3.2.1、复制配置文件<br>3.2.2、配置php.ini<br>3.2.3、配置 php-fpm.conf<br>3.2.4、将 php-fpm 加入服务并自动启动<br>4、源码编译安装Apache<br>4.1、安装依赖库<br>4.2、安装apache<br>4.2.1、下载apache<br>4.2.2、解压并进入目录<br>4.2.3、将configure参数及详情解析另存为一个文件以供学习参考用<br>4.2.4、进行软件的配置和环境检测<br>4.2.5、编译软件并且进行安装<br>4.3、配置<br>4.3.1、简单配置<br>4.3.2、优化虚拟主机配置<br>4.3.3、设为服务并开机自运行<br>4.4、整合PHP<br>4.4.1、修改 apache 的配置文件<br>4.4.2、重启 apache<br>4.5、开放端口<br>三、总结</p>
+<p>一、查看系统信息<br>1、主机名</p>
+<p>查看：</p>
+<p>shell&gt;# hostname</p>
+<p>永久修改：</p>
+<p>centos 6修改如下：</p>
+<p>shell&gt;#vim /etc/sysconfig/network</p>
+<p>shell&gt;# vim /etc/hosts</p>
+<p>shell&gt;#hostname Youlongit<br>centos 7 修改如下：</p>
+<p>shell&gt;# hostnamectl set-hostname <hostname><br>重新链接我们Linux服务器后可发现主机名已更改</hostname></p>
+<p>2、服务器时间</p>
+<p>查看：shell&gt;# date</p>
+<p>如果时间不正确，可以这样修改</p>
+<p>shell&gt;# vim /etc/sysconfig/clock<br>内容为：</p>
+<p>ZONE=”Asia/Shanghai”<br>UTC=false<br>ARC=false</p>
+<p>然后再执行：</p>
+<p>shell&gt;# date -s “YYYYMMDD HH:mm:ss”<br>例如：date -s “20190215 10:39:11”</p>
+<p>注意： -s 的s是小写的</p>
+<p>最后同步BIOS时钟，强制把系统时间写入CMOS</p>
+<p>shell&gt;# clock -w<br>注意：-w的w是小写</p>
+<p>3、系统内核及位数</p>
+<p>查看内核：</p>
+<p>shell&gt;# cat /etc/redhat-release</p>
+<p>查看位数：</p>
+<p>shell&gt;# uname -a</p>
+<p>有x86_64这个关键字表明系统是64位的</p>
+<p>4、虚拟内存</p>
+<p>​    如果服务器的物理内存小于2G，而且又没有设置虚拟内存的话，在编译安装MySQL的时候，就很容易发生以下报错：</p>
+<p>解决方法：增加内存或者增加虚拟内存</p>
+<p>先用free指令查看内存情况</p>
+<p>shell&gt;# free</p>
+<p>可以看到系统还没有设置虚拟内存，添加虚拟内存的方法如下：</p>
+<p>第一步：创建swap文件</p>
+<p>shell&gt;# cd /var<br>shell&gt;# dd if=/dev/zero of=swapfile bs=1024 count=2048000<br>shell&gt;# mkswap swapfile<br>第二步：激活</p>
+<p>shell&gt;# swapon swapfile<br>第三步：开机自动创建</p>
+<p>shell&gt;# echo “/var/swapfile swap swap defaults 0 0” &gt;&gt; /etc/fstab<br>二、WEB环境搭建<br>1、底层软件库</p>
+<p>运行以下命令确保底层软件库都已安装</p>
+<p>shell&gt;# yum -y install gcc gcc-c++ autoconf automake zlib libxml2 libxml2-devel ncurses-devel libmcrypt libtool cmake bison make pcre pcre-devel libevent openssl openssl-devel gd-devel bzip2 bzip2-devel libcurl curl-devel python python-devel mysql-devel expat-devel<br>2、源码编译安装MySQL</p>
+<p>​    <code>MySQL从5.5版本开始，通过./configure进行编译配置方式已经被取消，取而代之的是cmake工具。需要下载CMake编译器、Boost库、ncurses库和GNU分析器生成器bison这4种工具，可以用yum install的方式安装cmake、bison、boost、ncurses</code></p>
+<p>MySQL二进制文件可以 <a href="http://dev.mysql.com/downloads/mysql" target="_blank" rel="noopener">http://dev.mysql.com/downloads/mysql</a> 或者 <a href="http://mirrors.sohu.com/mysql" target="_blank" rel="noopener">http://mirrors.sohu.com/mysql</a> 去下载</p>
+<p>注意要下载与操作系统对应的版本及位数（32位或64位），编译安装需要下载源码版(Source Code)，此处以mysql-5.7.24tar.gz为例</p>
+<p>以下 安 装中 涉 及的 几点 需 要提 前 说明 的问 题 ：</p>
+<p>所有 下 载的 文件 将 保存 在 /root 目 录下</p>
+<p>mysql 将以 mysql 用户 运 行， 而 且将 加入 service 开 机 自动 运 行</p>
+<p>mysql 将被 安 装在 /usr/local/mysql/ 目录 下</p>
+<p>mysql 默认 安 装使 用 utf8 字符集</p>
+<p>mysql 的数 据 和日 志文 件 保存 在 /usr/local/mysql/data/ 目录 下</p>
+<p>mysql 的配 置 文件 保存 于 /usr/local/mysql/etc/my.cnf</p>
+<p>tmp</p>
+<p>注意 从 MySQL 5.7.5 开 始 Boost 库是 必需 的</p>
+<p>2.1、安装依赖库</p>
+<p>安装 cmake 和 bison 与 ncurses</p>
+<p>shell&gt;# yum -y install -y cmake bison ncurses<br>下载 Boost</p>
+<p>shell&gt;# wget <a href="http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz" target="_blank" rel="noopener">http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz</a></p>
+<p>解压</p>
+<p>shell&gt;# tar -zxvf boost_1_59_0.tar.gz</p>
+<p>移动</p>
+<p>shell&gt;# mv boost_1_59_0 /usr/local/boost</p>
+<p>2.2、安装MySQL</p>
+<p>2.2.1、建立mysql安装目录和用户</p>
+<p>在/usr/local/mysql建立【data】、【tmp】、【log】、【etc】4个目录</p>
+<p>shell&gt;# mkdir -pv /usr/local/mysql</p>
+<p>shell&gt;# cd /usr/local/mysql</p>
+<p>shell&gt;# mkdir data tmp log etc</p>
+<p>shell&gt;# groupadd mysql<br>shell&gt;# useradd -g mysql -s /usr/sbin/nologin mysql</p>
+<p>2.2.2、下载mysql</p>
+<p>shell&gt;# cd ~<br>shell&gt;# wget <a href="http://mirrors.sohu.com/mysql/MySQL-5.7/mysql-5.7.24.tar.gz" target="_blank" rel="noopener">http://mirrors.sohu.com/mysql/MySQL-5.7/mysql-5.7.24.tar.gz</a><br>2.2.3、解压并进入目录</p>
+<p>shell&gt;# tar -zxvf mysql-5.7.24.tar.gz<br>shell&gt;# cd mysql-5.7.24</p>
+<p>2.2.4、进行软件配置和环境检测</p>
+<p>shell&gt;# cmake <br>-DCMAKE_INSTALL_PREFIX=/usr/local/mysql <br>-DMYSQL_UNIX_ADDR=/usr/local/mysql/tmp/mysql.sock <br>-DMYSQL_DATADIR=/usr/local/mysql/data <br>-DSYSCONFDIR=/usr/local/mysql/etc <br>-DMYSQL_USER=mysql <br>-DDEFAULT_CHARSET=utf8 <br>-DDEFAULT_COLLATION=utf8_general_ci <br>-DWITH_EXTRA_CHARSETS:STRING=utf8,gbk <br>-DWITH_DEBUG=0 <br>-DWITH_MYISAM_STORAGE_ENGINE=1 <br>-DWITH_INNOBASE_STORAGE_ENGINE=1 <br>-DWITH_ARCHIVE_STORAGE_ENGINE=1 <br>-DWITH_PARTITION_STORAGE_ENGINE=1 <br>-DENABLED_LOCAL_INFILE=1 <br>-DWITH_EMBEDDED_SERVER=1 <br>-DMYSQL_USER=mysql <br>-DWITH_BOOST=/usr/local/boost <br>-DDOWNLOAD_BOOST=1<br>以上内容的解释：</p>
+<p>shell&gt;# cmake</p>
+<p>​    #设置安装目录</p>
+<p>​    -DCMAKE_INSTALL_PREFIX=/usr/local/mysql</p>
+<p>​    #设置sock目录</p>
+<p>​    -DMYSQL_UNIX_ADDR=/usr/local/mysql/tmp/mysql.sock</p>
+<p>​    #设置数据库存放目录</p>
+<p>​    -DMYSQL_DATADIR=/usr/local/mysql/data</p>
+<p>​    #设置配置文件my.cnf存放目录</p>
+<p>​    -DSYSCONFDIR=/usr/local/mysql/etc</p>
+<p>​    #设置mysql的默认使用用户</p>
+<p>​    -DMYSQL_USER=mysql</p>
+<p>​    #设置默认字符集</p>
+<p>​    -DDEFAULT_CHARSET=utf8</p>
+<p>​    #默认校对规则</p>
+<p>​    -DDEFAULT_COLLATION=utf8_general_ci</p>
+<p>​    #指明安装额外字符集的支持</p>
+<p>​    -DWITH_EXTRA_CHARSETS:STRING=utf8,gbk</p>
+<p>​    #去除debug模式</p>
+<p>​    -DWITH_DEBUG=0</p>
+<p>​    #以下几条开启常用的引擎</p>
+<p>​    -DWITH_MYISAM_STORAGE_ENGINE=1</p>
+<p>​    -DWITH_INNOBASE_STORAGE_ENGINE=1</p>
+<p>​    -DWITH_ARCHIVE_STORAGE_ENGINE=1</p>
+<p>​    -DWITH_PARTITION_STORAGE_ENGINE=1</p>
+<p>​    #Enable LOAD DATA LOCAL INFILE（default：disabled）</p>
+<p>​    -DENABLED_LOCAL_INFILE=1</p>
+<p>​    #使用一些字符函数的汇编版本</p>
+<p>​    -DWITH_EMBEDDED_SERVER=1</p>
+<p>​    -DMYSQL_USER=mysql</p>
+<p>​    #5.7编译需要boost类库，指明boost的路径</p>
+<p>​    -DWITH_BOOST=/usr/local/boost</p>
+<p>​    #在以上路径如果没查找到boost会自动下载并解压(如事先已下载好，此句可略)</p>
+<p>​    -DDOWNLOAD_BOOST=1<br>2.2.5、编译软件并且进行安装</p>
+<p>shell&gt;# make &amp;&amp; make install<br>注意：</p>
+<p>​    接下来可能需要耗较长时间，请耐心等待。另外如果过程中出现报错而中断，需要删除CMakeCache.txt文件后再执行 2.2.4步骤内容（没出错请不要执行以下两行指令）：</p>
+<p>shell&gt;# make clean</p>
+<p>shell&gt;# rm -rf CMakeCache.txt或者 shell&gt;# unlink CMakeCache.txt<br>2.3、配置</p>
+<p>2.3.1、使用递归，把mysql目录所有者设置为mysql这个用户</p>
+<p>shell&gt;# chown -R mysql:mysql /usr/local/mysql</p>
+<p>如果 /etc/my.cnf 存在的话，请删除</p>
+<p>shell&gt;# unlink /etc/my.cnf</p>
+<p>2.3.2、进入MySQL安装目录下</p>
+<p>shell&gt;# cd /usr/local/mysql</p>
+<p>重建 my.cnf文件</p>
+<p>2.3.3、根据实际情况优化mysql配置</p>
+<p>shell&gt;# vim etc/my.cnf</p>
+<p>大概内容如下：</p>
+<h1 id="my-cnf-的示例配置"><a href="#my-cnf-的示例配置" class="headerlink" title="my.cnf 的示例配置"></a>my.cnf 的示例配置</h1><p>[client]<br>default-character-set = utf8<br>port = 3306<br>socket = /usr/local/mysql/tmp/mysql.sock<br>​<br>[mysqld]<br>datadir =/usr/local/mysql/data<br>port = 3306<br>socket = /usr/local/mysql/tmp/mysql.sock<br>user = mysql<br>symbolic-links = 0<br>pid-file = /usr/local/mysql/tmp/mysql.pid<br>​<br>explicit_defaults_for_timestamp = true<br>sql_mode = ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE,NO_AUTO_CREATE_USER<br>​<br>slow_query_log = on<br>slow_query_log_file = /usr/local/mysql/log/slow.log<br>long_query_time = 2<br>​<br>log_error = /usr/local/mysql/log/mysql.err<br>2.3.4、初始化和启动</p>
+<p>2.3.4.1、初始化mysql的基本表</p>
+<p>5.7及以上的做法：</p>
+<p>–initialize会生成一个随机密码(~/.mysql_secret)，而–initialize-insecure不会生成密码</p>
+<p>shell&gt;# /usr/local/mysql/bin/mysqld <br>–initialize-insecure <br>–basedir=/usr/local/mysql <br>–datadir=/usr/local/mysql/data <br>–user=mysql</p>
+<p>注意：</p>
+<p>​    如果初始化出错，则需要用 rm -rf /usr/local/mysql/data/* 将 mysql 的 data 目录下的文件和目录都删除，然后再重新运行以上语句<br>2.3.4.2、启动mysql</p>
+<p>shell&gt;# /usr/local/mysql/bin/mysqld_safe &gt; /dev/null 2&gt;&amp;1 &amp;</p>
+<p>2.3.4.3、修改mysql的root密码</p>
+<p>shell&gt;# /usr/local/mysql/bin/mysqladmin -u root password 123456</p>
+<p>（其中 123456 为您希望使用的密码）</p>
+<p>2.3.4.4、增加到开机启动</p>
+<p>先将mysqld设置为服务</p>
+<p>shell&gt;# cp /usr/local/mysql/support-files/mysql.server /etc/rc.d/init.d/mysqld</p>
+<p>然后将mysqld服务加入启动项：</p>
+<p>shell&gt;# chkconfig –add mysqld</p>
+<p>设置为自启动：</p>
+<p>shell&gt;# chkconfig –level 345 mysqld on</p>
+<p>–level&lt;等级代号&gt; 　指定读系统服务要在哪一个执行等级中开启或关毕。<br>等级0表示：表示关机<br>等级1表示：单用户模式<br>等级2表示：无网络连接的多用户命令行模式<br>等级3表示：有网络连接的多用户命令行模式<br>等级4表示：不可用<br>等级5表示：带图形界面的多用户模式<br>等级6表示：重新启动</p>
+<p>2.3.4.5、将mysql命令加入到环境变量里</p>
+<p>shell&gt;# PATH=$PATH:/usr/local/mysql/bin</p>
+<p>为了重启后仍能有效：</p>
+<p>shell&gt;# echo ‘PATH=$PATH:/usr/local/mysql/bin’ &gt;&gt; /root/.bashrc</p>
+<p>2.3.4.6、如果需要对外开放 3306 端口</p>
+<p>shell&gt;# iptables -I INPUT -p tcp –dport 3306 -j ACCEPT<br>如果 mysqld 服务正常运行中，但是执行 mysql 指令时报出以下错误：</p>
+<p>解决方案就是创建一个软链接</p>
+<p>shell&gt;# mkdir -pv /var/lib/mysql<br>shell&gt;# ln -s /usr/local/mysql/tmp/mysql.sock /var/lib/mysql/mysql.sock</p>
+<p>3、源码编译安装PHP</p>
+<p>安装PHP之前，首先要检查安装libxml2、libxml2-devvel、gd-devel</p>
+<p>shell&gt;# rpm -qa | grep libxml2*<br>shell&gt;# rpm -qa | grep gd-devel*<br>如果没有安装，可以使用yum -y install命令进行安装。</p>
+<p>php可以到 <a href="http://php.net/downloads.php" target="_blank" rel="noopener">http://php.net/downloads.php</a> 或者 <a href="http://mirrors.sohu.com/php/" target="_blank" rel="noopener">http://mirrors.sohu.com/php/</a> 去下 载,此处 以php-7.2.2.tar.gz为例 </p>
+<p>以下安装中涉及的几点需要提前说明的问题：</p>
+<p>所有下载的文件将保存在 /root 目录下</p>
+<p>php 将以 FastCGI模式运行，监听 9000 端口(默认端口)</p>
+<p>php 将被安装在 /usr/local/php 目录下</p>
+<p>php 的配置文件保存于 /usr/local/php/etc/php.ini</p>
+<p>php 的扩展库文件，如果可以的话，尽量放在 /usr/local/php/lib/php/extensions/ 目录</p>
+<p>3.1、安装PHP</p>
+<p>3.1.1、下载</p>
+<p>shell&gt;# cd ~<br>shell&gt;# wget <a href="http://am1.php.net/distributions/php-7.2.2.tar.gz" target="_blank" rel="noopener">http://am1.php.net/distributions/php-7.2.2.tar.gz</a><br>3.1.2、解压并进入目录</p>
+<p>shell&gt;# tar -zxvf php-7.2.2.tar.gz<br>shell&gt;# cd php-7.2.2<br>3.1.3、将configure参数及详情解析另存为一个文件，以供学习参考用：</p>
+<p>shell&gt;# ./configure –help &gt; php_configure.txt<br>注意：</p>
+<p>​    这步可以忽略<br>3.1.4、进行软件的配置和环境检测</p>
+<p>shell&gt;# ./configure <br>–prefix=/usr/local/php <br>–with-config-file-path=/usr/local/php/etc <br>–enable-fpm <br>–enable-opcache <br>–with-zlib-dir <br>–with-bz2 <br>–with-libxml-dir=/usr <br>–with-gd <br>–with-freetype-dir <br>–with-jpeg-dir <br>–with-png-dir <br>–enable-mbstring <br>–with-mysql=/usr/local/mysql <br>–with-mysqli=/usr/local/mysql/bin/mysql_config <br>–with-pdo-mysql=/usr/local/mysql <br>–with-iconv <br>–disable-ipv6 <br>–enable-static <br>–enable-inline-optimization <br>–enable-sockets <br>–enable-soap <br>–with-openssl <br>–with-curl<br>以上内容的解释如下：</p>
+<p>./configure \                                        # 检测环境，并生成makefile文件</p>
+<p>–prefix=/usr/local/php \                            # 指定php安装目录</p>
+<p>–with-config-file-path=/usr/local/php/etc \            # 设置php.ini配置文件存放的路径</p>
+<p>–enable-fpm \                                    # 开启PHP-FPM，用于控制PHP-CGI的FastCGI进程</p>
+<p>–enable-opcache \                                # PHP新增opcache功能</p>
+<p>–with-zlib-dir \                                    # 加载zlib库</p>
+<p>–with-bz2 \                                        # 加载bz2的压缩库</p>
+<p>–with-libxml-dir=/usr \                            # 加载xml库</p>
+<p>–with-gd \                                        # 加载gd库</p>
+<p>–with-freetype-dir \                                # 加载字体库</p>
+<p>–with-jpeg-dir \                                    # 加载jpeg库</p>
+<p>–with-png-dir \                                    # 加载png库</p>
+<p>–enable-mbstring \                                # 开启mbstring加密库</p>
+<p>–with-mysql=/usr/local/mysql \                    # 加载mysql，并指定mysql基本路径</p>
+<p>–with-mysqli=/usr/local/mysql/bin/mysql_config \    # 加载mysqli库，并指定mysql配置工具</p>
+<p>–with-pdo-mysql=/usr/local/mysql \                # 加载pdo对mysql的支持</p>
+<p>–with-iconv \                                        # 开启转换字符集</p>
+<p>–disable-ipv6 \                                    # 关闭ipv6支持</p>
+<p>–enable-static \                                    # 以静态方式编辑php库</p>
+<p>–enable-inline-optimization \                        # 开启优化线程</p>
+<p>–enable-sockets \                                # 开启sockets支持</p>
+<p>–enable-soap \                                    #开启soap对web service的支持</p>
+<p>–with-openssl \                                    # 开启ssl支持</p>
+<p>–with-curl                                        # 模拟浏览器<br>3.1.5、编译软件并且进行安装</p>
+<p>shell&gt;# make &amp;&amp; make install<br>3.2、配置</p>
+<p>3.2.1、复制配置文件</p>
+<p>shell&gt;# cp php.ini-production /usr/local/php/etc/php.ini</p>
+<p>shell&gt;# cp sapi/fpm/init.d.php-fpm /etc/rc.d/init.d/php-fpm</p>
+<p>赋予其可执行权限</p>
+<p>shell&gt;# chmod +x /etc/rc.d/init.d/php-fpm</p>
+<p>拷贝产生 php-fpm 的配置文件</p>
+<p>shell&gt;# cd /usr/local/php/etc<br>shell&gt;# cp php-fpm.conf.default php-fpm.conf</p>
+<p>3.2.2、配置php.ini</p>
+<p>shell&gt;# vim php.ini<br>找到 ;date.timezone = 修改为 date.timezone = Asia/Shanghai</p>
+<p>根据自己的需求调整以下选项的值</p>
+<p>error_reporting = E_ALL &amp; ~E_NOTICE &amp; ~E_STRICT &amp; ~E_DEPRECATED</p>
+<p>​    !1550217004054</p>
+<p>display_errors = On</p>
+<p>max_execution_time = 60</p>
+<p>max_input_time = 60</p>
+<p>memory_limit = 256M</p>
+<p>post_max_size = 256M</p>
+<p>upload_max_filesize = 256M</p>
+<p>3.2.3、配置 php-fpm.conf</p>
+<p>shell&gt;# cd /usr/local/php/etc/php-fpm.d<br>shell&gt;# cp <a href="http://www.conf.default" target="_blank" rel="noopener">www.conf.default</a> <a href="http://www.conf" target="_blank" rel="noopener">www.conf</a></p>
+<p>shell&gt;# vim <a href="http://www.conf" target="_blank" rel="noopener">www.conf</a><br>找到 user = nobody 和 group = nobody，将 nobody 改成 www</p>
+<p>找到 listen.owner=nobody 和 listen.group= nobody，将 nobody 改成 www</p>
+<p>注意：</p>
+<p>​    ==必须得先新增www用户，否则无法启动php==</p>
+<p>shell&gt;# groupadd www</p>
+<p>shell&gt;# useradd -g www -s /usr/sbin/nologin www<br>3.2.4、将 php-fpm 加入服务并自动启动</p>
+<p>shell&gt;# service php-fpm start<br>shell&gt;# chkconfig –add php-fpm<br>shell&gt;# chkconfig –level 345 php-fpm on<br>–level&lt;等级代号&gt; 　指定读系统服务要在哪一个执行等级中开启或关毕。<br>等级0表示：表示关机<br>等级1表示：单用户模式<br>等级2表示：无网络连接的多用户命令行模式<br>等级3表示：有网络连接的多用户命令行模式<br>等级4表示：不可用<br>等级5表示：带图形界面的多用户模式<br>等级6表示：重新启动</p>
+<p>4、源码编译安装Apache</p>
+<p>安装apache之前，首先要先确保已安装 APR 和 APR-util</p>
+<p>shell&gt;# yum -y install apr*<br>apache 可以到 <a href="http://mirrors.sohu.com/apache/" target="_blank" rel="noopener">http://mirrors.sohu.com/apache/</a> 下载，此处理以 httpd-2.4.37.tar.gz 为例</p>
+<p>以下安装中涉及的几点需要提前说明的问题：</p>
+<p>所有下载的文件将保存在 /root 目录下</p>
+<p>apache 将以 www用户运行，而且将加入 service 开机自动运行</p>
+<p>apache 将被安装在 /usr/local/httpd 目录下</p>
+<p>apache 的每个网站将存放在 /mydata/wwwroot 目录下，默认网站为php33</p>
+<p>apache 的配置文件保存于 /usr/local/httpd/conf/httpd.cnf</p>
+<p>4.1、安装依赖库</p>
+<p>安装 apr 和 apr-util</p>
+<p>shell&gt;# cd ~<br>shell&gt;# wget <a href="http://archive.apache.org/dist/apr/apr-1.4.8.tar.gz" target="_blank" rel="noopener">http://archive.apache.org/dist/apr/apr-1.4.8.tar.gz</a><br>shell&gt;# mkdir /usr/local/apr</p>
+<p>shell&gt;# tar -zxf apr-1.4.8.tar.gz<br>shell&gt;# cd apr-1.4.8<br>shell&gt;# ./configure –prefix=/usr/local/apr<br>shell&gt;# make &amp;&amp; make install</p>
+<p>shell&gt;# cd ~<br>shell&gt;# wget <a href="http://archive.apache.org/dist/apr/apr-util-1.5.2.tar.gz" target="_blank" rel="noopener">http://archive.apache.org/dist/apr/apr-util-1.5.2.tar.gz</a><br>shell&gt;# mkdir /usr/local/apr-util<br>shell&gt;# tar -zxf apr-util-1.5.2.tar.gz<br>shell&gt;# cd apr-util-1.5.2<br>shell&gt;# ./configure –prefix=/usr/local/apr-util –with-apr=/usr/local/apr/bin/apr-1-config<br>shell&gt;# make &amp;&amp; make install<br>4.2、安装apache</p>
+<p>4.2.1、下载apache</p>
+<p>shell&gt;# cd ~<br>shell&gt;# wget <a href="http://mirrors.sohu.com/apache/httpd-2.4.37.tar.gz" target="_blank" rel="noopener">http://mirrors.sohu.com/apache/httpd-2.4.37.tar.gz</a><br>4.2.2、解压并进入目录</p>
+<p>shell&gt;# tar -zxvf httpd-2.4.37.tar.gz<br>shell&gt;# cd httpd-2.4.37<br>4.2.3、将configure参数及详情解析另存为一个文件以供学习参考用</p>
+<p>shell&gt;# ./configure –help &gt; httpd_configure.txt<br>注意：</p>
+<p>​    这步可以忽略<br>4.2.4、进行软件的配置和环境检测</p>
+<p>shell&gt;# ./configure <br>–prefix=/usr/local/httpd <br>–enable-deflate <br>–enable-expires <br>–enable-headers <br>–enable-so <br>–enable-modules=most <br>–with-mpm=worker <br>–enable-rewrite <br>–enable-static-ab <br>–enable-ssl <br>–with-apr=/usr/local/apr <br>–with-apr-util=/usr/local/apr-util<br>以上内容解释如下：</p>
+<p>4.2.5、编译软件并且进行安装</p>
+<p>shell&gt;# make &amp;&amp; make install<br>4.3、配置</p>
+<p>4.3.1、简单配置</p>
+<p>创建网站根目录</p>
+<p>shell&gt;# mkdir -pv /mydata/wwwroot</p>
+<p>shell&gt;# chown www:www /mydata/wwwroot</p>
+<p>shell&gt;# cd /usr/local/httpd/conf<br>开始配置</p>
+<p>shell&gt;# vim httpd.conf<br>内容修改如下：</p>
+<p>把</p>
+<p>User daemon<br>Group daemon</p>
+<p>修改以下</p>
+<p>User www</p>
+<p>Group www</p>
+<p>把ServerName <a href="http://www.example.com:80" target="_blank" rel="noopener">www.example.com:80</a> 前面#去除，修改成：ServerName localhost:80</p>
+<p>将 DocumentRoot 以及整个 Directory 标签代码段的内容都注释掉</p>
+<p>DirectoryIndex index.htm index.html index.php</p>
+<p>modules/mod_rewrite.so    去除前面的 # (井号)</p>
+<p>Include conf/extra/httpd-vhosts.conf    去除前面的 # (井号)</p>
+<p>保存并退出</p>
+<p>4.3.2、优化虚拟主机配置</p>
+<p>​    httpd.conf中的每个 VirtualHost 代码段都是一个独立的虚拟主机配置。当配置多个虚拟主机时，需要在 httpd.conf 里写多个 VirtualHost 代码段，那么主配置文件就会变得重复、臃肿。所以建议，将 VirtualHost 代码段都写在另一个文件（例如：conf/extra/httpd-vhosts.conf）或多个文件（例如按客户或项目分组），然后再用 Include 指令包含进来。</p>
+<p>本文档以 httpd-vhosts.conf 举例说明：</p>
+<p>shell&gt;# vim /usr/local/httpd/conf/extra/httpd-vhosts.conf</p>
+<p>​<br>&lt;VirtualHost *:80&gt;<br>    ServerName localhost<br>    DocumentRoot “/mydata/wwwroot/php33/www/“<br>    <directory></directory></p>
+<pre><code>    Require all granted
+
+    AllowOverride All
+
+    Options -Indexes
+&lt;/Directory&gt;</code></pre>
+
+<p>注意：</p>
+<p>​    把httpd-vhosts.conf文件的内容全部注释掉或删除<br>保存</p>
+<p>4.3.3、设为服务并开机自运行</p>
+<p>编辑 apachectl</p>
+<p>shell&gt;# vim /usr/local/httpd/bin/apachectl<br>加入以下注释内容</p>
+<h1 id="add-by-php33-2019-02-15"><a href="#add-by-php33-2019-02-15" class="headerlink" title="add by php33 2019-02-15"></a>add by php33 2019-02-15</h1><h1 id="chkconfig-2345-85-15"><a href="#chkconfig-2345-85-15" class="headerlink" title="chkconfig: 2345 85 15"></a>chkconfig: 2345 85 15</h1><h1 id="description-Activates-Deactivates-Apache-Web-Server"><a href="#description-Activates-Deactivates-Apache-Web-Server" class="headerlink" title="description: Activates/Deactivates Apache Web Server"></a>description: Activates/Deactivates Apache Web Server</h1><p>找到 [Math Processing Error]​ARGV</p>
+<p>改成 [Math Processing Error]​ARGV -f /usr/local/httpd/conf/httpd.conf</p>
+<p>保存并启动 apache</p>
+<p>shell&gt;# /usr/local/httpd/bin/apachectl start  到这里了<br>将 httpd 设置为服务</p>
+<p>shell&gt;# cp /usr/local/httpd/bin/apachectl /etc/rc.d/init.d/httpd</p>
+<p>加入启动项：</p>
+<p>shell&gt;# chkconfig –add httpd<br>shell&gt;# chkconfig –level 345 httpd on<br>–level&lt;等级代号&gt; 　指定读系统服务要在哪一个执行等级中开启或关毕。<br>等级0表示：表示关机<br>等级1表示：单用户模式<br>等级2表示：无网络连接的多用户命令行模式<br>等级3表示：有网络连接的多用户命令行模式<br>等级4表示：不可用<br>等级5表示：带图形界面的多用户模式<br>等级6表示：重新启动</p>
+<p>4.4、整合PHP</p>
+<p>4.4.1、修改 apache 的配置文件</p>
+<p>shell&gt;# vim /usr/local/httpd/conf/httpd.conf<br>去掉以下两项的注释</p>
+<p>LoadModule proxy_module modules/mod_proxy.so<br>LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so</p>
+<p>在底部加上</p>
+<p>&lt;FilesMatch .php$&gt;<br>    SetHandler “proxy:fcgi://127.0.0.1:9000”<br></p>
+<p>保存</p>
+<p>4.4.2、重启 apache</p>
+<p>shell&gt;# service httpd restart<br>4.5、开放端口</p>
+<p>将 80 端口加入防火墙</p>
+<p>shell&gt;# iptables -I INPUT -p tcp –dport 80 -j ACCEPT<br>添加至自启动文件</p>
+<p>shell&gt;# echo ‘iptables -I INPUT -p tcp –dport 80 -j ACCEPT’ &gt;&gt; /etc/rc.d/rc.local<br>三、总结<br>Lamp源码安装</p>
+<p>源码编译安装分几步走？<br>答： 3步</p>
+<p>第1步： ./configure 检查系统环境，并生成 makefile 文件<br>第2步： make 读取 makefile文件，编译生成寸进制文件<br>第3步： make install 读取二进制文件，并安装系统指定目录</p>
+<p>这三步顺序能调换吗？<br>答：不能</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjysekusq0002pguyerkw71xe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/01/linux权限和yum安装lamp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">&#39;linux权限和yum安装lamp&#39;</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/01/linux编译安装lanmp/">&#39;linux编译安装lanmp&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/01/linux权限和yum安装lamp/">&#39;linux权限和yum安装lamp&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/01/linux用户和权限/">&#39;linux用户和权限&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/01/linux系统搭建和命令的使用/">&#39;linux命令的使用&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/01/nginx/">&#39;nginx&#39;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
