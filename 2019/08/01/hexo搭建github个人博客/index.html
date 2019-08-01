@@ -7,14 +7,17 @@
   
   <title>&#39;hexo搭建github个人博客&#39; | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="hexo搭建github个人博客 国内有很多个人博客，比如cdn，博客园，简书等等 1.什么是HEXO？ Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。 2.安装HEXO 安装Hexo只需10分钟时间，相当简单。但有个安装前提，在安装前，您必须检查电脑中是否已安装下列应用程序 Node.js （安装">
+<meta property="og:type" content="article">
 <meta property="og:title" content="&#39;hexo搭建github个人博客&#39;">
 <meta property="og:url" content="http://yoursite.com/2019/08/01/hexo搭建github个人博客/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="hexo搭建github个人博客 国内有很多个人博客，比如cdn，博客园，简书等等 1.什么是HEXO？ Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。 2.安装HEXO 安装Hexo只需10分钟时间，相当简单。但有个安装前提，在安装前，您必须检查电脑中是否已安装下列应用程序 Node.js （安装">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T06:14:29.018Z">
+<meta property="og:updated_time" content="2019-08-01T06:15:49.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="&#39;hexo搭建github个人博客&#39;">
+<meta name="twitter:description" content="hexo搭建github个人博客 国内有很多个人博客，比如cdn，博客园，简书等等 1.什么是HEXO？ Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。 2.安装HEXO 安装Hexo只需10分钟时间，相当简单。但有个安装前提，在安装前，您必须检查电脑中是否已安装下列应用程序 Node.js （安装">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -83,27 +86,85 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>hexo搭建github个人博客</p>
+<p>国内有很多个人博客，比如cdn，博客园，简书等等</p>
+<p>1.什么是HEXO？</p>
+<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<p>2.安装HEXO</p>
+<p>安装Hexo只需10分钟时间，相当简单。但有个安装前提，在安装前，您必须检查电脑中是否已安装下列应用程序</p>
+<p>Node.js （安装nodejs自带了npm包管理工具）</p>
+<p>Git （代码管理工具）</p>
+<p>Node.js 安装包及源码下载地址为：<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a> </p>
+<p>GIt下载地址：<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">https://git-scm.com/downloads</a></p>
+<p>也可以用本地的安装包</p>
+<p>一路默认便可(建议安装到本地的新建一个文件夹)</p>
+<p>nodejs安装</p>
+<p>配置环境变量</p>
+<p>打开黑窗口cmd</p>
+<p>看到版本号表示配置成功</p>
+<p>git安装</p>
+<p>一路默认,安装后出现下图表示成功</p>
+<p>按鼠标右键出来：</p>
+<p>安装淘宝镜像：</p>
+<p>默认的npm是国外镜像，要去国外的源下载东西，切换淘宝源是用国内的镜像地址下载我的的库</p>
+<p>使用淘宝NPM安装Hexo的脚手架工具 </p>
+<pre><code>cnpm install -g hexo-cli</code></pre><p>安装hexo</p>
+<pre><code>cnpm install hexo --save</code></pre><p>查看是否安装成功</p>
+<pre><code>hexo -v</code></pre><p>3.本地运行hexo</p>
+<p>初始化hexo</p>
+<p> hexo init</p>
+<ul>
+<li><p>安装生成器</p>
+<p>cnpm install</p>
+</li>
+<li><p>运行hexo,以后要在本地运行博客只要输入该命令即可</p>
+<p>hexo s -g</p>
+</li>
+</ul>
+<p>打开浏览器，输入localhost:4000,就可以在本地看到你的个人博客了 </p>
+<ul>
+<li>停止运行<br>按住Ctrl+C键即可停止</li>
+</ul>
+<p>hexo常用的几个命令：</p>
+<p>hexo init   blog   //初始化博客项目的名称</p>
+<p>cd blog             //进入项目目录</p>
+<p>npm install   //安装项目需要的依赖(包括hexo了)</p>
+<p>hexo  n   ‘文章的名称’  </p>
+<p>hexo g     生成静态页面</p>
+<p>hexo s      启动本地服务</p>
+<p>hexo d   发布到线上仓库 username.github.io</p>
+<p>4.安装一个工具，上传我们hexo代码到github的工具</p>
+<pre><code>cnpm install   hexo-deployer-git --save</code></pre><p>或则</p>
+<pre><code>npm install   hexo-deployer-git --registry https://registry.npm.taobao.org --save</code></pre><p>过程比较慢，慢慢等等</p>
+<p>5.需要配置线上仓库：</p>
+<pre><code>1.配置 _config.yml 
+
+deploy:
+  type: git
+  repo: git@github.com:xxx/xxx.github.io.git
+  branch: master</code></pre><p>6.打通git线上线下环境</p>
+<p>1.配置本地的用户名密码</p>
+<p>git config –global user.name 名字     # 叫啥名字</p>
+<p>git config –global user.email 邮箱         # 怎么联系你</p>
+<p>2.生成公钥密钥</p>
+<p> ssh-keygen  -t rsa -C（大写C哦） ‘邮箱地址’</p>
+<p>成功之后会在当前用户的目录多出如下的两个文件。</p>
+<p>id.rsa:私钥文件</p>
+<p>id_rsa.pub:公钥文件</p>
+<p>3.配置私钥到github上的ssh设置</p>
+<p>复制id.rsa到GitHub用户设置的ssh上</p>
+<p>相当于GitHub密钥（钥匙）链接我们的公钥（锁头）       —注意一个key只能用一个GitHub账号</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjysaazlq00011ouyme0shg2e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjysaivq00000hwuymxnpazgz" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2019/08/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -137,10 +198,6 @@
         
           <li>
             <a href="/2019/08/01/hexo搭建github个人博客/">&#39;hexo搭建github个人博客&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/hello-world/">Hello World</a>
           </li>
         
       </ul>
