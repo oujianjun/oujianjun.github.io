@@ -62,6 +62,223 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-easyswoole" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/25/easyswoole/" class="article-date">
+  <time datetime="2019-08-25T06:06:14.000Z" itemprop="datePublished">2019-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/25/easyswoole/">&#39;easyswoole&#39;</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目录<br>目录<br>一、昨日回顾<br>二、今日目标<br>三、EasySwoole<br>1、简介<br>2、特性<br>3、优势<br>4、环境要求<br>5、安装 EasySwoole<br>5.1、切换镜像源<br>5.2、安装<br>5.2.1、下载框架代码<br>5.2.2、安装<br>5.3、Hello World<br>5.4、安装IDE助手插件<br>5.5、目录结构<br>6、框架生命周期(了解)<br>7、服务管理<br>7.1、启动服务<br>7.2、守护模式启动<br>7.3、重启服务<br>7.4、停止服务<br>8、easyswoole 基本使用<br>8.1、URL模式<br>8.2、创建Category控制器<br>8.3、返回 JSON 格式数据<br>9、模块划分<br>9.1、接口模块(Api)<br>9.2、创建Index.php控制器<br>10、解决常见BUG<br>10.1创建控制器<br>11、EasySwoole结合MySql使用<br>11.1、DB库安装<br>11.2、配置参数<br>11.3、将MySql注册到Di容器中<br>11.4、在控制器使用MySql类<br>11.5、CURD案例<br>11.5.1、创建数据库与数据表<br>11.5.2、添加数据<br>11.5.3、查询数据<br>11.5.4、删除数据<br>11.5.4、更新数据<br>12、EasySwoole结合Redis使用<br>12.1、为什么要学习消息队列<br>12.2、Reids准备工作<br>12.2.1、下载Redis扩展文件<br>12.2.2、解压并进入目录<br>12.2.3、生成编译文件<br>12.2.4、进行软件配置和环境检测<br>12.2.5、编译软件并且进行安装<br>12.2.6、修改 php.ini 加载 Redis 组件<br>12.2.7、重启PHP进程<br>12.2.8、检查是否开启成功<br>12.3、测试Redis<br>12.4、封装Redis类<br>12.4.1、首先创建Redis目录<br>12.4.2、创建Redis.php文件<br>12.4.3、引入实现单列模式的类<br>12.4.4、实例化 Redis 类<br>12.4.5、封装get方法<br>12.4.6、测试<br>12.5、将配置信息写到项目配置文件中<br>12.6、优化Redis封装方法</p>
+<p>一、昨日回顾<br>swoole 可以实现什么功能？</p>
+<p>​    可以编写高性能的异步并发 TCP、UDP、Unix Socket、HTTP、WebSocket 服务器。</p>
+<p>应用场景</p>
+<p>​    可以应用于互联网、移动通信、企业软件、云计算、网络游戏、物联网(IOT)、车联网、智能家居等领域。</p>
+<p>二、今日目标<br>能够实现在项目中使用Di容器注册MySql</p>
+<p>能够实现CURD的操作</p>
+<p>三、EasySwoole<br>1、简介</p>
+<p>官方网站：<a href="https://www.easyswoole.com" target="_blank" rel="noopener">https://www.easyswoole.com</a></p>
+<p>​        EasySwoole 是一款基于Swoole Server 开发的常驻内存型的分布式PHP框架，专为API而生，摆脱传统PHP运行模式在进程唤起和文件加载上带来的性能损失。 EasySwoole 高度封装了 Swoole Server 而依旧维持 Swoole Server 原有特性，支持同时混合监听HTTP、自定义TCP、UDP协议，让开发者以最低的学习成本和精力编写出多进程，可异步，高可用的应用服务。</p>
+<p>常用组件：</p>
+<p>HTTP WEB 组件</p>
+<p>TCP、UDP、WEB_SOCKET 组件</p>
+<p>redis连接池</p>
+<p>mysql 连接池</p>
+<p>自定义进程</p>
+<p>分布式跨平台RPC组件</p>
+<p>微信公众号与小程序SDK</p>
+<p>协程版微信、支付宝支付SDK</p>
+<p>模板渲染引擎</p>
+<p>Tracker链路跟踪</p>
+<p>限流器</p>
+<p>消息队列</p>
+<p>协程HTTP客户端组件</p>
+<p>apollo配置中心</p>
+<p>validate验证器</p>
+<p>验证码</p>
+<p>fast-cache组件</p>
+<p>Policy权限组件</p>
+<p>IOC、协程上下文管理器</p>
+<p>2、特性</p>
+<p>强大的 TCP/UDP Server 框架，多线程，EventLoop，事件驱动，异步，Worker进程组，Task异步任务，毫秒定时器，SSL/TLS隧道加密。</p>
+<p>EventLoop API，让用户可以直接操作底层的事件循环，将socket，stream，管道等Linux文件加入到事件循环中</p>
+<p>定时器、协程对象池、HTTP/SOCK控制器、分布式微服务、RPC支持。</p>
+<p>3、优势</p>
+<p>简单易用开发效率高</p>
+<p>并发百万TCP连接</p>
+<p>TCP/UDP/UnixSock</p>
+<p>支持异步/同步协程</p>
+<p>支持多进程/多线程</p>
+<p>CPU亲和性守护进程</p>
+<p>4、环境要求</p>
+<p>保证PHP版本大于等于 7.1</p>
+<p>保证Swoole扩展版本大于等于4.4.0</p>
+<p>需要pcntl扩展的任意版本</p>
+<p>使用LInux/FreeBSD/MacOS 这三种操作系统</p>
+<p>使用composer作为依赖包管理工具</p>
+<p>5、安装 EasySwoole</p>
+<p>注意：使用composer安装EasySwoole框架，得确保composer已经安装好。如果没有安装请求参考前面安装composer教程。</p>
+<p>5.1、切换镜像源</p>
+<p>composer config -g repo.packagist composer <a href="https://mirrors.aliyun.com/composer/" target="_blank" rel="noopener">https://mirrors.aliyun.com/composer/</a></p>
+<p>5.2、安装</p>
+<p>5.2.1、下载框架代码</p>
+<p>shell&gt;# mkdir EasySwoole<br>shell&gt;# EasySwoole<br>shell&gt;# composer require easyswoole/easyswoole=3.x</p>
+<p>有可能报以下错误：</p>
+<p>以上错误代表着：有可能PHP扩展的zip扩展没有开启；Linxu操作没有安装unzip解压命令</p>
+<p>解决方案：</p>
+<p>shell&gt;# yum -y install unzip</p>
+<p>5.2.2、安装</p>
+<p>shell&gt;# php vendor/bin/easyswoole install</p>
+<p>5.3、Hello World</p>
+<p>首先，在项目根目录下创建 App 目录；作为应用目录</p>
+<p>然后，进入到 App 目录中，创建 HttpController 目录；作为存放控制器目录</p>
+<p>然后，进入到 HttpController 目录，创建 Index.php，写入以下内容</p>
+<p>&lt;?php<br>namespace App\HttpController;<br>​<br>use EasySwoole\Http\AbstractInterface\Controller;<br>​<br>class Index extends Controller<br>{<br>​<br>    public function index()<br>    {<br>        // TODO: Implement index() method.<br>        return $this-&gt;response()-&gt;write(‘hello world’);<br>    }<br>}</p>
+<p>再然后编辑根目录下的 composer.json 文件，注册应用的命名空间，内容如下：</p>
+<p>{<br>    “autoload”: {<br>        “psr-4”: {<br>            “App\“: “App/“<br>        }<br>    },<br>    “require”: {<br>        “easyswoole/easyswoole”: “3.x”<br>    }<br>}</p>
+<p>更新命名空间映射</p>
+<p>composer dumpautoload</p>
+<p>启动项目</p>
+<p>php easyswoole start</p>
+<p>5.4、安装IDE助手插件</p>
+<p>由于 Swoole 的函数并不是 PHP 标准函数，IDE 无法进行自动补全，为了方便开发，需要安装IDE助手插件；在项目根目录下执行以下命令：</p>
+<p>shell&gt;# composer require easyswoole/swoole-ide-helper</p>
+<p>5.5、目录结构</p>
+<p>EasySwoole 的目录结构是非常灵活的，基本上可以任意定制，没有太多的约束，但是仍然建议遵循下面的目录结构，方便开发</p>
+<p>project                   项目部署目录<br>├─App                     应用目录(可以有多个)<br>│  ├─HttpController       控制器目录<br>│  │  └─Index.php         默认控制器<br>│  └─Model                模型文件目录<br>├─Log                     日志文件目录<br>├─Temp                    临时文件目录<br>├─vendor                  第三方类库目录<br>├─composer.json           Composer架构<br>├─composer.lock           Composer锁定<br>├─EasySwooleEvent.php     框架全局事件<br>├─easyswoole              框架管理脚本<br>├─easyswoole.install      框架安装锁定文件<br>├─dev.php                 开发配置文件<br>├─produce.php             生产配置文件<br>6、框架生命周期(了解)</p>
+<p>7、服务管理</p>
+<p>7.1、启动服务</p>
+<p>php easyswoole start<br>注意：开发环境下建议使用该命令启动项目</p>
+<p>7.2、守护模式启动</p>
+<p>php easyswoole start d<br>注意：生产环境下建议使用该命令启动项目</p>
+<p>7.3、重启服务</p>
+<p>php easyswoole reload 只重启task进程<br>php easyswoole reload all  重启task + worker进程<br>注意：重启服务需要使用守护模式启动项目，才能使用重启服务命令</p>
+<p>7.4、停止服务</p>
+<p>php easyswoole stop<br>注意：停止服务需要使用守护模式启动项目，才能使用停止服务命令</p>
+<p>8、easyswoole 基本使用</p>
+<p>8.1、URL模式</p>
+<p>当我们看到Hello World 页面 时，是怎么请求到的呢？</p>
+<p>假设：<a href="http://127.0.0.1:9501/index/index" target="_blank" rel="noopener">http://127.0.0.1:9501/index/index</a></p>
+<p>假设：<a href="http://127.0.0.1:9501/category/indexs" target="_blank" rel="noopener">http://127.0.0.1:9501/category/indexs</a></p>
+<p>8.2、创建Category控制器</p>
+<p>效果如下图所示：</p>
+<p>8.3、返回 JSON 格式数据</p>
+<p>代码如下图所示：</p>
+<p>效果如下图所示：</p>
+<p>9、模块划分</p>
+<p>9.1、接口模块(Api)</p>
+<p>9.2、创建Index.php控制器</p>
+<p>代码如下图所示：</p>
+<p>效果如下图所示：</p>
+<p>10、解决常见BUG</p>
+<p>假设：有一个视频播放功能，这时我们需要创建一个Video控制器，播放视频使用一个playVideo方法。</p>
+<p>10.1创建控制器</p>
+<p>控制代码如下图所示：</p>
+<p>注意：有可能报以下错误信息</p>
+<p>解决方法：</p>
+<p>首先，进入到父级控制器中，因为我们子控制器继承了父级；发现父级是一个抽象类与index方法也是一个抽象方法，如果我们继承了抽象类就必须要实现该类的所有抽象方法。</p>
+<p>第一种解决方案：</p>
+<p>代码如下图所示：</p>
+<p>第二种解决方法：</p>
+<p>可能有多个控制器不需要使用index方法，这时所有控制器都需要写入index方法，这种情况的话就会出现代码冗余问题；我们可以创建一个公共控制器，让所有控制器都继承它。</p>
+<p>创建一个Base.php公共文件，代码如下：</p>
+<p>然后，让所控制器都继承于它，代码如下图所示：</p>
+<p>11、EasySwoole结合MySql使用</p>
+<p>准备工作：</p>
+<p>DB库安装</p>
+<p>检查是否有MySqli扩展</p>
+<p>基本使用</p>
+<p>11.1、DB库安装</p>
+<p>shell&gt;# composer require easyswoole/mysqli</p>
+<p>11.2、配置参数</p>
+<p>/<em>################ MYSQL CONFIG ##################</em>/<br>​<br>‘MYSQL’ =&gt; [<br>//数据库配置<br>   ‘host’                 =&gt; ‘’,//数据库连接ip<br>   ‘user’                 =&gt; ‘’,//数据库用户名<br>   ‘password’             =&gt; ‘’,//数据库密码<br>   ‘database’             =&gt; ‘’,//数据库<br>   ‘port’                 =&gt; ‘’,//端口<br>   ‘timeout’              =&gt; ‘30’,//超时时间<br>   ‘connect_timeout’      =&gt; ‘5’,//连接超时时间<br>   ‘charset’              =&gt; ‘utf8’,//字符编码<br>   ‘strict_type’          =&gt; false, //开启严格模式，返回的字段将自动转为数字类型<br>   ‘fetch_mode’           =&gt; false,//开启fetch模式, 可与pdo一样使用fetch/fetchAll逐行或获取全部结果集(4.0版本以上)<br>   ‘alias’                =&gt; ‘’,//子查询别名<br>   ‘isSubQuery’           =&gt; false,//是否为子查询<br>   ‘max_reconnect_times ‘ =&gt; ‘3’,//最大重连次数<br>],<br>dev.php</p>
+<p>11.3、将MySql注册到Di容器中</p>
+<p>学习目标：能够实现在项目中使用Di容器注册MySql</p>
+<p>概述：<br>​        为什么需要将MySql注册到项目中？直接在控制中不能实例化MySql类吗？</p>
+<p>将MySql注册到项目中，是为了代码解耦性，所以需要将它注册码到项目中。也可以直接在控制器实例化MySql类。</p>
+<p>EasySwooleEvent.php</p>
+<p>11.4、在控制器使用MySql类</p>
+<p>效果如下图所示：</p>
+<p>11.5、CURD案例</p>
+<p>11.5.1、创建数据库与数据表</p>
+<p>– 数据库<br>CREATE DATABASE <code>php34</code> CHARSET utf8;<br>​<br>– 选择数据库<br>use php34;<br>​<br>– 数据表<br>CREATE TABLE <code>user</code> (<br>  <code>id</code> int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT ‘主键ID’,<br>  <code>username</code> varchar(150) NOT NULL COMMENT ‘用户名’,<br>  <code>nickname</code> varchar(255) NOT NULL COMMENT ‘昵称’,<br>  <code>password</code> varchar(255) NOT NULL COMMENT ‘密码’,<br>  PRIMARY KEY (<code>id</code>)<br>) ENGINE=InnoDB CHARSET=utf8;<br>11.5.2、添加数据</p>
+<p>$insert_id = $db-&gt;insert($table_name, $data);</p>
+<p>– 使用原生SQL<br>$result = $db-&gt;rawQuery(‘insert into xsk_test (<code>name</code>)values (“tioncico”)’,[]);<br>$id = $db-&gt;getInsertId();</p>
+<p>11.5.3、查询数据</p>
+<p>EasySwoole\EasySwoole\App\HttpController\Api\Index.php</p>
+<p>//查询数据<br>public function select()<br>{<br>    //1、获取MySql对象<br>    $db = Di::getInstance()-&gt;get(‘MYSQL’);<br>    //获取所有数据<br>    $data = $db-&gt;get(‘user’);<br>    //实现一个分页<br>    $page = 3;<br>    $pagetotal = 2;<br>    $dataPage = $db-&gt;get(‘user’, [($page-1)*$pagetotal, $pagetotal]);<br>    //获取一条数据<br>    $one = $db-&gt;getOne(‘user’);<br>    return $this-&gt;writeJson(200, ‘OK’, [‘data’=&gt;$data,’dataPage’=&gt;$dataPage, ‘oen’=&gt;$one]);<br>}<br>11.5.4、删除数据</p>
+<p>EasySwoole\EasySwoole\App\HttpController\Api\Index.php</p>
+<p>//删除数据<br>public function delete()<br>{<br>    //1、获取MySql对象<br>    $db = Di::getInstance()-&gt;get(‘MYSQL’);<br>    $res = $db-&gt;where(‘id’, 6)-&gt;delete(‘user’);<br>    return $this-&gt;writeJson(200, ‘OK’, $res);<br>​<br>}<br>11.5.4、更新数据</p>
+<p>EasySwoole\EasySwoole\App\HttpController\Api\Index.php</p>
+<p>//更新数据<br>public function update()<br>{<br>    //1、获取MySql对象<br>    $db = Di::getInstance()-&gt;get(‘MYSQL’);<br>    $data = [<br>        ‘username’ =&gt; ‘php37’<br>    ];<br>    $res = $db-&gt;whereIn(‘id’, [4,5])-&gt;update(‘user’, $data);<br>    return $this-&gt;writeJson(200, ‘OK’, $res);<br>​<br>}<br>12、EasySwoole结合Redis使用</p>
+<p>12.1、为什么要学习消息队列</p>
+<p>生产者—&gt;经纪人—&gt;消费者</p>
+<p>常用消息队列：</p>
+<p>kafka</p>
+<p>rabbitmq</p>
+<p>redis</p>
+<p>安装：</p>
+<p>shell&gt;# yum -y install epel-release<br>shell&gt;# yum -y install redis<br>12.2、Reids准备工作</p>
+<p>12.2.1、下载Redis扩展文件</p>
+<p>下载地址：<a href="https://codeload.github.com/phpredis/phpredis/zip/develop" target="_blank" rel="noopener">https://codeload.github.com/phpredis/phpredis/zip/develop</a></p>
+<p>12.2.2、解压并进入目录</p>
+<p>shell&gt;# unzip phpredis-develop.zip &amp;&amp; cd phpredis-develop</p>
+<p>12.2.3、生成编译文件</p>
+<p>shell&gt;# /usr/local/php/bin/phpize</p>
+<p>12.2.4、进行软件配置和环境检测</p>
+<p>shell&gt;# ./configure –with-php-config=/usr/local/php/bin/php-config</p>
+<p>12.2.5、编译软件并且进行安装</p>
+<p>shell&gt;# make &amp;&amp; make install</p>
+<p>安装成功如下图所示：</p>
+<p>12.2.6、修改 php.ini 加载 Redis 组件</p>
+<p>shell&gt;# vim /usr/local/php/etc/php.ini</p>
+<p>12.2.7、重启PHP进程</p>
+<p>shell&gt;# service php-fpm restart</p>
+<p>12.2.8、检查是否开启成功</p>
+<p>shell&gt;# php -m | grep redis</p>
+<p>12.3、测试Redis</p>
+<p>代码如下图所示：</p>
+<p>效果如下图所示：</p>
+<p>12.4、封装Redis类</p>
+<p>12.4.1、首先创建Redis目录</p>
+<p>12.4.2、创建Redis.php文件</p>
+<p>12.4.3、引入实现单列模式的类</p>
+<p>12.4.4、实例化 Redis 类</p>
+<p>12.4.5、封装get方法</p>
+<p>12.4.6、测试</p>
+<p>12.5、将配置信息写到项目配置文件中</p>
+<p>配置文件内容如下图所示：</p>
+<p>Reids类中的代码如下图所示：</p>
+<p>12.6、优化Redis封装方法</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/25/easyswoole/" data-id="cjzqklpgr0001bouyho5sgtcy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-swoole1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/25/swoole1/" class="article-date">
@@ -318,7 +535,7 @@ $ws-&gt;start();</code></pre><p>4、客户端</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="cjzqkjkuc000118uywjcldrgc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="cjzqklph70003bouy7zdrtx1u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -941,7 +1158,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="cjzqkjkxr000618uyxm4oqnl9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="cjzqklpkf0006bouyoi03ziq4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1268,7 +1485,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjzqkjkw9000318uyxmj85opd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjzqklpjn0004bouy79cwtdqw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1421,7 +1638,7 @@ Apache版本为2.0 - 2.4,Centos默认安装版本就是这个版本，因为Apac
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjzqkjkup000218uybvvf9vu8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjzqklph00002bouy4ntrkhda" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1909,7 +2126,7 @@ grep php34 /etc/group</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjzqkjkxj000518uyazblv198" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjzqklpl30007bouyom67l62r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2318,7 +2535,7 @@ shell&gt;# yum install -y man</code></pre><p>注意：前提必须能上网</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjzqkjkwr000418uy4tt1uj94" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjzqklpk80005bouy4rh3ivhz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3406,7 +3623,7 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjzqkjky9000718uyua5m1tdb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjzqklplg0008bouy0oe5o90g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3510,7 +3727,7 @@ deploy:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjzqkjkrf000018uy8az1luwf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjzqklpem0000bouyhn8871wt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3551,6 +3768,10 @@ deploy:
       <ul>
         
           <li>
+            <a href="/2019/08/25/easyswoole/">&#39;easyswoole&#39;</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/25/swoole1/">&#39;swoole1&#39;</a>
           </li>
         
@@ -3564,10 +3785,6 @@ deploy:
         
           <li>
             <a href="/2019/08/01/linux权限和yum安装lamp/">&#39;linux权限和yum安装lamp&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/linux用户和权限/">&#39;linux用户和权限&#39;</a>
           </li>
         
       </ul>
