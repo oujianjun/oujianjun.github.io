@@ -62,6 +62,272 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-swoole1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/25/swoole1/" class="article-date">
+  <time datetime="2019-08-25T06:05:00.000Z" itemprop="datePublished">2019-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/25/swoole1/">&#39;swoole1&#39;</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目录</p>
+<p>目录 目录一、昨日回顾二、今日目标三、swoole 简介四、下载安装1、下载地址2、环境依赖3、安装 swoole 扩展3.1、下载3.2、解压并进入目录3.3、生成编译文件3.4、进行软件配置和环境检测3.5、编译软件并且进行安装4、配置4.1、修改php.ini4.2、结束PHP进程4.3、重新启动PHP进程4.4、检查是否添加成功五、swoole 的线程和进程的模型六、TCP 服务器1、服务端1.1、构建server对象与配置选项1.2、注册事件回调函数1.3、接受消息事件1.4、关闭消息事件与启动服务2、客户端2.1、创建 tcp客户对象与连接tcp服务器2.2、发送数据2.3、接收数据3、配置phpstorm使用ftp同步代码七、httpServer 服务器1、服务端八、websocket 服务器1、websocket 协议概述2、浏览器支持3、websocket 服务器3.1、实例化对象与配置3.2、打开事件3.3、消息事件3.4、关闭事件与启动服务4、客户端</p>
+<p>一、昨日回顾</p>
+<p>二、今日目标</p>
+<ul>
+<li>能够下载swoole源码进行编译安装</li>
+<li>能够使用swoole开发http服务器</li>
+<li>能够使用swoole开发websocket服务器</li>
+</ul>
+<p>三、swoole 简介</p>
+<p>网址：<a href="http://www.swoole.com" target="_blank" rel="noopener">http://www.swoole.com</a></p>
+<p>swoole：面向生产环境的 PHP 异步网络通信引擎，swoole 使用纯 C 语言编写，swoole 是 PHP 一个扩展的形式。</p>
+<p>作者：韩天峰</p>
+<p>使用 PHP 开发人员可以编写高性能的异步并发 TCP、UDP、Unix Socket、HTTP，WebSocket 服务器。</p>
+<p>swoole 可以广泛应用于互联网、移动通信、企业软件、云计算、网络游戏、物联网(IOT)、车联网、智能家居等领域。</p>
+<p>使用 PHP + swoole 作为网络通信框架，可以使企业 IT 研发团队的效率大大提升，更加专注于开发创新产品。</p>
+<p>四、下载安装</p>
+<p>swoole 是一个 PHP 扩展，所以安装的方式和安装其它的 PHP 扩展的方式一样。</p>
+<p>swoole 不支持 windows 安装</p>
+<p>1、下载地址</p>
+<p>Github上下载源代码：<a href="https://github.com/swoole/swoole-src/tags" target="_blank" rel="noopener">https://github.com/swoole/swoole-src/tags</a></p>
+<p>pecl.php.net上下载源代码：<a href="http://pecl.php.net/package/swoole" target="_blank" rel="noopener">http://pecl.php.net/package/swoole</a> 【php官方扩展库网站 – 推荐】</p>
+<p>开源中国：<a href="http://git.oschina.net/swoole/swoole/tags" target="_blank" rel="noopener">http://git.oschina.net/swoole/swoole/tags</a>  【国内】</p>
+<p>注：建议在我们的php官方扩展库网站中去下载对应的稳定版【stable】</p>
+<p>2、环境依赖</p>
+<p>仅支持 Linux、FreeBSD、MacOS，3种操作系统</p>
+<p>Linux 内核版本 2.3.32，如CentOS 必须6.6 以上 uname -r</p>
+<p>PHP要求5.3.10以上版本，包括PHP7 php -v；这里的 PHP 最好设置成 Linux环境系统变量；没有设置的话需要使用绝对路径。</p>
+<p>gcc4.4 以上版本或者 clang编译器；查看gcc版本：gcc –version</p>
+<p>cmake2.4+，编译为 libswoole.so作为C/C++库时 需要使用 cmake，查看cmake版本：cmake –version</p>
+<p>建议使用 Ubuntu14/CentOS7或更高的版本的操作系统</p>
+<p>3、安装 swoole 扩展</p>
+<p>3.1、下载</p>
+<pre><code>shell&gt;# wget http://pecl.php.net/get/swoole-4.4.3.tgz</code></pre><p>3.2、解压并进入目录</p>
+<pre><code>shell&gt;# tar -zxvf swoole-4.4.3.taz &amp;&amp; cd swoole-4.4.3</code></pre><p>3.3、生成编译文件</p>
+<pre><code>shell&gt;# /usr/local/php/bin/phpize</code></pre><p>3.4、进行软件配置和环境检测</p>
+<pre><code>shell&gt;# ./configure --with-php-config=/usr/local/php/bin/php-config</code></pre><p>3.5、编译软件并且进行安装</p>
+<pre><code>shell&gt;# make &amp;&amp; make install</code></pre><p>安装成功如下图所示：</p>
+<p>4、配置</p>
+<p>4.1、修改php.ini</p>
+<p>查找到 extension_dir</p>
+<pre><code>shell&gt;# vim /usr/local/php/etc/php.ini</code></pre><p>4.2、结束PHP进程</p>
+<pre><code>shell&gt;# pkill -9 php-fpm</code></pre><p>4.3、重新启动PHP进程</p>
+<pre><code>shell&gt;# service php-fpm start</code></pre><p>4.4、检查是否添加成功</p>
+<pre><code>shell&gt;# php -m | grep swoole</code></pre><p>五、swoole 的线程和进程的模型</p>
+<pre><code>swoole 服务器启动会创建一个Master主进程，Master主进程会创建多个Reactor线程，这些线程会接受、发送用户请求数据，通过管道发给你Worker进程，Master主进程还会一个创建Manager进程，Manager进程是Worker和Task进程的守护进程，管理着Worker和Task进程，Manager进程只有一个，而这个Worker进程就可以高速处理客户端的请求，提高并发量。</code></pre><p>六、TCP 服务器</p>
+<p>安装智能提示插件</p>
+<p>1、服务端</p>
+<p>1.1、构建server对象与配置选项</p>
+<pre><code>&lt;?php
+    //构建 swoole 对象与配置选项
+    $server = new swoole_server(&apos;0.0.0.0&apos;, 9503);
+    //配置选项
+    $server-&gt;set([
+        //1为守护，开发阶段都设置为0
+        &apos;daemonize&apos; =&gt; 0,
+        //设置 woker 进程数量
+        &apos;worker_num&apos; =&gt; 2
+    ]);</code></pre><p>1.2、注册事件回调函数</p>
+<pre><code>//注册事件回调函数
+/**
+ *有新的连接进入时，在worker进程中回调
+ *$server swoole 对象
+ *$fd 客户端请求过来的 socket对象
+ *$reactorId 处理的线程ID号
+ */
+$server-&gt;on(&apos;connect&apos;, function($server, int $fd, int $reactorId){
+    //给客户端发送消息
+    //$server-&gt;send( $fd, &quot;welcome&quot; );
+    echo &apos;连接成功&apos;;
+});</code></pre><p>1.3、接受消息事件</p>
+<pre><code>/**
+ *接受消息事件
+ *$server swoole 对象
+ *$fd 客户端请求过来的 socket 对象
+ *$reactorId 处理的线程ID号
+ *$data 客户端发送过来的数据
+ */
+$server-&gt;on(&apos;receive&apos;, function($server, int $fd, int $reacctorId, string $data){
+    $message = $fd . &apos;说：&apos; . $data.PHP_EOL;
+    //广播给所有人
+    foreach( $server-&gt;connections as $socket ){
+        $server-&gt;send( $socket, $message );
+    }
+});</code></pre><p>1.4、关闭消息事件与启动服务</p>
+<pre><code>/**
+ *关闭消息事件
+ *$server swoole 对象
+ *$fd 客户端请求过来的 socket 对象
+ *$reactorId 处理线程ID号
+ */
+$server-&gt;on(&apos;close&apos;, function($server, int $fd, int $reactorId){
+    echo $fd.&apos;已经离开了房间&apos;.date(&apos;Y-m-d H:i:s&apos;).PHP_EOL;
+});
+//启动服务
+$server-&gt;start();</code></pre><p>2、客户端</p>
+<p>2.1、创建 tcp客户对象与连接tcp服务器</p>
+<pre><code>&lt;?php
+    //创建tcp客户端对象
+    $client = new swoole_client(SWOOLE_SOCK_TCP);
+    //连接tcp服务器
+    try{
+        $client-&gt;connect(&apos;127.0.0.1&apos;, 9503);
+    }catch(Exception $e){
+        throw new Exception(&apos;连接失败&apos;);
+    }</code></pre><p>2.2、发送数据</p>
+<pre><code>//发送数据
+$msg = &quot;我是就是我&quot;;
+$client-&gt;send( $msg );</code></pre><p>2.3、接收数据</p>
+<pre><code>//接收数据
+$data = $client -&gt; recv();
+echo $data . PHP_EOL;</code></pre><p>3、配置phpstorm使用ftp同步代码</p>
+<p>七、httpServer 服务器</p>
+<p>1、服务端</p>
+<p>laravel支持swoole插件：<a href="https://github.com/swooletw/laravel-swoole/wiki/4.-Installation" target="_blank" rel="noopener">https://github.com/swooletw/laravel-swoole/wiki/4.-Installation</a></p>
+<pre><code>&lt;?php
+    //swoole 创建httpServer 服务器
+    $http = new swoole_http_server(&apos;0.0.0.0&apos;, 8080);
+    //服务器启动成功回调函数
+    $http-&gt;on(&apos;start&apos;, function($http){
+        echo &quot;swoole http server is started at http://10.10.10.13:8080\n&quot;;
+    });
+    /**
+     *当浏览器连接到这个http服务器时，触发此事件
+     *$req 请求的详细信息，如请求时携带的参数
+     *$res 返回给浏览器的信息，如返回信息给浏览器
+     */
+    $http-&gt;on(&apos;request&apos;, function( swoole_http_request $request, swoole_http_response $response ){
+        //设置 header 头信息
+        $response-&gt;header(&apos;Content-Type&apos;, &apos;text/html;charset=utf-8&apos;);
+        //表示数据传输完毕
+        $response-&gt;end(&apos;开启人生的第一次旅程...&apos;);
+    });
+    //启动http服务器
+    $http-&gt;start()</code></pre><p>八、websocket 服务器</p>
+<p>1、websocket 协议概述</p>
+<p><a href="https://github.com/zhangkaitao/websocket-protocol" target="_blank" rel="noopener">https://github.com/zhangkaitao/websocket-protocol</a></p>
+<p>websocket 是html5 提出的一个协议规范，由 html5 提供一种浏览器和服务器之间的全双工通信网络技术。</p>
+<p>websocket 通信协议在2011年被IETF定为标准 RFC 6455，websocket Api 被 W3C定为标准。</p>
+<p>全双工，是通讯传输的一个术语，通信允许数据在两个方向上同时传输。相当于高速公路或打电话。</p>
+<p>单工或半双工，是指一个时间段内只有一个动作发生。相当于汽车单行道或对讲机。</p>
+<p>应用场景</p>
+<p>在线聊天、在线人数统计</p>
+<p>协议名称</p>
+<p>ws和wss</p>
+<p>2、浏览器支持</p>
+<p>3、websocket 服务器</p>
+<p>swoole_websocket_server 继承自 swoole_http_server</p>
+<p>3.1、实例化对象与配置</p>
+<pre><code>&lt;?php
+    //创建一个 websocket 对象
+    $ws = new swoole_websocket_server(&apos;0.0.0.0&apos;, 8080);
+    //设置 worker 进程数量
+    $ws -&gt; set([
+        //进程数量
+        &apos;worker_num&apos; =&gt; 2
+    ]);</code></pre><p>3.2、打开事件</p>
+<pre><code>//打开事件
+$ws-&gt;on(&apos;open&apos;, function($ws, swoole_httpd_request $request){
+    //设置为全局变量
+    $GLOBALS[$request-&gt;fd][&apos;name&apos;] = &apos;未知&apos;;
+    $GLOBALS[&apos;ids&apos;][$request-&gt;fd] = $request-&gt;fd;
+});</code></pre><p>3.3、消息事件</p>
+<pre><code>/**
+ *消息事件
+ *$frame-&gt;fd，客户端的 socket id，使用 $server-&gt;push 推送数据时需要用到
+ *$frame-&gt;data，数据内容
+ */
+$ws-&gt;on(&apos;message&apos;, function( swoole_server $server, swoole_websocket_frame $frame ){
+    //第一个请求，我们得到他的名称
+    if( stristr( $frame-&gt;data, &apos;name#&apos; ) ){
+        $GLOBALS[$frame-&gt;fd][&apos;name&apos;] = str_replace(&apos;name#&apos;, &apos;&apos;, $frame-&gt;data);
+    }else{
+        //广播给所有人
+        foreach( $serve-&gt;connection_list() as $socket_id ){
+            $name = $socket_id == $frame-&gt;fd ? &apos;我&apos; : $GLOBALS[$frame-&gt;fd][&apos;name&apos;];
+            //发送的时候存在着不活跃的 socket
+            @$server-&gt;push( $socket_id, $msg );
+        }
+    }
+});</code></pre><p>3.4、关闭事件与启动服务</p>
+<pre><code>//关闭事件
+$ws-&gt;on(&apos;close&apos;, function( $ws, int $fd ){
+    echo $GLOBALS[&apos;ids&apos;][$fd] . &apos;离开了我们&apos; . PHP_EOL;
+});
+//启动服务
+$ws-&gt;start();</code></pre><p>4、客户端</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;聊天室&lt;/title&gt;
+    &lt;style&gt;
+        #box{
+            width: 300px;
+            height:300px;
+            border: 1px red solid;
+            border-radius: 5px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!--聊天内容区域--&gt;
+&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+&lt;!--聊天区域--&gt;
+&lt;div id=&quot;input&quot;&gt;
+    &lt;input type=&quot;text&quot; id=&quot;msg&quot;&gt;
+    &lt;input type=&quot;button&quot; value=&quot;发送消息&quot; id=&quot;send&quot;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    // 申明一个websocket对象
+    var ws = new WebSocket(&apos;ws://127.0.0.1:6060&apos;);
+
+    // 事件监听
+    // 建立链接
+    ws.onopen = function (evt) {};
+
+    // 会话事件
+    ws.onmessage = function (evt) {
+        var data  = &quot;&lt;p&gt;&quot;+evt.data+&quot;&lt;/p&gt;&quot;;
+        document.getElementById(&apos;box&apos;).innerHTML += data;
+    };
+
+    // 发送消息事件
+    document.getElementById(&apos;send&apos;).onclick = function () {
+        var value = document.getElementById(&apos;msg&apos;).value;
+        ws.send(value);
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="cjzqkjkuc000118uywjcldrgc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-rabbtMQ" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/01/rabbtMQ/" class="article-date">
@@ -675,7 +941,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="cjysgypd70004nouy3h5up6b4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="cjzqkjkxr000618uyxm4oqnl9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1002,7 +1268,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjysgypcq0002nouyuscrye1i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjzqkjkw9000318uyxmj85opd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1155,7 +1421,7 @@ Apache版本为2.0 - 2.4,Centos默认安装版本就是这个版本，因为Apac
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjysgypbt0001nouyxv42i20o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjzqkjkup000218uybvvf9vu8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1643,7 +1909,7 @@ grep php34 /etc/group</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjysgypdj0005nouyfbjqy05m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjzqkjkxj000518uyazblv198" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2052,7 +2318,7 @@ shell&gt;# yum install -y man</code></pre><p>注意：前提必须能上网</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjysgypd50003nouy00h9m7wv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjzqkjkwr000418uy4tt1uj94" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3140,7 +3406,7 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjysgypds0006nouys6a4fdqy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjzqkjky9000718uyua5m1tdb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3244,7 +3510,7 @@ deploy:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjysgypaw0000nouy2nj1on0t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjzqkjkrf000018uy8az1luwf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3285,6 +3551,10 @@ deploy:
       <ul>
         
           <li>
+            <a href="/2019/08/25/swoole1/">&#39;swoole1&#39;</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/01/rabbtMQ/">&#39;rabbtMQ&#39;</a>
           </li>
         
@@ -3298,10 +3568,6 @@ deploy:
         
           <li>
             <a href="/2019/08/01/linux用户和权限/">&#39;linux用户和权限&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/linux系统搭建和命令的使用/">&#39;linux命令的使用&#39;</a>
           </li>
         
       </ul>
