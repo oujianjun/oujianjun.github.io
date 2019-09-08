@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>虎-小程序02 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="复习  了解小程序发展的历史，以及用户的理念（用完即走） 小程序开发的工具的使用 学会创建一个基本的小程序应用（helloworld） 掌握小程序的目录结构（pages目录） 掌握小程序里面的常见文件的类型（1. wxml 2. wxss 3. json 4. js）  课程目标  weui复习一下 小程序里面的 数据渲染、指令、页面跳转、网络请求 π框架基本使用  weui 简介 WeUI 是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虎-小程序02">
+<meta property="og:url" content="http://yoursite.com/2019/09/08/虎-小程序02/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="复习  了解小程序发展的历史，以及用户的理念（用完即走） 小程序开发的工具的使用 学会创建一个基本的小程序应用（helloworld） 掌握小程序的目录结构（pages目录） 掌握小程序里面的常见文件的类型（1. wxml 2. wxss 3. json 4. js）  课程目标  weui复习一下 小程序里面的 数据渲染、指令、页面跳转、网络请求 π框架基本使用  weui 简介 WeUI 是一">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-08T03:32:08.605Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="虎-小程序02">
+<meta name="twitter:description" content="复习  了解小程序发展的历史，以及用户的理念（用完即走） 小程序开发的工具的使用 学会创建一个基本的小程序应用（helloworld） 掌握小程序的目录结构（pages目录） 掌握小程序里面的常见文件的类型（1. wxml 2. wxss 3. json 4. js）  课程目标  weui复习一下 小程序里面的 数据渲染、指令、页面跳转、网络请求 π框架基本使用  weui 简介 WeUI 是一">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-虎-小程序02" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/08/虎-小程序02/" class="article-date">
+  <time datetime="2019-09-08T03:31:05.000Z" itemprop="datePublished">2019-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      虎-小程序02
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>复习</p>
+<ol>
+<li>了解小程序发展的历史，以及用户的理念（用完即走）</li>
+<li>小程序开发的工具的使用</li>
+<li>学会创建一个基本的小程序应用（helloworld）</li>
+<li>掌握小程序的目录结构（pages目录）</li>
+<li>掌握小程序里面的常见文件的类型（1. wxml 2. wxss 3. json 4. js）</li>
+</ol>
+<p>课程目标</p>
+<ol>
+<li>weui复习一下</li>
+<li>小程序里面的 数据渲染、指令、页面跳转、网络请求</li>
+<li>π框架基本使用</li>
+</ol>
+<p>weui</p>
+<p>简介</p>
+<p>WeUI 是一套同微信原生视觉体验一致的基础样式库，由微信官方设计团队为微信内网页和微信小程序量身设计，令用户的使用感知更加统一。</p>
+<p>在微信小程序的开发过程中，涉及到的前端复杂的样式界面的问题，就需要使用个UI框架，这样可以省去以后很多麻烦。WeUI作为一个开源的移动端UI框架，由于它是微信官方提供的对微信的兼容性没有太大问题，而且和各组件的样式和微信一样，能够很好地和微信融合在一起，给用户较好的体验。</p>
+<p>下载</p>
+<p><a href="https://github.com/Tencent/weui-wxss" target="_blank" rel="noopener">https://github.com/Tencent/weui-wxss</a></p>
+<p>目录介绍</p>
+<p>源码目录介绍</p>
+<p>dist目录结构</p>
+<p>example目录</p>
+<p>weui.wxss文件</p>
+<p>官方demo演示</p>
+<p>将官方下载的源码的dist目录使用微信开发工具打开，观看小程序应用</p>
+<p>效果</p>
+<p>项目集成</p>
+<ol>
+<li><p>在自己的小程序项目引入官方的wxss文件</p>
+</li>
+<li><p>在app.wxss全局样式文件引入官方的wxss文件</p>
+</li>
+<li><p>查看官方的demo，复制粘贴代码到自己的项目</p>
+</li>
+</ol>
+<p>数据渲染和指令</p>
+<p>文档</p>
+<p>数据渲染</p>
+<p>在小程序开发里面，对于数据的渲染不在类似传统的DOM操作，先DOM选取，然后在设置DOM元素的相关的属性；或者使用jQuery的工具类进行操作；现在流行使用数据驱动为主的开发模式，一些前端的MVVM框架，例如vuejs或者AngularJS都是遵循数据驱动为主，开发者只需要提供好数据，框架本身就会自动将数据进行处理，放置在页面上。一般来说对数据的处理都是双向（一般我们经常听到前端框架里面的双向数据绑定。 方向一：模型变量到视图的变化； 方向二：视图里面的数据变化（表单元素）映射到模型变量）现在我们要学习的小程序里面的方向一变化。使用什么样的语法将模型变量放置在页面上呢？</p>
+<p>a. 基本数据类型（直接输出），使用插值表达式进行处理</p>
+<p>b. 复合数据类型（遍历），需要借助指令wx:for + 插值表达式</p>
+<p>什么是插值表达式？</p>
+<p>插值表达式是一个模板标签的叫法，格式形如：</p>
+<pre><code>{{  express }}</code></pre><p>以两个大括号包裹一个表达式，并且表达式的前后是允许出现一个或者多个空格的，建议一致；</p>
+<p>表达式是一个合法的js语境下的表达式。</p>
+<p>例如： 变量1 +  变量2 、变量1 &amp;&amp; 变量2、变量1 &gt;=  变量2、”hello” + “world!”</p>
+<p>作用：主要是计算表达式，并且把表达式的结果放置在对应的位置上。例如</p>
+<pre><code>&lt;text&gt;{{ 12 + 12  }}&lt;/text&gt;</code></pre><p>运行的结果:</p>
+<pre><code>&lt;text&gt;24&lt;/text&gt;</code></pre><p>什么是指令？</p>
+<p>指令是小程序里面给我们提供一套对组件（标签）进行了加强的额外的属性，有了它们可以扩充组件本身自有的能力。就是一系列的语法，有的它可以完成数据遍历 for、条件表达式 if。</p>
+<p>语法：(1. 数组  2. 对象  3. 多维)</p>
+<pre><code>&lt;tagName wx:for=&quot;{{ 复合数据类型的模型变量 }}&quot; wx:for-index=&quot;手工指定下标&quot; wx:for-item=&quot;手工指定当前项&quot;&gt;
+    &lt;text&gt;{{ item }}&lt;/text&gt;
+    &lt;!-- 注意： 这里的 item 是固定写法，代表的是做遍历的时候，当前项 [12, 23, 34] 也就是数组中每个元素--&gt;
+    &lt;!-- 有的时候我们还要查看数组的下标，也是固定写法叫做 index --&gt;
+&lt;/tageName&gt;</code></pre><p>示例：</p>
+<ol>
+<li><p>在chazhi.wxml文件</p>
+<pre><code>&lt;view&gt;
+  &lt;!-- foreach ( arr1 as index =&gt; item) --&gt;
+  &lt;view wx:for=&quot;{{ arr1 }}&quot;&gt;
+    &lt;!--  wx:if=&quot;{{ item > 20 }}&quot; wx:if 是控制组件的显示或者隐藏，如果为true，则显示；否则隐藏 --&gt;
+    &lt;view wx:if=&quot;{{ item > 20 }}&quot;&gt;{{ '下标：' + index +  ' ，元素: ' +  item }}&lt;/view&gt;
+
+  &lt;/view&gt;
+
+&lt;/view&gt;</code></pre></li>
+<li><p>在chazhi.js文件定义好模型变量</p>
+<pre><code>Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    // 定义属性，这些属性称为模型变量，可以在页面上进行使用，插值表达式
+    // 基本数据类型
+    &apos;title&apos;: &apos;字符串类型&apos;,
+    &apos;number1&apos; : 12,
+    &apos;number2&apos; : 14,
+    &apos;isBoolean&apos;: true,
+    // 如果现在有能力可以把后台接口提供的数据，赋值给这些模型变量，则页面上看到的数据则是来自后台的了。
+    // 没有能力去发送网络请求，并且把网络请求的数据赋值给这些模型变量 稍后处理
+    //复合数据类型 1. 一维数组  2. 对象 3. 多维数组
+    &apos;arr1&apos;: [12, 23, 34],
+    &apos;obj1&apos;: {&apos;id&apos;: 12, &apos;username&apos;: &apos;andy&apos;, &apos;age&apos;: 24},
+    // 网络请求返回的数据格式 用户列表  订单列表 json_encode([[], []])
+    &apos;arr2&apos;: [
+
+        { &apos;id&apos;: 12, &apos;username&apos;: &apos;andy&apos;, &apos;age&apos;: 24 }, 
+        { &apos;id&apos;: 15, &apos;username&apos;: &apos;mark&apos;, &apos;age&apos;: 34 }
+
+        ],
+
+  })</code></pre></li>
+</ol>
+<p>如何在wxml页面中调用JavaScript函数</p>
+<p><a href="https://www.cnblogs.com/kevinCoder/p/8961748.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevinCoder/p/8961748.html</a></p>
+<p>网络请求</p>
+<p>简介</p>
+<p>通过上面的学习，我们在js文件里面即使定义一堆的变量，这个数据还是死的，不是活的。我们希望这个数据是从后端进行获取的，则这个时候，我们就需要进行网络请求。在传统的web开发里面，我们前端可以通过ajax或者websocket和后端服务器进行交互。在小程序里面，官方也给我们封装了一系列的网络请求接口，我们可以用封装好的接口完成网络请求。</p>
+<p>传统web开发</p>
+<pre><code>var xhr = new XMLHttpRequest();
+xhr.open(&apos;GET&apos;, &apos;data.php&apos;);
+xhr.onreadyStatusChange = function(){
+    if（xhr.status == 4）{
+        console.log(xhr.responseText);
+    }
+
+}
+// 如果是post请求设置一个请求头信息
+//xhr.setHeader(&apos;Content-Type&apos;, &apos;multipart/form-data&apos;);
+
+xhr.send();</code></pre><p>小程序</p>
+<pre><code>wx.request({
+    // 参数
+
+})</code></pre><p>查看API</p>
+<p>入门使用</p>
+<ol>
+<li><p>在wl.wxml文件进行布局，创建一个按钮，为按钮绑定点击事件</p>
+</li>
+<li><p>在wl.js文件定义好模型变量</p>
+</li>
+<li><p>在wl.js文件定义好回调函数，完成网络请求</p>
+</li>
+<li><p>在wl.wxml文件完成数据的显示</p>
+</li>
+<li><p>效果</p>
+</li>
+</ol>
+<p>电影列表</p>
+<p>navigator组件使用</p>
+<p>navigator用于在小程序里面做页面的跳转，语法格式：</p>
+<pre><code>&lt;navigator url=&apos;/pages/wl/wl?id=12&amp;uname=andy&apos;&gt;前往详情页&lt;/navigator&gt;</code></pre><ul>
+<li>这里的url地址里面的值代表的是跳转的地址，使用 /pages/目录下定义好的页面</li>
+<li>在做页面跳转的时候，可以进行get传递参数，在/pages/wl/wl.js文件的onload生成周期函数里面的options进行获取</li>
+</ul>
+<p>列表代码实操</p>
+<ol>
+<li><p>在list.wxml文件完成列表布局（参照weui框架进行布局）</p>
+</li>
+<li><p>在list.js文件的data属性里面定义好模型变量</p>
+</li>
+<li><p>onload生命周期函数里面，通过网络接口获取数据</p>
+</li>
+<li><p>效果</p>
+</li>
+</ol>
+<p>详情页代码实操</p>
+<ol>
+<li><p>在wl.wxml页面完成布局</p>
+</li>
+<li><p>在wl.js文件定义好模型变量，在onload生命周期函数完成数据获取</p>
+</li>
+<li><p>在wl.js的定义好getData方法，向详情接口发送网络请求获取数据</p>
+</li>
+<li><p>效果</p>
+</li>
+</ol>
+<p>电影网站接口</p>
+<p>注意：在本地开发的时候，需要在设置里面完成url地址的防检测操作(千万)</p>
+<p>数据库的处理</p>
+<p>虚拟主机创建</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    DocumentRoot &quot;C:\phpStudy\WWW\api.movie.com&quot;
+    ServerName api.movie.com
+    ServerAlias phpStudy.net
+  &lt;Directory &quot;C:\phpStudy\WWW\api.movie.com&quot;&gt;
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</code></pre><p>修改hosts文件</p>
+<p>将api代码复制到虚拟主机的根目录下</p>
+<p>修改项目里面数据库的配置</p>
+<p>内容如下</p>
+<p>浏览器访问(api.movie.com)</p>
+<p>列表接口</p>
+<p>api地址：<a href="http://api.movie.com/index.php/Home/Index/movies" target="_blank" rel="noopener">http://api.movie.com/index.php/Home/Index/movies</a></p>
+<p>详情接口</p>
+<p>api地址：<a href="http://api.movie.com/index.php/Home/Index/detail/id/ID" target="_blank" rel="noopener">http://api.movie.com/index.php/Home/Index/detail/id/ID</a></p>
+<p>参数：ID是inter，代表的电影的主键id（输入一个1到800之间的数字）</p>
+<p>源码学习</p>
+<ol>
+<li><p>电影的列表接口的代码</p>
+</li>
+<li><p>电影详情的接口的代码</p>
+</li>
+</ol>
+<p>π框架</p>
+<p><a href="https://www.phalapi.net/" target="_blank" rel="noopener">https://www.phalapi.net/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/虎-小程序02/" data-id="ck0af8mf30001g8uymg16yuqz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/08/虎-小程序01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">虎-小程序01</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/08/虎-小程序02/">虎-小程序02</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/08/虎-小程序01/">虎-小程序01</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/25/easyswoole/">&#39;easyswoole&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/25/swoole1/">&#39;swoole1&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/01/rabbtMQ/">&#39;rabbtMQ&#39;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

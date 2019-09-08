@@ -62,6 +62,426 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-虎-小程序02" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/08/虎-小程序02/" class="article-date">
+  <time datetime="2019-09-08T03:31:05.000Z" itemprop="datePublished">2019-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/08/虎-小程序02/">虎-小程序02</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>复习</p>
+<ol>
+<li>了解小程序发展的历史，以及用户的理念（用完即走）</li>
+<li>小程序开发的工具的使用</li>
+<li>学会创建一个基本的小程序应用（helloworld）</li>
+<li>掌握小程序的目录结构（pages目录）</li>
+<li>掌握小程序里面的常见文件的类型（1. wxml 2. wxss 3. json 4. js）</li>
+</ol>
+<p>课程目标</p>
+<ol>
+<li>weui复习一下</li>
+<li>小程序里面的 数据渲染、指令、页面跳转、网络请求</li>
+<li>π框架基本使用</li>
+</ol>
+<p>weui</p>
+<p>简介</p>
+<p>WeUI 是一套同微信原生视觉体验一致的基础样式库，由微信官方设计团队为微信内网页和微信小程序量身设计，令用户的使用感知更加统一。</p>
+<p>在微信小程序的开发过程中，涉及到的前端复杂的样式界面的问题，就需要使用个UI框架，这样可以省去以后很多麻烦。WeUI作为一个开源的移动端UI框架，由于它是微信官方提供的对微信的兼容性没有太大问题，而且和各组件的样式和微信一样，能够很好地和微信融合在一起，给用户较好的体验。</p>
+<p>下载</p>
+<p><a href="https://github.com/Tencent/weui-wxss" target="_blank" rel="noopener">https://github.com/Tencent/weui-wxss</a></p>
+<p>目录介绍</p>
+<p>源码目录介绍</p>
+<p>dist目录结构</p>
+<p>example目录</p>
+<p>weui.wxss文件</p>
+<p>官方demo演示</p>
+<p>将官方下载的源码的dist目录使用微信开发工具打开，观看小程序应用</p>
+<p>效果</p>
+<p>项目集成</p>
+<ol>
+<li><p>在自己的小程序项目引入官方的wxss文件</p>
+</li>
+<li><p>在app.wxss全局样式文件引入官方的wxss文件</p>
+</li>
+<li><p>查看官方的demo，复制粘贴代码到自己的项目</p>
+</li>
+</ol>
+<p>数据渲染和指令</p>
+<p>文档</p>
+<p>数据渲染</p>
+<p>在小程序开发里面，对于数据的渲染不在类似传统的DOM操作，先DOM选取，然后在设置DOM元素的相关的属性；或者使用jQuery的工具类进行操作；现在流行使用数据驱动为主的开发模式，一些前端的MVVM框架，例如vuejs或者AngularJS都是遵循数据驱动为主，开发者只需要提供好数据，框架本身就会自动将数据进行处理，放置在页面上。一般来说对数据的处理都是双向（一般我们经常听到前端框架里面的双向数据绑定。 方向一：模型变量到视图的变化； 方向二：视图里面的数据变化（表单元素）映射到模型变量）现在我们要学习的小程序里面的方向一变化。使用什么样的语法将模型变量放置在页面上呢？</p>
+<p>a. 基本数据类型（直接输出），使用插值表达式进行处理</p>
+<p>b. 复合数据类型（遍历），需要借助指令wx:for + 插值表达式</p>
+<p>什么是插值表达式？</p>
+<p>插值表达式是一个模板标签的叫法，格式形如：</p>
+<pre><code>{{  express }}</code></pre><p>以两个大括号包裹一个表达式，并且表达式的前后是允许出现一个或者多个空格的，建议一致；</p>
+<p>表达式是一个合法的js语境下的表达式。</p>
+<p>例如： 变量1 +  变量2 、变量1 &amp;&amp; 变量2、变量1 &gt;=  变量2、”hello” + “world!”</p>
+<p>作用：主要是计算表达式，并且把表达式的结果放置在对应的位置上。例如</p>
+<pre><code>&lt;text&gt;{{ 12 + 12  }}&lt;/text&gt;</code></pre><p>运行的结果:</p>
+<pre><code>&lt;text&gt;24&lt;/text&gt;</code></pre><p>什么是指令？</p>
+<p>指令是小程序里面给我们提供一套对组件（标签）进行了加强的额外的属性，有了它们可以扩充组件本身自有的能力。就是一系列的语法，有的它可以完成数据遍历 for、条件表达式 if。</p>
+<p>语法：(1. 数组  2. 对象  3. 多维)</p>
+<pre><code>&lt;tagName wx:for=&quot;{{ 复合数据类型的模型变量 }}&quot; wx:for-index=&quot;手工指定下标&quot; wx:for-item=&quot;手工指定当前项&quot;&gt;
+    &lt;text&gt;{{ item }}&lt;/text&gt;
+    &lt;!-- 注意： 这里的 item 是固定写法，代表的是做遍历的时候，当前项 [12, 23, 34] 也就是数组中每个元素--&gt;
+    &lt;!-- 有的时候我们还要查看数组的下标，也是固定写法叫做 index --&gt;
+&lt;/tageName&gt;</code></pre><p>示例：</p>
+<ol>
+<li><p>在chazhi.wxml文件</p>
+<pre><code>&lt;view&gt;
+  &lt;!-- foreach ( arr1 as index =&gt; item) --&gt;
+  &lt;view wx:for=&quot;{{ arr1 }}&quot;&gt;
+    &lt;!--  wx:if=&quot;{{ item > 20 }}&quot; wx:if 是控制组件的显示或者隐藏，如果为true，则显示；否则隐藏 --&gt;
+    &lt;view wx:if=&quot;{{ item > 20 }}&quot;&gt;{{ '下标：' + index +  ' ，元素: ' +  item }}&lt;/view&gt;
+
+  &lt;/view&gt;
+
+&lt;/view&gt;</code></pre></li>
+<li><p>在chazhi.js文件定义好模型变量</p>
+<pre><code>Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    // 定义属性，这些属性称为模型变量，可以在页面上进行使用，插值表达式
+    // 基本数据类型
+    &apos;title&apos;: &apos;字符串类型&apos;,
+    &apos;number1&apos; : 12,
+    &apos;number2&apos; : 14,
+    &apos;isBoolean&apos;: true,
+    // 如果现在有能力可以把后台接口提供的数据，赋值给这些模型变量，则页面上看到的数据则是来自后台的了。
+    // 没有能力去发送网络请求，并且把网络请求的数据赋值给这些模型变量 稍后处理
+    //复合数据类型 1. 一维数组  2. 对象 3. 多维数组
+    &apos;arr1&apos;: [12, 23, 34],
+    &apos;obj1&apos;: {&apos;id&apos;: 12, &apos;username&apos;: &apos;andy&apos;, &apos;age&apos;: 24},
+    // 网络请求返回的数据格式 用户列表  订单列表 json_encode([[], []])
+    &apos;arr2&apos;: [
+
+        { &apos;id&apos;: 12, &apos;username&apos;: &apos;andy&apos;, &apos;age&apos;: 24 }, 
+        { &apos;id&apos;: 15, &apos;username&apos;: &apos;mark&apos;, &apos;age&apos;: 34 }
+
+        ],
+
+  })</code></pre></li>
+</ol>
+<p>如何在wxml页面中调用JavaScript函数</p>
+<p><a href="https://www.cnblogs.com/kevinCoder/p/8961748.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevinCoder/p/8961748.html</a></p>
+<p>网络请求</p>
+<p>简介</p>
+<p>通过上面的学习，我们在js文件里面即使定义一堆的变量，这个数据还是死的，不是活的。我们希望这个数据是从后端进行获取的，则这个时候，我们就需要进行网络请求。在传统的web开发里面，我们前端可以通过ajax或者websocket和后端服务器进行交互。在小程序里面，官方也给我们封装了一系列的网络请求接口，我们可以用封装好的接口完成网络请求。</p>
+<p>传统web开发</p>
+<pre><code>var xhr = new XMLHttpRequest();
+xhr.open(&apos;GET&apos;, &apos;data.php&apos;);
+xhr.onreadyStatusChange = function(){
+    if（xhr.status == 4）{
+        console.log(xhr.responseText);
+    }
+
+}
+// 如果是post请求设置一个请求头信息
+//xhr.setHeader(&apos;Content-Type&apos;, &apos;multipart/form-data&apos;);
+
+xhr.send();</code></pre><p>小程序</p>
+<pre><code>wx.request({
+    // 参数
+
+})</code></pre><p>查看API</p>
+<p>入门使用</p>
+<ol>
+<li><p>在wl.wxml文件进行布局，创建一个按钮，为按钮绑定点击事件</p>
+</li>
+<li><p>在wl.js文件定义好模型变量</p>
+</li>
+<li><p>在wl.js文件定义好回调函数，完成网络请求</p>
+</li>
+<li><p>在wl.wxml文件完成数据的显示</p>
+</li>
+<li><p>效果</p>
+</li>
+</ol>
+<p>电影列表</p>
+<p>navigator组件使用</p>
+<p>navigator用于在小程序里面做页面的跳转，语法格式：</p>
+<pre><code>&lt;navigator url=&apos;/pages/wl/wl?id=12&amp;uname=andy&apos;&gt;前往详情页&lt;/navigator&gt;</code></pre><ul>
+<li>这里的url地址里面的值代表的是跳转的地址，使用 /pages/目录下定义好的页面</li>
+<li>在做页面跳转的时候，可以进行get传递参数，在/pages/wl/wl.js文件的onload生成周期函数里面的options进行获取</li>
+</ul>
+<p>列表代码实操</p>
+<ol>
+<li><p>在list.wxml文件完成列表布局（参照weui框架进行布局）</p>
+</li>
+<li><p>在list.js文件的data属性里面定义好模型变量</p>
+</li>
+<li><p>onload生命周期函数里面，通过网络接口获取数据</p>
+</li>
+<li><p>效果</p>
+</li>
+</ol>
+<p>详情页代码实操</p>
+<ol>
+<li><p>在wl.wxml页面完成布局</p>
+</li>
+<li><p>在wl.js文件定义好模型变量，在onload生命周期函数完成数据获取</p>
+</li>
+<li><p>在wl.js的定义好getData方法，向详情接口发送网络请求获取数据</p>
+</li>
+<li><p>效果</p>
+</li>
+</ol>
+<p>电影网站接口</p>
+<p>注意：在本地开发的时候，需要在设置里面完成url地址的防检测操作(千万)</p>
+<p>数据库的处理</p>
+<p>虚拟主机创建</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    DocumentRoot &quot;C:\phpStudy\WWW\api.movie.com&quot;
+    ServerName api.movie.com
+    ServerAlias phpStudy.net
+  &lt;Directory &quot;C:\phpStudy\WWW\api.movie.com&quot;&gt;
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</code></pre><p>修改hosts文件</p>
+<p>将api代码复制到虚拟主机的根目录下</p>
+<p>修改项目里面数据库的配置</p>
+<p>内容如下</p>
+<p>浏览器访问(api.movie.com)</p>
+<p>列表接口</p>
+<p>api地址：<a href="http://api.movie.com/index.php/Home/Index/movies" target="_blank" rel="noopener">http://api.movie.com/index.php/Home/Index/movies</a></p>
+<p>详情接口</p>
+<p>api地址：<a href="http://api.movie.com/index.php/Home/Index/detail/id/ID" target="_blank" rel="noopener">http://api.movie.com/index.php/Home/Index/detail/id/ID</a></p>
+<p>参数：ID是inter，代表的电影的主键id（输入一个1到800之间的数字）</p>
+<p>源码学习</p>
+<ol>
+<li><p>电影的列表接口的代码</p>
+</li>
+<li><p>电影详情的接口的代码</p>
+</li>
+</ol>
+<p>π框架</p>
+<p><a href="https://www.phalapi.net/" target="_blank" rel="noopener">https://www.phalapi.net/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/虎-小程序02/" data-id="ck0af8mf30001g8uymg16yuqz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-虎-小程序01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/08/虎-小程序01/" class="article-date">
+  <time datetime="2019-09-08T03:30:55.000Z" itemprop="datePublished">2019-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/08/虎-小程序01/">虎-小程序01</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>课程目标<br>小程序的基本的简介（相关的历史）</p>
+<p>学会小程序的账号注册、开发工具的使用</p>
+<p>小程序的基本的组件（主要是用于布局、学习wxml + wxss 官方组件）（WeUI 腾讯官方团队开发一套UI组件，学会类的使用即可，或者会查看文档选择和合适的组件进行拼接，有点类似PC端的bootstrap）</p>
+<p>小程序的事件相关</p>
+<p>小程序的网络请求（有点类似PC ajax请求）</p>
+<p>小程序后台应用（PHP开发接口，使用 π完成即可）</p>
+<p>了解一下 es6语法（可能还是要重点了解下，因为小程序里面基本都是使用的Es6语法： 箭头函数）、 vuejs（无DOM操作、数据驱动为主，是借鉴的vuejs开发思想）</p>
+<p>…..</p>
+<p>第一章、微信小程序简介<br>什么是微信小程序呢？</p>
+<p>微信小程序，简称小程序，缩写XCX，英文名Mini Program，小程序是一种不需要下载安装（javascript开发:桌面应用）即可使用的应用，借助微信这个APP，用户只需要扫一扫或者搜一下即可打开应用。体现出了“用完即走”的理念，用户不用关心是否安装太多应用的问题。应用将无处不在，随时可用，但又无需安装卸载。对于开发者而言，小程序开发门槛相对较低，难度不及APP(native APP)（hybrid APP 混合APP）（react js），能够满足简单的基础应用，适合生活服务类线下商铺以及一些小游戏。其中，通过公众号关联，用户可以实现公众号与小程序之间相互跳转。</p>
+<p>那么小程序出现之前，是否有类似的应用出现呢，为什么微信小程序会突然火起来了呢？</p>
+<p>主要的原因：</p>
+<p>\1. 支付宝上面的应用都是自己官方开发，没有给第三方提供开发的机会</p>
+<p>\2. 现在的微信是一个支持第三方开发的，并且微信本身就是做聊天应用，人们不喜欢过多的做切换（1. 聊天 2. 支付）</p>
+<p>\3. 现在小程序为什么可以火起来？</p>
+<p>a) 国人来说不喜欢安装APP，认为APP需要消耗内存空间、APP多了手机卡<br>​<br>b) 一些应用一般都是低频使用的，比如羊城通、税收计算器……<br>​<br>c) 上班途中需要娱乐一下，小程序体现的是无需下载，小程序一般控制1M左右<br>​<br>d) 现在微信已经将小程序加入到首页列表里面，下拉一下，即可使用小程序<br>​<br>……</p>
+<p>小程序历史</p>
+<p>2016年9月22日凌晨，微信公众平台开始陆续对外发送小程序内测邀请。</p>
+<p>2016年11月3日晚间，微信团队对外宣布，微信小程序开放公测，开发者可登陆微信公众平台申请，开发完成后可以提交审核，公测期间暂不能发布。</p>
+<p>2016年12月28日，腾讯集团高级执行副总裁、微信事业群总裁张小龙表示，微信小程序计划于1月9日正式上线，届时所有微信用户都能够使用。</p>
+<p>2017年3月27日，小程序宣布新增六大功能：个人开发者开放、公众号自定义菜单跳小程序、公众号模版消息可打开相关小程序、模板消息跳小程序 、绑定时可发送模板消息、兼容线下二维码、App分享用小程序打开。</p>
+<p>…..</p>
+<p>2017年12月28日，微信更新的版本开放了小游戏，微信启动页面还重点推荐了小游戏「跳一跳」，你可以通过「小程序」找到已经玩过的小游戏。</p>
+<p>小程序的特点</p>
+<p>\1. 无需安装，其实在使用小程序的时候，底层还是做了网络请求，加载很多的数据，只是小程序应用代码很少，体会不到安装的过程。</p>
+<p>\2. 用完即走</p>
+<p>\3. 低频使用</p>
+<p>\4. 开发简单</p>
+<p>\5. 跨平台</p>
+<p>\6. …..</p>
+<p>对开发者的影响</p>
+<p>\1. 理解前端MVVM的思想，以数据驱动为主，无DOM操作</p>
+<p>\2. 需要提升javascript的能力，尤其是对es6标准下的javascript开发</p>
+<p>\3. 生态圈目前还不成熟，还有很大的空间适合发展</p>
+<p>第二章、账号注册及开发工具简介<br>账号注册</p>
+<p>如果要进行小程序的开发，需要去腾讯上面注册相应的账户，然后申请小程序APP应用，申请之后，会给用户一个APPID，同时还有一个APPSECRET。</p>
+<p>注册网址：<a href="https://mp.weixin.qq.com/cgi-bin/registermidpage?action=index" target="_blank" rel="noopener">https://mp.weixin.qq.com/cgi-bin/registermidpage?action=index</a></p>
+<p>账号申请后、需要前往（ <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">https://mp.weixin.qq.com/</a> ）进行登录，成功登录后</p>
+<p>查看APPID</p>
+<p>相关文档</p>
+<p>小程序介绍：</p>
+<p><a href="https://mp.weixin.qq.com/debug/wxadoc/introduction/" target="_blank" rel="noopener">https://mp.weixin.qq.com/debug/wxadoc/introduction/</a></p>
+<p>开发文档：</p>
+<p><a href="https://mp.weixin.qq.com/debug/wxadoc/dev/" target="_blank" rel="noopener">https://mp.weixin.qq.com/debug/wxadoc/dev/</a></p>
+<p>开发工具：</p>
+<p><a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/devtools.html" target="_blank" rel="noopener">https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/devtools.html</a></p>
+<p>工具的使用</p>
+<p>下载后，全程下一步即可</p>
+<p>安装后</p>
+<p>使用工具添加一个项目</p>
+<p>小程序的AK：</p>
+<p>wx83b9426679a8bdad</p>
+<p>小程序的SK：</p>
+<p>fc4073b01f5dd5bf3957f038052c4a53</p>
+<p>工具的调试</p>
+<p>缓存清除</p>
+<p>关闭合法域名校验，不然在本地开发的时候，必须要提供一个线上的https的url地址。</p>
+<p>开发者文档</p>
+<p>模拟器选择</p>
+<p>打开小程序目录结构</p>
+<p>开发者工具栏</p>
+<p>第三章、小程序之-helloWord<br>小程序目录结构</p>
+<p>整体目录结构分析</p>
+<p>小程序的文件类型</p>
+<p>当我们建立一个小程序项目后，分析完整体的目录结构后，发现里面文件的扩展类型和传统的文件扩展是不一样的，那么每个类型的扩展文件到底代表什么样的含义呢？</p>
+<p>在正式了解小程序的文件类型之前，我们先思考一下传统的web页面，是如何构成的呢？</p>
+<p>\1. HTML 负责页面结构</p>
+<p>\2. CSS 负责页面的样式</p>
+<p>\3. JS 负责页面的行为</p>
+<p>那么小程序的文件和web页面的构造也是比较类似的，也存在如下几个文件：</p>
+<p>\1. *.wxml 负责页面结构，可以理解为传统web开发里面的HTML文件</p>
+<p>\2. *.wxss 负责页面的样式 ，可以理解为传统web开发里面的 CSS文件</p>
+<p>\3. *.js 负责页面的逻辑结构</p>
+<p>\4. *.json 负责页面的配置</p>
+<p>自定义小程序</p>
+<p>\1. 选择小程序项目</p>
+<p>\2. 设置小程序代码保存目录和APPID，同时选择快速启动模板</p>
+<p>\3. 小程序入口相关文件项配置</p>
+<p>\4. 代码：</p>
+<p>视图文件：</p>
+<p>css文件：</p>
+<p>\5. 效果</p>
+<p>第四章、组件学习<br>文档：<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/component/" target="_blank" rel="noopener">https://mp.weixin.qq.com/debug/wxadoc/dev/component/</a></p>
+<p>什么是组件？</p>
+<p>组件是视图层的基本组成单元，和传统的HTML里面的标签是比较类似的，但是小程序里面的组件都是经过重新定义了的，需要按照小程序的标准进行使用。</p>
+<p>一个组件通常包括开始标签和结束标签，属性用来修饰这个组件，内容在两个标签之内。格式如下：</p>
+<tagname property="value">
+​
+  Content goes here ...
+​
+</tagname>
+​
+​
+
+
+
+<p>注意：所有组件与属性都是小写，以连字符-连接。</p>
+<p>视图容器-view</p>
+<p>view组件和传统的HTML里面的div是比较类似的，主要负责页面的布局作为容器使用。在编写小程序的时候建议将所有的内容都放置在容器内。</p>
+<p>代码：</p>
+<p>\1. 在pages/user/user/user.wxml文件使用view容器标签存放内容</p>
+<p>视图容器-swiper</p>
+<p>该组件主要用于小程序里面的轮播图的效果。</p>
+<p>注意：其中只可放置<swiper-item>组件，否则会导致未定义的行为。</swiper-item></p>
+<p>代码：</p>
+<p>\1. 在pages/user/user/user.wxml文件使用swiper组件制作轮播图</p>
+<p>\2. 在项目根目录下创建一个 images 目录，添加轮播图需要的图片</p>
+<p>\3. 在pages/user/user/user.js定义好初始化属性模型变量</p>
+<p>基本内容-text</p>
+<p>该组件主要是负责页面的文本内容的处理。</p>
+<p>\1. 在pages/user/user/user.wxml文件使用text组件存放文本内容</p>
+<p>表单组件-button</p>
+<p>该组件主要负责页面按钮的制作。</p>
+<p>代码：</p>
+<p>\1. 在pages/user/user/user.wxml文件使用button定义按钮</p>
+<p>\2. 在pages/user/user/user.js文件定义好 clickMe 回调函数</p>
+<p>导航组件-navigator</p>
+<p>该组件负责页面的链接跳转</p>
+<p>代码：</p>
+<p>\3. 在pages/user/user/user.wxml文件使用navigator定义两个链接</p>
+<p>事件代理机制</p>
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.0.1/jquery.js"></script>  
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <ul class="list-group">
+
+<pre><code>&lt;!-- 循环遍历 --&gt;
+&lt;!-- &lt;?php foreach ($data as $v): ?&gt;
+    &lt;li class=&quot;list-group-item&quot;&gt;1 Lorem ipsum dolor sit amet. &lt;button class=&quot;btn btn-success&quot;&gt;编辑&lt;/button&gt;  &lt;button class=&quot;btn bg-danger del&quot; data-id=&quot;&lt;?php echo $v[&apos;id&apos;];?&gt;&quot;&gt;删除&lt;/button&gt;&lt;/li&gt;
+&lt;?php endforeach ?&gt; --&gt;</code></pre><p>​<br>            <li class="list-group-item">1 Lorem ipsum dolor sit amet. <button class="btn btn-success">编辑</button>  <button class="btn bg-danger del" data-id="1">删除</button></li><br>            <li class="list-group-item">2 Lorem ipsum dolor sit amet. <button class="btn btn-success">编辑</button>  <button class="btn bg-danger del" data-id="2">删除</button></li><br>            <li class="list-group-item">3 Lorem ipsum dolor sit amet. <button class="btn btn-success">编辑</button>  <button class="btn bg-danger del" data-id="3">删除</button></li><br>            <li class="list-group-item">4 Lorem ipsum dolor sit amet. <button class="btn btn-success">编辑</button>  <button class="btn bg-danger del" data-id="4">删除</button></li><br>​<br>​<br>        </p></ul><br>    </div><p></p>
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.0.1/jquery.js"></script>
+<script type="text/javascript">
+    // 事件代理 或者事件委托
+    $(".list-group").click(function (event) {
+        var _target = $(event.target);
+
+<pre><code>if( _target.hasClass(&apos;del&apos;) ){
+    var _id = _target.attr(&apos;data-id&apos;);
+    console.log( _id );</code></pre><p>​<br>            // 1. ajax<br>            $.ajax({<br>                url: ‘del.php’,<br>                type: ‘GET’,<br>                data: {id: _id},<br>                dataType: ‘json’,<br>                success:function(json){<br>                    // 2. 成功<br>                    _target.parent(‘li’).remove();<br>                    console.log(json);</p>
+<pre><code>    }
+});</code></pre><p>​<br>        }<br>​<br>    });<br></script><p></p>
+</html>
+​
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/虎-小程序01/" data-id="ck0af8mfd0002g8uybf0891g5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-easyswoole" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/08/25/easyswoole/" class="article-date">
@@ -269,7 +689,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/25/easyswoole/" data-id="cjzqklpgr0001bouyho5sgtcy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/25/easyswoole/" data-id="ck0af8mfx0004g8uynvzeh1pa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -535,7 +955,7 @@ $ws-&gt;start();</code></pre><p>4、客户端</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="cjzqklph70003bouy7zdrtx1u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="ck0af8mhb0006g8uy29b7sspf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1158,7 +1578,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="cjzqklpkf0006bouyoi03ziq4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="ck0af8mhz0008g8uymzcwa07p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1485,7 +1905,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="cjzqklpjn0004bouy79cwtdqw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="ck0af8mgz0005g8uy5c3rhusi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1638,7 +2058,7 @@ Apache版本为2.0 - 2.4,Centos默认安装版本就是这个版本，因为Apac
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="cjzqklph00002bouy4ntrkhda" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="ck0af8mfn0003g8uy7ay10mv3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2126,7 +2546,7 @@ grep php34 /etc/group</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="cjzqklpl30007bouyom67l62r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="ck0af8mia0009g8uyz2n9pkd5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2535,7 +2955,7 @@ shell&gt;# yum install -y man</code></pre><p>注意：前提必须能上网</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="cjzqklpk80005bouy4rh3ivhz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="ck0af8mhu0007g8uy362igtqa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3623,111 +4043,7 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="cjzqklplg0008bouy0oe5o90g" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo搭建github个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/08/01/hexo搭建github个人博客/" class="article-date">
-  <time datetime="2019-08-01T06:14:28.000Z" itemprop="datePublished">2019-08-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/01/hexo搭建github个人博客/">&#39;hexo搭建github个人博客&#39;</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>hexo搭建github个人博客</p>
-<p>国内有很多个人博客，比如cdn，博客园，简书等等</p>
-<p>1.什么是HEXO？</p>
-<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<p>2.安装HEXO</p>
-<p>安装Hexo只需10分钟时间，相当简单。但有个安装前提，在安装前，您必须检查电脑中是否已安装下列应用程序</p>
-<p>Node.js （安装nodejs自带了npm包管理工具）</p>
-<p>Git （代码管理工具）</p>
-<p>Node.js 安装包及源码下载地址为：<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a> </p>
-<p>GIt下载地址：<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">https://git-scm.com/downloads</a></p>
-<p>也可以用本地的安装包</p>
-<p>一路默认便可(建议安装到本地的新建一个文件夹)</p>
-<p>nodejs安装</p>
-<p>配置环境变量</p>
-<p>打开黑窗口cmd</p>
-<p>看到版本号表示配置成功</p>
-<p>git安装</p>
-<p>一路默认,安装后出现下图表示成功</p>
-<p>按鼠标右键出来：</p>
-<p>安装淘宝镜像：</p>
-<p>默认的npm是国外镜像，要去国外的源下载东西，切换淘宝源是用国内的镜像地址下载我的的库</p>
-<p>使用淘宝NPM安装Hexo的脚手架工具 </p>
-<pre><code>cnpm install -g hexo-cli</code></pre><p>安装hexo</p>
-<pre><code>cnpm install hexo --save</code></pre><p>查看是否安装成功</p>
-<pre><code>hexo -v</code></pre><p>3.本地运行hexo</p>
-<p>初始化hexo</p>
-<p> hexo init</p>
-<ul>
-<li><p>安装生成器</p>
-<p>cnpm install</p>
-</li>
-<li><p>运行hexo,以后要在本地运行博客只要输入该命令即可</p>
-<p>hexo s -g</p>
-</li>
-</ul>
-<p>打开浏览器，输入localhost:4000,就可以在本地看到你的个人博客了 </p>
-<ul>
-<li>停止运行<br>按住Ctrl+C键即可停止</li>
-</ul>
-<p>hexo常用的几个命令：</p>
-<p>hexo init   blog   //初始化博客项目的名称</p>
-<p>cd blog             //进入项目目录</p>
-<p>npm install   //安装项目需要的依赖(包括hexo了)</p>
-<p>hexo  n   ‘文章的名称’  </p>
-<p>hexo g     生成静态页面</p>
-<p>hexo s      启动本地服务</p>
-<p>hexo d   发布到线上仓库 username.github.io</p>
-<p>4.安装一个工具，上传我们hexo代码到github的工具</p>
-<pre><code>cnpm install   hexo-deployer-git --save</code></pre><p>或则</p>
-<pre><code>npm install   hexo-deployer-git --registry https://registry.npm.taobao.org --save</code></pre><p>过程比较慢，慢慢等等</p>
-<p>5.需要配置线上仓库：</p>
-<pre><code>1.配置 _config.yml 
-
-deploy:
-  type: git
-  repo: git@github.com:xxx/xxx.github.io.git
-  branch: master</code></pre><p>6.打通git线上线下环境</p>
-<p>1.配置本地的用户名密码</p>
-<p>git config –global user.name 名字     # 叫啥名字</p>
-<p>git config –global user.email 邮箱         # 怎么联系你</p>
-<p>2.生成公钥密钥</p>
-<p> ssh-keygen  -t rsa -C（大写C哦） ‘邮箱地址’</p>
-<p>成功之后会在当前用户的目录多出如下的两个文件。</p>
-<p>id.rsa:私钥文件</p>
-<p>id_rsa.pub:公钥文件</p>
-<p>3.配置私钥到github上的ssh设置</p>
-<p>复制id.rsa到GitHub用户设置的ssh上</p>
-<p>相当于GitHub密钥（钥匙）链接我们的公钥（锁头）       —注意一个key只能用一个GitHub账号</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/hexo搭建github个人博客/" data-id="cjzqklpem0000bouyhn8871wt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="ck0af8mik000ag8uy0tots1ev" class="article-share-link">Share</a>
       
       
     </footer>
@@ -3738,6 +4054,11 @@ deploy:
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -3755,7 +4076,7 @@ deploy:
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
     </div>
   </div>
 
@@ -3768,6 +4089,14 @@ deploy:
       <ul>
         
           <li>
+            <a href="/2019/09/08/虎-小程序02/">虎-小程序02</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/08/虎-小程序01/">虎-小程序01</a>
+          </li>
+        
+          <li>
             <a href="/2019/08/25/easyswoole/">&#39;easyswoole&#39;</a>
           </li>
         
@@ -3777,14 +4106,6 @@ deploy:
         
           <li>
             <a href="/2019/08/01/rabbtMQ/">&#39;rabbtMQ&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/linux编译安装lanmp/">&#39;linux编译安装lanmp&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/linux权限和yum安装lamp/">&#39;linux权限和yum安装lamp&#39;</a>
           </li>
         
       </ul>
