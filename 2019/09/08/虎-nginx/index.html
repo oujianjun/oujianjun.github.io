@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>&#39;虎-nginx&#39; | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Nginx简介 Lamp(Linux + Apache + MySQL + PHP)架构概述 LAMP（Linux- Apache-MySQL-PHP）网站架构是目前国际流行的Web架构，该架构包括：Linux操作系统，Apache网络服务器，MySQL数据库、PHP，所有组成产品均是开源软件，很多流行的商业应用都是采取这个架构。LAMP具有通用、跨平台、高性能、低价格的优势，因此LAMP无论是性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&#39;虎-nginx&#39;">
+<meta property="og:url" content="http://yoursite.com/2019/09/08/虎-nginx/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Nginx简介 Lamp(Linux + Apache + MySQL + PHP)架构概述 LAMP（Linux- Apache-MySQL-PHP）网站架构是目前国际流行的Web架构，该架构包括：Linux操作系统，Apache网络服务器，MySQL数据库、PHP，所有组成产品均是开源软件，很多流行的商业应用都是采取这个架构。LAMP具有通用、跨平台、高性能、低价格的优势，因此LAMP无论是性">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-08T05:22:09.018Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="&#39;虎-nginx&#39;">
+<meta name="twitter:description" content="Nginx简介 Lamp(Linux + Apache + MySQL + PHP)架构概述 LAMP（Linux- Apache-MySQL-PHP）网站架构是目前国际流行的Web架构，该架构包括：Linux操作系统，Apache网络服务器，MySQL数据库、PHP，所有组成产品均是开源软件，很多流行的商业应用都是采取这个架构。LAMP具有通用、跨平台、高性能、低价格的优势，因此LAMP无论是性">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-虎-nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/08/虎-nginx/" class="article-date">
+  <time datetime="2019-09-08T05:21:54.000Z" itemprop="datePublished">2019-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      &#39;虎-nginx&#39;
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Nginx简介</p>
+<p>Lamp(Linux + Apache + MySQL + PHP)架构概述</p>
+<p>LAMP（Linux- Apache-MySQL-PHP）网站架构是目前国际流行的Web架构，该架构包括：Linux操作系统，Apache网络服务器，MySQL数据库、PHP，所有组成产品均是开源软件，很多流行的商业应用都是采取这个架构。LAMP具有通用、跨平台、高性能、低价格的优势，因此LAMP无论是性能、质量还是价格都是企业搭建网站的首选平台。在国内可以说每一个公司都有使用LAMP这种架构，可以说它在国内互联网公司中的占有率基本上达到100%。</p>
+<p>对于大流量、大并发量的网站系统架构来说，除了硬件上使用高性能的服务器、负载均衡、CDN等之外，在软件架构上需要重点关注下面几个环节：使用高性能的操作系统（OS）、高性能的网页服务器（Web Server）、高性能的数据库（Database）、高效率的编程语言等。</p>
+<p>注意：现在的M有可能指的是MariaDB，也是MySQL的一个分支。现在的P有可能使用Python。</p>
+<p>问题的产生-C10K</p>
+<p>目前的我们正处于web2.0的互联网的时代，传统的lamp架构已经很难承载目前的访问流量，同时C10K的问题的产生，这个时候我们就不得不使用更加优秀的架构来支撑业务。这个时候，俄国的一个程序猿根据现有的互联网场景、以及结合现在的开发技术和硬件，设计出了一个非常厉害的web服务器软件Nginx，由于Nginx是为了访问量而设计的服务器。在最早的时候Nginx服务器并不支持PHP的，是后来加入了FastCgi才开始支持PHP的。</p>
+<p>最后，我们需要知道Nginx的产生并不是为了取代apache软件，而是为了相互配合，使得网站架构更加的牢固。</p>
+<p>nginx和apache的软件底层架构不一样。Nginx的并发性要比apache好很多，nginx属于轻量级服务器软件，apache属于重量级软件，nginx在处理静态页的效率要比apache好很多；apache在安全性要比nginx要好，apache在处理动态页面上的效率要比nginx高。</p>
+<p>运行模式不同的。php在apache环境下，运行的是php5模块方式运行的，由于是apache去加载php5模块，所以每次修改了php配置文件需要重启apache；</p>
+<p>在nginx模式下，php运行的时候使用的是php-fpm方式进行运行，这个方式会创建服务（端口是9000），因此在nginx下修改了php配置文件则需要重启php-fpm服务。</p>
+<p>什么是C10K的问题？</p>
+<p>答：在web2.0时代(信息为主，是无法体现价值的转义 web3.0的时候就是目前最火的区块链技术，就是为了价值转移而存在)（以社交类型网站兴起的时候开始计算，51博客、校内）主要是以动态请求为主，静态请求为辅。这个时候由于早先web服务器的设计主要是为了完成静态请求，这个时候对动态请求就显得有点乏力，无法支持大的动态请求。互联网上的一些就开始开发新的web服务器，以来适应新的web2.0时代。</p>
+<p>注意：当一个web网站的请求的并发数达到10k（同1s之内大概同时存在1w请求来请求web服务器），这个时候整个网站的架构都要进行重新设计。这个就是著名的C10K问题。并且目前互联网上已经出现C100K 甚至C1000K的问题的出现。</p>
+<p>nginx服务器简介</p>
+<p>nginx是一个web服务器；类似Apache软件。这是由俄国人开发的一个软件。其早期开发的这个软件主要是用于邮件代理。后面才转换为web服务，只能做静态的web服务器和负载均衡器。</p>
+<p>官网：<a href="http://nginx.org/" target="_blank" rel="noopener">http://nginx.org/</a></p>
+<p>中文社区：<a href="http://www.nginx.cn/" target="_blank" rel="noopener">http://www.nginx.cn/</a></p>
+<p>书籍推荐：《实战nginx》、《决战Nginx》</p>
+<p> 张宴-httpsqs队列服务， 是国内最早将Nginx软件引入到新浪。</p>
+<p>nginx:</p>
+<p>a. 邮件代理服务器，基本不再使用，最早期的功能，后来由于web领域做的更好</p>
+<p>b. 静态的web服务器（1u的服务器，大致可以处理的并发数 3-5w之间。apache的并发3-5k左右）</p>
+<p>c. 负载均衡器（集群）</p>
+<p>了解Nginx软件内部的架构处理。</p>
+<p>答： Nginx软件启动的时候会启动一个master进程（管理），在启动一个worker进行（主要是提供web服务）。master主进程是不做事的，主要是负责进程的产生和管理，以及配置文件的读取、日志进程管理、缓存进程管理…</p>
+<p>Nginx可以这样理解，在内部是一个worker进程处理多个用户的请求，并且在处理请求达到一定的数量之后，会被master进程kill掉，然后在重新的启动一个worker进程（只要是为了防止内存的泄露问题）</p>
+<p>Nginx好的特性：</p>
+<p>a. 支持平滑升级（热部署）：在不关闭服务的情况下可以升级到其他的Nginx版本。（erlang是专门做热部署，一般在游戏领域或者银行领域使用这门语言）</p>
+<p>b. 支持动态配置文件的读取（不关闭服务的情况可以重新的加载配置文件）</p>
+<p>常见web服务器的分类</p>
+<ol>
+<li>apache软件：一般在Linux下叫做httpd，最先是不使为了提供web服务，是为了解决资源共享的问题，最早使用应该是在军方的信息共享里面。(2.2  2.4版本)（重量级 ，设计成是模块化,但是它的模块不是热插拔的，就是说这么模块必须在编译安装的时候进行选择，不能说是编译完成之后，后期要加，在编译。）</li>
+</ol>
+<ol>
+<li>nginx：轻量级的web服务器，轻内核的web服务器，众多的其他的特性需要其他的模块进行提供(1. 官方很多模块 2. 第三方模块，互联网上广大开源爱好者，国内的淘宝为其提供很多的模块，并且有部分的模块已经被官方进行收录)。【国内前端的力量基本都是在阿里，阿里最先提出大前端，全栈(js 全栈)也是阿里提出来。full stack】</li>
+</ol>
+<ol>
+<li>IIS：Windows下的一个web服务器，常见的和 sql server【很好】 已经 windows server 【图形化】一起使用，并且都是图形化配置。【自媒体：写软文，改软文 捕捉热点–》自己文章】</li>
+</ol>
+<ol>
+<li>Lighttpd：主要是用来提供图片服务，主要是在推广上做的不好。早年豆瓣基本都是使用它。</li>
+</ol>
+<ol>
+<li>tomcat猫：Java里面的一个web服务器容器。</li>
+</ol>
+<hr>
+<p>介绍两个国内基于Nginx做了二次开发的版本：</p>
+<ol>
+<li>tengine：这个是淘宝基于Nginx做了二次开发，运用到双11 、天猫商城上面进行了检验，是的产品是非常的优秀。并且在上面增量很多的功能模块，提供了DSO特性。<br><a href="http://tengine.taobao.org/" target="_blank" rel="noopener">http://tengine.taobao.org/</a></li>
+<li>openresty：这个产品是之前淘宝里面的一个叫做章宜春的大牛基于Nginx做了二次开发，设计出来。在Nginx的基础上面引入 lua 解释器，可以让Nginx在不使用第三方的脚本解释器的情况下，自己就可以完成动态请求。（openresty = nginx + lua）<ol>
+<li>lua是由一个巴西人开发出来了一门脚本语言，专注于游戏领域的开发。lua是后端语言。</li>
+<li>cocos2d-lua 专门做游戏的。（cocos2d-js\C++）</li>
+<li>lua火起来的原因是国内一款《大话2》，其背后的推动着是前网易的 云风（吴云洋）。（国内游戏基本上都认识这个人，天才）<br><a href="http://openresty.org/cn/" target="_blank" rel="noopener">http://openresty.org/cn/</a></li>
+</ol>
+</li>
+</ol>
+<p>总结：上面的这两个产品在国内使用的更多。成熟的解决方案就更多，文档更加符合国内情况。</p>
+<p>哪里在使用这些web服务器？</p>
+<p>目前在全球T1000的网站里面，Nginx已经首当其冲。全球市场还是Apache老大哥。</p>
+<p>可以通过抓包分析</p>
+<ol>
+<li><p>豆瓣</p>
+</li>
+<li><p>搜狐</p>
+</li>
+</ol>
+<p>后期找工作可以可以尝试去抓包分析网站使用的大致的技术，然后根据该技术有选择性的简历。</p>
+<p>Nginx安装</p>
+<ol>
+<li><p>使用yum安装</p>
+<pre><code># yum install -y nginx</code></pre></li>
+<li><p>使用源码编译（lnmp架构）</p>
+</li>
+</ol>
+<p>目录结构</p>
+<p>安装nginx软件</p>
+<ol>
+<li>使用ftpd客户端进行上传操作</li>
+</ol>
+<ol>
+<li>把所有的保存copy到/usr/local/src目录下</li>
+</ol>
+<p>复制后</p>
+<ol>
+<li>由于nginx依赖pcre软件包，所以需要先安装pcre包</li>
+</ol>
+<p>a. 解压</p>
+<p>b. 编译和安装一起</p>
+<p>注意：pcre包安装的时候不需要指定安装路径 –prefix 不要使用</p>
+<ol>
+<li>安装nginx软件</li>
+</ol>
+<p>a. 解压nginx安装包</p>
+<p>b. 进入后，编译和安装</p>
+<p>nginx安装的时候指定了安装的路径(/usr/local/nginx)</p>
+<ol>
+<li>安装后的目录结构</li>
+</ol>
+<ol>
+<li>启动服务</li>
+</ol>
+<ol>
+<li>查看服务是否正常启动</li>
+</ol>
+<p>进程查看方式</p>
+<p>端口查看方式</p>
+<p>完成lnmp架构</p>
+<p>安装php的php-fpm运行模式。在php-5.3.28以后的版本默认里面就存在php-fpm模块，只需要在编译安装php的时候，启用这个模块即可。在编译configure的时候，指定一个选项 –enable-fpm</p>
+<ol>
+<li>解压php源码包</li>
+</ol>
+<ol>
+<li>进行目录，编译安装</li>
+</ol>
+<p>收集操作系统的信息（主要是检测操作的位数，编译器是否存在）</p>
+<p>编译和安装（主要是把c语言的文件转换机器语言；安装把对应生成的二进制的命令复制到指定的安装目录里面）</p>
+<p>注意：在编译的过程中，可能出现如下的错误</p>
+<p>可以使用如下命令进行解决</p>
+<pre><code># yum -y install make apr* autoconf automake curl-devel gcc gcc-c++ zlib-devel openssl openssl-devel pcre-devel gd kernel keyutils patch perl kernel-headers compat* mpfr cpp glibc libgomp libstdc++-devel ppl cloog-ppl keyutils-libs-devel libcom_err-devel libsepol-devel libselinux-devel krb5-devel zlib-devel libXpm* freetype libjpeg* libpng* php-common php-gd ncurses* libtool* libxml2 libxml2-devel patch cmake wget vim lrzsz pcre pcre-devel</code></pre><p>在执行上面的命令后，需要先清除编译的临时文件，然后在重新编译</p>
+<pre><code># make clean
+
+# ./configure --prefix=/usr/local/php --enable-fpm --disable-fileinfo
+
+# make 
+
+# make install</code></pre><p>安装后</p>
+<ol>
+<li>复制配置文件</li>
+</ol>
+<ol>
+<li>启动</li>
+</ol>
+<ol>
+<li>查看服务</li>
+</ol>
+<ol>
+<li>整合nginx和PHP</li>
+</ol>
+<p>使得nginx能够完成动态的请求，修改如下的nginx.conf文件</p>
+<p>配置文件内容如下</p>
+<p>如果以后有index.php的文件的请求，则nginx会把请求交给php-fpm处理，php-fpm处理的动态脚本的目录是/scripts目录（动态文件夹的目录可以修改）</p>
+<ol>
+<li>增加一个动态请求的目录</li>
+</ol>
+<p>增加一个index.php测试文件（内容phpinfo()函数）</p>
+<ol>
+<li>重启nginx服务器 -s 传递一个信号量</li>
+</ol>
+<p>-t检测nginx的配置文件语法是否正确</p>
+<p>帮助查看</p>
+<ol>
+<li>浏览器查看</li>
+</ol>
+<p>通过上面查看发现php没有正确的加载配置文件，需要去php的源码包里面复制一份</p>
+<p>在上面正确复制后，重启php-fpm模式</p>
+<p>查看</p>
+<p>Nginx使用</p>
+<p>Nginx软件的基本使用</p>
+<p>在Nginx成功安装后，我们可以在Nginx的安装目录下的sbin文件夹里面的nginx来对linux进行管理。</p>
+<p>例如：语法检测</p>
+<h1 id="nginx-t"><a href="#nginx-t" class="headerlink" title="./nginx -t"></a>./nginx -t</h1><p>例如：配置文件重新加载</p>
+<h1 id="nginx-s-reload"><a href="#nginx-s-reload" class="headerlink" title="./nginx -s reload"></a>./nginx -s reload</h1><p>Nginx软件的架构体系-【了解】</p>
+<p><a href="http://blog.csdn.net/syhd142/article/details/8440667" target="_blank" rel="noopener">http://blog.csdn.net/syhd142/article/details/8440667</a></p>
+<p>记住：master 和 worker。</p>
+<p>Nginx的虚拟主机的配置</p>
+<p>参考文档：<a href="http://tengine.taobao.org/nginx_docs/cn/" target="_blank" rel="noopener">http://tengine.taobao.org/nginx_docs/cn/</a></p>
+<p>虚拟主机的配置：<a href="http://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html" target="_blank" rel="noopener">http://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html</a></p>
+<p>配置文件的解释</p>
+<ol>
+<li>子进程的配置</li>
+</ol>
+<ol>
+<li>子进程处理的http请求参数（默认1024即可，不是越大越好）</li>
+</ol>
+<ol>
+<li>mime.types</li>
+</ol>
+<ol>
+<li>http 配置：主要是用来做web配置</li>
+</ol>
+<p>gzip压缩</p>
+<p><a href="https://www.cnblogs.com/mitang/p/4477220.html" target="_blank" rel="noopener">https://www.cnblogs.com/mitang/p/4477220.html</a></p>
+<p>a. server配置</p>
+<p>基于域名的虚拟主机配置</p>
+<ol>
+<li>修改server里面的 server_name</li>
+</ol>
+<ol>
+<li>更改hosts文件（更改的Windows下），相当于是dns解释器</li>
+</ol>
+<p>基于端口的配置</p>
+<ol>
+<li>增加一个server段</li>
+</ol>
+<ol>
+<li>创建一个虚拟主机的网站根目录（绝对路径）</li>
+</ol>
+<ol>
+<li>访问</li>
+</ol>
+<p>负载均衡配置</p>
+<p>前面学习了Nginx可以为一个静态的web服务器，那么接下我们学习一下它的另外一个功能作为负载均衡器。</p>
+<p>之前，一般web架构里面，常见就是一个ln/amp，但是这个单一架构往往能力有限，随着业务的发展，网站越来越受到欢迎，则原先的架构不能支持高并发的访问。所以我们一般会对这个架构做扩展，来支撑高并发。</p>
+<p>什么是并发？</p>
+<p>答：可以简单的理解就是在1s之内的用户的访问量的总和。一般来说这个最好不要取平均值，一般来说这个最大的峰值。</p>
+<pre><code>一般常见的扩展的方式有哪些？</code></pre><p>答：常见的扩展方式</p>
+<p>\1. 直接升级硬件服务器，也是最简单的，一般被称为垂直扩展，向上扩展。但是这个容易达到瓶颈。【服务器的硬件配置是很容易达到顶配 16G 32G 64G 128G  工业标准4G 电脑 32 64 128 寻址 电流 线宽 】【硬件升级价格是很贵 二级缓存 一级缓存2m 4m 8m 显卡】【硬件配置升了一倍，性能不一定 diy】【老板最不喜欢】</p>
+<p>\2. 水平扩展，向外扩展。购买普通的pc廉价服务器，搭建集群。</p>
+<p>什么是集群？</p>
+<p>答：为了完成某一个特定的功能而使用多台服务器搭建的一个架构，被称为集群。</p>
+<p>一般在互联网的企业都是做web服务器，一般把它称为web负载均衡集群【LB load balance 负载平衡】。还有一些其他的集群：高可用集群【HA high availability】、高性能集群【HP high perfermance】。</p>
+<p>相关文档：<a href="http://www.tuicool.com/articles/aMVjeeU#_motz" target="_blank" rel="noopener">http://www.tuicool.com/articles/aMVjeeU#_motz</a>_</p>
+<p>抓包分析：<a href="http://www.51cto.com/" target="_blank" rel="noopener">http://www.51cto.com/</a></p>
+<p>可以看到该网站的内容是来自于loadblance</p>
+<p>由于单台web服务器的能力有限，这个时候可以做水平扩展、向外扩展（scale outer）（负载均衡集群），增加很多台web服务器提供服务。原先有一个垂直扩展 （scale up）（向上扩展：主要是在单台服务器上不断的增加硬件的配置）。</p>
+<p>垂直扩展</p>
+<p>在单台服务器上增加配置，但是这有问题：</p>
+<ol>
+<li>随着硬件的增加的，效率反倒会在一定的时候出现急剧下降。主要的原因是由于如果存在多个CPU或者其他资源，多个服务进程会不断的争夺操作系统资源。</li>
+<li>硬件是存在瓶颈的，也就是说不可能有一个无限配置的主机，也叫作电子行业的摩尔定律不在满足。主要是由于先在工业限制，造成电器设备的线宽已经达到瓶颈。</li>
+<li>往往硬件的升级和硬件的成本是不满足线性关系的，是一个指数级别的增加。</li>
+<li>往往老板最不喜欢花钱的。</li>
+</ol>
+<p>水平扩展</p>
+<p>f5报价【好处：1. 简单 2. 效果特别明显 【立竿见影】】</p>
+<p>在水平方向不断的增加主机，提升网站的整体的性能。</p>
+<p>概念：</p>
+<ol>
+<li>常见的负载均衡器实现有：软件 nginx 或者 lvs和 硬件 f5（类似交换机 20w） 之分</li>
+<li>常见的负载均衡的算法有 轮询、加权、ip_hash</li>
+</ol>
+<p>高可用</p>
+<p>ping IP 包返回 心跳检测</p>
+<p>注意：有一个参数是用来衡量这个高可用集群是否高效；用9的个数来衡量</p>
+<p>一年内平均无故障的时间/(一年平均无故障的时间+平均恢复应用的时间+维护时间) * 100%</p>
+<p>得到的结果肯定是小于1的。（99.8% 96.8%）如果能够实现5个9则这个高可用的集群是非常稳固的（意味着一年内故障的时间大概在5分钟左右）（一般国内也就阿里和12306做到了）《京东技术解密》《淘宝技术那十年》</p>
+<p>具体配置</p>
+<ol>
+<li>画一个拓扑图</li>
+</ol>
+<ol>
+<li>配置3个虚拟主机</li>
+</ol>
+<p>81：</p>
+<p>82：</p>
+<p>83：</p>
+<p>配置一个80的虚拟主机做前端的用户请求:</p>
+<p>建立虚拟主机的网站根目录</p>
+<p>特别注意：配置Linux下的hosts文件，需要给upstream里面定义的虚拟主机的域名做一个对应的解析</p>
+<p>内容：</p>
+<ol>
+<li>配置一个upstream，代表的含义配置负载均衡器的能够处理的web服务器</li>
+</ol>
+<p>注意：定义这个upstream必须放在http里面的server前面</p>
+<ol>
+<li>nginx的负载均衡的默认算法是轮询的算法，一个服务器接着一个服务器来。</li>
+</ol>
+<ol>
+<li>将nginx的负载均衡算法改为加权方式</li>
+</ol>
+<ol>
+<li>将nginx的负载均衡算法改为ip_hash;</li>
+</ol>
+<ol>
+<li>备用服务器的概念</li>
+</ol>
+<ol>
+<li>常见的文档</li>
+</ol>
+<p>地址：[<a href="http://tengine.taobao.org/documentation_cn.html" target="_blank" rel="noopener">http://tengine.taobao.org/documentation_cn.html</a></p>
+<p>](<a href="http://tengine.taobao.org/documentation_cn.html" target="_blank" rel="noopener">http://tengine.taobao.org/documentation_cn.html</a>)</p>
+<p>查看</p>
+<p>地址：<a href="http://tengine.taobao.org/nginx_docs/cn/docs/http/ngx_http_upstream_module.html" target="_blank" rel="noopener">http://tengine.taobao.org/nginx_docs/cn/docs/http/ngx_http_upstream_module.html</a></p>
+<p>扩展</p>
+<p>linux是可以做文件查找的，使用find命令</p>
+<p>语法：# find 查找目录  选项（1. 名字 2. 修改时间….） 查找文件名称</p>
+<pre><code>[root@localhost sbin]# find / -name libpcre.so.1</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/虎-nginx/" data-id="ck0ajuevd0007s4uyobd18u5a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/08/虎-小程序02/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">虎-小程序02</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/08/虎-nginx/">&#39;虎-nginx&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/08/虎-小程序02/">虎-小程序02</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/08/虎-小程序01/">虎-小程序01</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/25/easyswoole/">&#39;easyswoole&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/25/swoole1/">&#39;swoole1&#39;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -62,6 +62,319 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-虎-nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/08/虎-nginx/" class="article-date">
+  <time datetime="2019-09-08T05:21:54.000Z" itemprop="datePublished">2019-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/08/虎-nginx/">&#39;虎-nginx&#39;</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Nginx简介</p>
+<p>Lamp(Linux + Apache + MySQL + PHP)架构概述</p>
+<p>LAMP（Linux- Apache-MySQL-PHP）网站架构是目前国际流行的Web架构，该架构包括：Linux操作系统，Apache网络服务器，MySQL数据库、PHP，所有组成产品均是开源软件，很多流行的商业应用都是采取这个架构。LAMP具有通用、跨平台、高性能、低价格的优势，因此LAMP无论是性能、质量还是价格都是企业搭建网站的首选平台。在国内可以说每一个公司都有使用LAMP这种架构，可以说它在国内互联网公司中的占有率基本上达到100%。</p>
+<p>对于大流量、大并发量的网站系统架构来说，除了硬件上使用高性能的服务器、负载均衡、CDN等之外，在软件架构上需要重点关注下面几个环节：使用高性能的操作系统（OS）、高性能的网页服务器（Web Server）、高性能的数据库（Database）、高效率的编程语言等。</p>
+<p>注意：现在的M有可能指的是MariaDB，也是MySQL的一个分支。现在的P有可能使用Python。</p>
+<p>问题的产生-C10K</p>
+<p>目前的我们正处于web2.0的互联网的时代，传统的lamp架构已经很难承载目前的访问流量，同时C10K的问题的产生，这个时候我们就不得不使用更加优秀的架构来支撑业务。这个时候，俄国的一个程序猿根据现有的互联网场景、以及结合现在的开发技术和硬件，设计出了一个非常厉害的web服务器软件Nginx，由于Nginx是为了访问量而设计的服务器。在最早的时候Nginx服务器并不支持PHP的，是后来加入了FastCgi才开始支持PHP的。</p>
+<p>最后，我们需要知道Nginx的产生并不是为了取代apache软件，而是为了相互配合，使得网站架构更加的牢固。</p>
+<p>nginx和apache的软件底层架构不一样。Nginx的并发性要比apache好很多，nginx属于轻量级服务器软件，apache属于重量级软件，nginx在处理静态页的效率要比apache好很多；apache在安全性要比nginx要好，apache在处理动态页面上的效率要比nginx高。</p>
+<p>运行模式不同的。php在apache环境下，运行的是php5模块方式运行的，由于是apache去加载php5模块，所以每次修改了php配置文件需要重启apache；</p>
+<p>在nginx模式下，php运行的时候使用的是php-fpm方式进行运行，这个方式会创建服务（端口是9000），因此在nginx下修改了php配置文件则需要重启php-fpm服务。</p>
+<p>什么是C10K的问题？</p>
+<p>答：在web2.0时代(信息为主，是无法体现价值的转义 web3.0的时候就是目前最火的区块链技术，就是为了价值转移而存在)（以社交类型网站兴起的时候开始计算，51博客、校内）主要是以动态请求为主，静态请求为辅。这个时候由于早先web服务器的设计主要是为了完成静态请求，这个时候对动态请求就显得有点乏力，无法支持大的动态请求。互联网上的一些就开始开发新的web服务器，以来适应新的web2.0时代。</p>
+<p>注意：当一个web网站的请求的并发数达到10k（同1s之内大概同时存在1w请求来请求web服务器），这个时候整个网站的架构都要进行重新设计。这个就是著名的C10K问题。并且目前互联网上已经出现C100K 甚至C1000K的问题的出现。</p>
+<p>nginx服务器简介</p>
+<p>nginx是一个web服务器；类似Apache软件。这是由俄国人开发的一个软件。其早期开发的这个软件主要是用于邮件代理。后面才转换为web服务，只能做静态的web服务器和负载均衡器。</p>
+<p>官网：<a href="http://nginx.org/" target="_blank" rel="noopener">http://nginx.org/</a></p>
+<p>中文社区：<a href="http://www.nginx.cn/" target="_blank" rel="noopener">http://www.nginx.cn/</a></p>
+<p>书籍推荐：《实战nginx》、《决战Nginx》</p>
+<p> 张宴-httpsqs队列服务， 是国内最早将Nginx软件引入到新浪。</p>
+<p>nginx:</p>
+<p>a. 邮件代理服务器，基本不再使用，最早期的功能，后来由于web领域做的更好</p>
+<p>b. 静态的web服务器（1u的服务器，大致可以处理的并发数 3-5w之间。apache的并发3-5k左右）</p>
+<p>c. 负载均衡器（集群）</p>
+<p>了解Nginx软件内部的架构处理。</p>
+<p>答： Nginx软件启动的时候会启动一个master进程（管理），在启动一个worker进行（主要是提供web服务）。master主进程是不做事的，主要是负责进程的产生和管理，以及配置文件的读取、日志进程管理、缓存进程管理…</p>
+<p>Nginx可以这样理解，在内部是一个worker进程处理多个用户的请求，并且在处理请求达到一定的数量之后，会被master进程kill掉，然后在重新的启动一个worker进程（只要是为了防止内存的泄露问题）</p>
+<p>Nginx好的特性：</p>
+<p>a. 支持平滑升级（热部署）：在不关闭服务的情况下可以升级到其他的Nginx版本。（erlang是专门做热部署，一般在游戏领域或者银行领域使用这门语言）</p>
+<p>b. 支持动态配置文件的读取（不关闭服务的情况可以重新的加载配置文件）</p>
+<p>常见web服务器的分类</p>
+<ol>
+<li>apache软件：一般在Linux下叫做httpd，最先是不使为了提供web服务，是为了解决资源共享的问题，最早使用应该是在军方的信息共享里面。(2.2  2.4版本)（重量级 ，设计成是模块化,但是它的模块不是热插拔的，就是说这么模块必须在编译安装的时候进行选择，不能说是编译完成之后，后期要加，在编译。）</li>
+</ol>
+<ol>
+<li>nginx：轻量级的web服务器，轻内核的web服务器，众多的其他的特性需要其他的模块进行提供(1. 官方很多模块 2. 第三方模块，互联网上广大开源爱好者，国内的淘宝为其提供很多的模块，并且有部分的模块已经被官方进行收录)。【国内前端的力量基本都是在阿里，阿里最先提出大前端，全栈(js 全栈)也是阿里提出来。full stack】</li>
+</ol>
+<ol>
+<li>IIS：Windows下的一个web服务器，常见的和 sql server【很好】 已经 windows server 【图形化】一起使用，并且都是图形化配置。【自媒体：写软文，改软文 捕捉热点–》自己文章】</li>
+</ol>
+<ol>
+<li>Lighttpd：主要是用来提供图片服务，主要是在推广上做的不好。早年豆瓣基本都是使用它。</li>
+</ol>
+<ol>
+<li>tomcat猫：Java里面的一个web服务器容器。</li>
+</ol>
+<hr>
+<p>介绍两个国内基于Nginx做了二次开发的版本：</p>
+<ol>
+<li>tengine：这个是淘宝基于Nginx做了二次开发，运用到双11 、天猫商城上面进行了检验，是的产品是非常的优秀。并且在上面增量很多的功能模块，提供了DSO特性。<br><a href="http://tengine.taobao.org/" target="_blank" rel="noopener">http://tengine.taobao.org/</a></li>
+<li>openresty：这个产品是之前淘宝里面的一个叫做章宜春的大牛基于Nginx做了二次开发，设计出来。在Nginx的基础上面引入 lua 解释器，可以让Nginx在不使用第三方的脚本解释器的情况下，自己就可以完成动态请求。（openresty = nginx + lua）<ol>
+<li>lua是由一个巴西人开发出来了一门脚本语言，专注于游戏领域的开发。lua是后端语言。</li>
+<li>cocos2d-lua 专门做游戏的。（cocos2d-js\C++）</li>
+<li>lua火起来的原因是国内一款《大话2》，其背后的推动着是前网易的 云风（吴云洋）。（国内游戏基本上都认识这个人，天才）<br><a href="http://openresty.org/cn/" target="_blank" rel="noopener">http://openresty.org/cn/</a></li>
+</ol>
+</li>
+</ol>
+<p>总结：上面的这两个产品在国内使用的更多。成熟的解决方案就更多，文档更加符合国内情况。</p>
+<p>哪里在使用这些web服务器？</p>
+<p>目前在全球T1000的网站里面，Nginx已经首当其冲。全球市场还是Apache老大哥。</p>
+<p>可以通过抓包分析</p>
+<ol>
+<li><p>豆瓣</p>
+</li>
+<li><p>搜狐</p>
+</li>
+</ol>
+<p>后期找工作可以可以尝试去抓包分析网站使用的大致的技术，然后根据该技术有选择性的简历。</p>
+<p>Nginx安装</p>
+<ol>
+<li><p>使用yum安装</p>
+<pre><code># yum install -y nginx</code></pre></li>
+<li><p>使用源码编译（lnmp架构）</p>
+</li>
+</ol>
+<p>目录结构</p>
+<p>安装nginx软件</p>
+<ol>
+<li>使用ftpd客户端进行上传操作</li>
+</ol>
+<ol>
+<li>把所有的保存copy到/usr/local/src目录下</li>
+</ol>
+<p>复制后</p>
+<ol>
+<li>由于nginx依赖pcre软件包，所以需要先安装pcre包</li>
+</ol>
+<p>a. 解压</p>
+<p>b. 编译和安装一起</p>
+<p>注意：pcre包安装的时候不需要指定安装路径 –prefix 不要使用</p>
+<ol>
+<li>安装nginx软件</li>
+</ol>
+<p>a. 解压nginx安装包</p>
+<p>b. 进入后，编译和安装</p>
+<p>nginx安装的时候指定了安装的路径(/usr/local/nginx)</p>
+<ol>
+<li>安装后的目录结构</li>
+</ol>
+<ol>
+<li>启动服务</li>
+</ol>
+<ol>
+<li>查看服务是否正常启动</li>
+</ol>
+<p>进程查看方式</p>
+<p>端口查看方式</p>
+<p>完成lnmp架构</p>
+<p>安装php的php-fpm运行模式。在php-5.3.28以后的版本默认里面就存在php-fpm模块，只需要在编译安装php的时候，启用这个模块即可。在编译configure的时候，指定一个选项 –enable-fpm</p>
+<ol>
+<li>解压php源码包</li>
+</ol>
+<ol>
+<li>进行目录，编译安装</li>
+</ol>
+<p>收集操作系统的信息（主要是检测操作的位数，编译器是否存在）</p>
+<p>编译和安装（主要是把c语言的文件转换机器语言；安装把对应生成的二进制的命令复制到指定的安装目录里面）</p>
+<p>注意：在编译的过程中，可能出现如下的错误</p>
+<p>可以使用如下命令进行解决</p>
+<pre><code># yum -y install make apr* autoconf automake curl-devel gcc gcc-c++ zlib-devel openssl openssl-devel pcre-devel gd kernel keyutils patch perl kernel-headers compat* mpfr cpp glibc libgomp libstdc++-devel ppl cloog-ppl keyutils-libs-devel libcom_err-devel libsepol-devel libselinux-devel krb5-devel zlib-devel libXpm* freetype libjpeg* libpng* php-common php-gd ncurses* libtool* libxml2 libxml2-devel patch cmake wget vim lrzsz pcre pcre-devel</code></pre><p>在执行上面的命令后，需要先清除编译的临时文件，然后在重新编译</p>
+<pre><code># make clean
+
+# ./configure --prefix=/usr/local/php --enable-fpm --disable-fileinfo
+
+# make 
+
+# make install</code></pre><p>安装后</p>
+<ol>
+<li>复制配置文件</li>
+</ol>
+<ol>
+<li>启动</li>
+</ol>
+<ol>
+<li>查看服务</li>
+</ol>
+<ol>
+<li>整合nginx和PHP</li>
+</ol>
+<p>使得nginx能够完成动态的请求，修改如下的nginx.conf文件</p>
+<p>配置文件内容如下</p>
+<p>如果以后有index.php的文件的请求，则nginx会把请求交给php-fpm处理，php-fpm处理的动态脚本的目录是/scripts目录（动态文件夹的目录可以修改）</p>
+<ol>
+<li>增加一个动态请求的目录</li>
+</ol>
+<p>增加一个index.php测试文件（内容phpinfo()函数）</p>
+<ol>
+<li>重启nginx服务器 -s 传递一个信号量</li>
+</ol>
+<p>-t检测nginx的配置文件语法是否正确</p>
+<p>帮助查看</p>
+<ol>
+<li>浏览器查看</li>
+</ol>
+<p>通过上面查看发现php没有正确的加载配置文件，需要去php的源码包里面复制一份</p>
+<p>在上面正确复制后，重启php-fpm模式</p>
+<p>查看</p>
+<p>Nginx使用</p>
+<p>Nginx软件的基本使用</p>
+<p>在Nginx成功安装后，我们可以在Nginx的安装目录下的sbin文件夹里面的nginx来对linux进行管理。</p>
+<p>例如：语法检测</p>
+<h1 id="nginx-t"><a href="#nginx-t" class="headerlink" title="./nginx -t"></a>./nginx -t</h1><p>例如：配置文件重新加载</p>
+<h1 id="nginx-s-reload"><a href="#nginx-s-reload" class="headerlink" title="./nginx -s reload"></a>./nginx -s reload</h1><p>Nginx软件的架构体系-【了解】</p>
+<p><a href="http://blog.csdn.net/syhd142/article/details/8440667" target="_blank" rel="noopener">http://blog.csdn.net/syhd142/article/details/8440667</a></p>
+<p>记住：master 和 worker。</p>
+<p>Nginx的虚拟主机的配置</p>
+<p>参考文档：<a href="http://tengine.taobao.org/nginx_docs/cn/" target="_blank" rel="noopener">http://tengine.taobao.org/nginx_docs/cn/</a></p>
+<p>虚拟主机的配置：<a href="http://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html" target="_blank" rel="noopener">http://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html</a></p>
+<p>配置文件的解释</p>
+<ol>
+<li>子进程的配置</li>
+</ol>
+<ol>
+<li>子进程处理的http请求参数（默认1024即可，不是越大越好）</li>
+</ol>
+<ol>
+<li>mime.types</li>
+</ol>
+<ol>
+<li>http 配置：主要是用来做web配置</li>
+</ol>
+<p>gzip压缩</p>
+<p><a href="https://www.cnblogs.com/mitang/p/4477220.html" target="_blank" rel="noopener">https://www.cnblogs.com/mitang/p/4477220.html</a></p>
+<p>a. server配置</p>
+<p>基于域名的虚拟主机配置</p>
+<ol>
+<li>修改server里面的 server_name</li>
+</ol>
+<ol>
+<li>更改hosts文件（更改的Windows下），相当于是dns解释器</li>
+</ol>
+<p>基于端口的配置</p>
+<ol>
+<li>增加一个server段</li>
+</ol>
+<ol>
+<li>创建一个虚拟主机的网站根目录（绝对路径）</li>
+</ol>
+<ol>
+<li>访问</li>
+</ol>
+<p>负载均衡配置</p>
+<p>前面学习了Nginx可以为一个静态的web服务器，那么接下我们学习一下它的另外一个功能作为负载均衡器。</p>
+<p>之前，一般web架构里面，常见就是一个ln/amp，但是这个单一架构往往能力有限，随着业务的发展，网站越来越受到欢迎，则原先的架构不能支持高并发的访问。所以我们一般会对这个架构做扩展，来支撑高并发。</p>
+<p>什么是并发？</p>
+<p>答：可以简单的理解就是在1s之内的用户的访问量的总和。一般来说这个最好不要取平均值，一般来说这个最大的峰值。</p>
+<pre><code>一般常见的扩展的方式有哪些？</code></pre><p>答：常见的扩展方式</p>
+<p>\1. 直接升级硬件服务器，也是最简单的，一般被称为垂直扩展，向上扩展。但是这个容易达到瓶颈。【服务器的硬件配置是很容易达到顶配 16G 32G 64G 128G  工业标准4G 电脑 32 64 128 寻址 电流 线宽 】【硬件升级价格是很贵 二级缓存 一级缓存2m 4m 8m 显卡】【硬件配置升了一倍，性能不一定 diy】【老板最不喜欢】</p>
+<p>\2. 水平扩展，向外扩展。购买普通的pc廉价服务器，搭建集群。</p>
+<p>什么是集群？</p>
+<p>答：为了完成某一个特定的功能而使用多台服务器搭建的一个架构，被称为集群。</p>
+<p>一般在互联网的企业都是做web服务器，一般把它称为web负载均衡集群【LB load balance 负载平衡】。还有一些其他的集群：高可用集群【HA high availability】、高性能集群【HP high perfermance】。</p>
+<p>相关文档：<a href="http://www.tuicool.com/articles/aMVjeeU#_motz" target="_blank" rel="noopener">http://www.tuicool.com/articles/aMVjeeU#_motz</a>_</p>
+<p>抓包分析：<a href="http://www.51cto.com/" target="_blank" rel="noopener">http://www.51cto.com/</a></p>
+<p>可以看到该网站的内容是来自于loadblance</p>
+<p>由于单台web服务器的能力有限，这个时候可以做水平扩展、向外扩展（scale outer）（负载均衡集群），增加很多台web服务器提供服务。原先有一个垂直扩展 （scale up）（向上扩展：主要是在单台服务器上不断的增加硬件的配置）。</p>
+<p>垂直扩展</p>
+<p>在单台服务器上增加配置，但是这有问题：</p>
+<ol>
+<li>随着硬件的增加的，效率反倒会在一定的时候出现急剧下降。主要的原因是由于如果存在多个CPU或者其他资源，多个服务进程会不断的争夺操作系统资源。</li>
+<li>硬件是存在瓶颈的，也就是说不可能有一个无限配置的主机，也叫作电子行业的摩尔定律不在满足。主要是由于先在工业限制，造成电器设备的线宽已经达到瓶颈。</li>
+<li>往往硬件的升级和硬件的成本是不满足线性关系的，是一个指数级别的增加。</li>
+<li>往往老板最不喜欢花钱的。</li>
+</ol>
+<p>水平扩展</p>
+<p>f5报价【好处：1. 简单 2. 效果特别明显 【立竿见影】】</p>
+<p>在水平方向不断的增加主机，提升网站的整体的性能。</p>
+<p>概念：</p>
+<ol>
+<li>常见的负载均衡器实现有：软件 nginx 或者 lvs和 硬件 f5（类似交换机 20w） 之分</li>
+<li>常见的负载均衡的算法有 轮询、加权、ip_hash</li>
+</ol>
+<p>高可用</p>
+<p>ping IP 包返回 心跳检测</p>
+<p>注意：有一个参数是用来衡量这个高可用集群是否高效；用9的个数来衡量</p>
+<p>一年内平均无故障的时间/(一年平均无故障的时间+平均恢复应用的时间+维护时间) * 100%</p>
+<p>得到的结果肯定是小于1的。（99.8% 96.8%）如果能够实现5个9则这个高可用的集群是非常稳固的（意味着一年内故障的时间大概在5分钟左右）（一般国内也就阿里和12306做到了）《京东技术解密》《淘宝技术那十年》</p>
+<p>具体配置</p>
+<ol>
+<li>画一个拓扑图</li>
+</ol>
+<ol>
+<li>配置3个虚拟主机</li>
+</ol>
+<p>81：</p>
+<p>82：</p>
+<p>83：</p>
+<p>配置一个80的虚拟主机做前端的用户请求:</p>
+<p>建立虚拟主机的网站根目录</p>
+<p>特别注意：配置Linux下的hosts文件，需要给upstream里面定义的虚拟主机的域名做一个对应的解析</p>
+<p>内容：</p>
+<ol>
+<li>配置一个upstream，代表的含义配置负载均衡器的能够处理的web服务器</li>
+</ol>
+<p>注意：定义这个upstream必须放在http里面的server前面</p>
+<ol>
+<li>nginx的负载均衡的默认算法是轮询的算法，一个服务器接着一个服务器来。</li>
+</ol>
+<ol>
+<li>将nginx的负载均衡算法改为加权方式</li>
+</ol>
+<ol>
+<li>将nginx的负载均衡算法改为ip_hash;</li>
+</ol>
+<ol>
+<li>备用服务器的概念</li>
+</ol>
+<ol>
+<li>常见的文档</li>
+</ol>
+<p>地址：[<a href="http://tengine.taobao.org/documentation_cn.html" target="_blank" rel="noopener">http://tengine.taobao.org/documentation_cn.html</a></p>
+<p>](<a href="http://tengine.taobao.org/documentation_cn.html" target="_blank" rel="noopener">http://tengine.taobao.org/documentation_cn.html</a>)</p>
+<p>查看</p>
+<p>地址：<a href="http://tengine.taobao.org/nginx_docs/cn/docs/http/ngx_http_upstream_module.html" target="_blank" rel="noopener">http://tengine.taobao.org/nginx_docs/cn/docs/http/ngx_http_upstream_module.html</a></p>
+<p>扩展</p>
+<p>linux是可以做文件查找的，使用find命令</p>
+<p>语法：# find 查找目录  选项（1. 名字 2. 修改时间….） 查找文件名称</p>
+<pre><code>[root@localhost sbin]# find / -name libpcre.so.1</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/虎-nginx/" data-id="ck0ajuevd0007s4uyobd18u5a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-虎-小程序02" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/09/08/虎-小程序02/" class="article-date">
@@ -283,7 +596,7 @@ xhr.send();</code></pre><p>小程序</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/08/虎-小程序02/" data-id="ck0af8mf30001g8uymg16yuqz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/08/虎-小程序02/" data-id="ck0ajuesr0005s4uyiaw2t007" class="article-share-link">Share</a>
       
       
     </footer>
@@ -472,7 +785,7 @@ xhr.send();</code></pre><p>小程序</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/08/虎-小程序01/" data-id="ck0af8mfd0002g8uybf0891g5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/08/虎-小程序01/" data-id="ck0ajuesk0004s4uygd7fjvw0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -689,7 +1002,7 @@ xhr.send();</code></pre><p>小程序</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/25/easyswoole/" data-id="ck0af8mfx0004g8uynvzeh1pa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/25/easyswoole/" data-id="ck0ajuery0001s4uy6wy5drxc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -955,7 +1268,7 @@ $ws-&gt;start();</code></pre><p>4、客户端</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="ck0af8mhb0006g8uy29b7sspf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/25/swoole1/" data-id="ck0ajuese0003s4uyd3jb8mrk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1578,7 +1891,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="ck0af8mhz0008g8uymzcwa07p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/rabbtMQ/" data-id="ck0ajuew10009s4uy44bls466" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1905,7 +2218,7 @@ $connection-&gt;close();</code></pre><p>七、推送消息模板</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="ck0af8mgz0005g8uy5c3rhusi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux编译安装lanmp/" data-id="ck0ajuev40006s4uyz9gcx3y1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2058,7 +2371,7 @@ Apache版本为2.0 - 2.4,Centos默认安装版本就是这个版本，因为Apac
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="ck0af8mfn0003g8uy7ay10mv3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux权限和yum安装lamp/" data-id="ck0ajues70002s4uy2ph8zlq8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2546,7 +2859,7 @@ grep php34 /etc/group</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="ck0af8mia0009g8uyz2n9pkd5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux用户和权限/" data-id="ck0ajuewk000as4uylq8eba8e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2955,1095 +3268,7 @@ shell&gt;# yum install -y man</code></pre><p>注意：前提必须能上网</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="ck0af8mhu0007g8uy362igtqa" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-nginx" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/08/01/nginx/" class="article-date">
-  <time datetime="2019-08-01T06:29:37.000Z" itemprop="datePublished">2019-08-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/01/nginx/">&#39;nginx&#39;</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目录</p>
-<p>目录 目录一、昨日回顾1、知识点回顾二、今日目标三、Nginx 简介1、什么是 Nginx2、Nginx 服务器的特点3、查看一个网站是否使用 nginx四、安装操作系统1、安装CentOS6.8镜像到虚拟机中1.1、选择虚拟机光驱插入镜像文件1.2、启动虚拟机1.3、出现以下界面选择第1项1.4、跳过检测(光盘)镜像1.5、选择下一步1.6、选择简体中文与选择下一步1.7、默认下一步1.8、默认下一步1.9、选择是1.10、默认下一步1.11、设置 root 用户密码1.12、选择所有磁盘空间1.13、看到以下界面时代表安装成功2、网络配置2.1、关闭Selinux2.2、修改Linux系统下的网卡2.2.1、ifcfg-eth0(第一张网卡配置)2.2.2、ifcfg-eth1(第二张网卡配置)2.3、关闭防火墙2.4、修改虚拟机的网卡模式2.4.1、第一张网卡2.4.2、第二张网卡2.5、设置本地网络VM1网卡IP地址(windows)2.6、重启Linux操作系统3、使用 cmder 连接Linux五、WEB环境搭建(重要)1、前期准备1.1、底层软件库1.2、虚拟内存2、安装 MySQL2.2.1、安装依赖库2.2.1.1、安装 cmake 和 bison 与 ncurses2.2.1.2、下载 Boost2.2.1.3、解压2.2.1.4、移动2.2.2、安装MySQL2.2.2.1、建立 MySQL 安装目录和用户2.2.2.2、下载 MySQL2.2.2.3、上传2.2.2.4、解压2.2.2.5、进入目录2.2.2.6、进行软件配置和环境检测2.2.2.7、编译软件并且进行安装2.2.3、配置2.2.3.1、使用递归，把 MySQL 目录所有者设置为 MySQL这个用户2.2.3.2、删除系统自带的 my.cnf 文件2.2.3.3、进入 MySQL 安装目录下2.2.3.4、根据实际情况优化 MySQL 配置2.2.3.5、初始化和启动2.2.3.5.1、初始化 MySQL 的基本表2.2.3.5.2、启动 MySQL2.2.3.5.3、修改 MySQL 的 root 密码2.2.3.5.4、增加到开机启动2.2.3.5.4、将 MySQL 命令加入到环境变量中2.2.3.5.5、如果需要对外开放 3306 端口3、安装PHP3.1、检查与安装依赖库3.1.1、检查依赖库3.1.2、安装依赖库3.2、安装 PHP3.2.1、下载3.2.2、解压3.2.3、进入目录3.2.4、将configure 参数及详情解析另存为一个文件，以供学习参考用3.2.5、进行软件的配置与环境检测3.2.6、编译软件并且进行安装3.3、配置3.3.1、复制配置文件3.3.2、配置 php.ini3.3.3、配置 php-fpm.conf3.3.4、创建用户组与用户名3.3.5、将 php-fpm 加入服务并自动启动4、安装 Nginx4.1、检查与安装依赖库4.1.1、检查依赖库4.1.2、安装依赖库4.2、安装 nginx4.2.1、创建目录4.2.2、下载  nginx4.2.3、解压4.2.4、进入目录4.2.5、将 configure 参数及详情解析另存为一个文件，以供学习参考 用4.2.6、进行软件配置和环境检测4.2.7、编译软件并且进行安装4.3、配置4.3.1、简单配置4.3.1.1、创建网站根目录4.3.1.2、开始配置4.3.2、支持 PHP4.3.3、优化虚拟主机配置4.4、nginx 管理4.4.1、启动4.4.2、重载配置文件4.4.3、停止4.4.4、通知nginx关闭服务4.4.4、安装为服务4.4.4.1、配置权限并添加到开机启动4.5、与 ThinkPHP 的整合4.6、开放端口六、网站的静态资源和 gzip 压缩1、配置如下2、重新加载七、使用缓存功能把静态资源缓存到客户端1、启动缓存功能的配置八、服务器集群(了解)九、负载均衡的分发实验(重要)1、正向代理和反向代理的原理图2、负载均衡的原理和作用3、使用 nginx 部署一个负载均衡的实验3.1、负载均衡必须要有至少 3 台服务器3.2、修改 Proxy 服务器中 nginx.conf 文件内容3.3、修改 Proxy 服务器中 vhost.conf 文件内容3.4、重新加载 nginx十、Lamp 和Lnmp 的区别1、Lamp 架构概述2、Lnmp 框架概述3、Lamp 和 Lnmp 的区别是什么十一、总结</p>
-<p>一、昨日回顾</p>
-<p>1、知识点回顾</p>
-<p>二、今日目标</p>
-<ul>
-<li>能够说出 Nginx 的作用</li>
-<li>能够实现 Nginx 与 php-fpm 安装</li>
-<li>能够实现 Nginx 的虚拟主机配置</li>
-<li>能够了解 Nginx 的缓存功能</li>
-<li>能够了解 Nginx 的压缩功能</li>
-<li>能够解释 session 访问失效的原因</li>
-<li>能够理解 session 共享的原理</li>
-</ul>
-<p>三、Nginx 简介</p>
-<p>官网：<a href="http://nginx.org" target="_blank" rel="noopener">http://nginx.org</a></p>
-<p>中文社区：<a href="http://www.nginx.cn/doc/" target="_blank" rel="noopener">http://www.nginx.cn/doc/</a></p>
-<p>淘宝：<a href="http://tengine.taobao.org/" target="_blank" rel="noopener">http://tengine.taobao.org/</a></p>
-<p>1、什么是 Nginx</p>
-<pre><code>Nginx(&quot;engine x&quot;) 是一个高性能的 Web 和反向代理服务器，它具有很多非常优越的特性：</code></pre><p>作为 Web 服务器：</p>
-<pre><code>相比 Apache，Nginx 使用更少的资源，支持更多的并发连接，体现更高的效率，能够支持高达 50000 个并发连接数的响应，Nginx选择了 epoll and kqueue 作为开发模型。</code></pre><p>作为负载均衡服务器：</p>
-<pre><code>Nginx 即可以在内部直接支持 Rails 和 PHP，也可以支持作为 HTTP 代理服务器对外进行服务。Nginx 使用 C 语言编写，不论是系统资源开销还  CPU 使用效率都比 Perlbal 要好的多。</code></pre><p>作为邮件代理服务器：</p>
-<pre><code>Nginx 同时也是一个非常优秀的邮件代理服务器（最早开发这个产品的目的之一也是作为邮件代理服务器），Last.fm 描述成功并且美妙的使用经验。</code></pre><p>2、Nginx 服务器的特点</p>
-<ul>
-<li>热部署</li>
-<li>可以高并连接</li>
-<li>内存消耗低</li>
-<li>处理响应请求很快</li>
-</ul>
-<p>3、查看一个网站是否使用 nginx</p>
-<p>使用 lua 命令：curl -I -H “Accept-Encoding: gzip, deflate” “网址”</p>
-<p>案例：获取元游信息这个网站的相关信息</p>
-<pre><code>shell&gt;# curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.yyxxgame.com&quot;</code></pre><p>其实淘宝也是使用 Nginx，只不过淘宝的工程师把 Nginx 的源代码进行了修改，他们把修改后的 Nginx 服务叫做 Tengine，是一个进阶版 Nginx</p>
-<p>四、安装操作系统</p>
-<p>学习目标：能够实现CentOS系统安装与网络配置</p>
-<p>概述</p>
-<pre><code>为什么在自己的电脑上安装VM虚拟机，而不直接在各大云服务商购买云主机？为了减少学习或开发成本与方便开发人员测试代码。</code></pre><p>步骤</p>
-<ol>
-<li>安装CentOS系统<ol>
-<li>选择虚拟机光驱插入镜像文件</li>
-<li>出现以下界面选择第1项</li>
-<li>跳过检测(光盘)镜像</li>
-<li>选择下一步</li>
-<li>选择简体中文与选择下一步</li>
-<li>默认下一步</li>
-<li>默认下一步</li>
-<li>选择是</li>
-<li>默认下一步</li>
-<li>设置 root 用户密码</li>
-<li>选择所有磁盘空间</li>
-<li>等待安装</li>
-</ol>
-</li>
-<li>网络配置<ol>
-<li>关闭 Selinux</li>
-<li>修改Linux系统下的网卡<ol>
-<li>ifcfg-eth0</li>
-<li>ifcfg-eth1</li>
-</ol>
-</li>
-<li>修改虚拟机的网卡模式<ol>
-<li>第一张网卡</li>
-<li>第二张网卡</li>
-</ol>
-</li>
-<li>设置本地网络VM1网卡IP地址</li>
-</ol>
-</li>
-</ol>
-<p>1、安装CentOS6.8镜像到虚拟机中</p>
-<p>镜像下载地址：<a href="https://www.centos.org/download/" target="_blank" rel="noopener">https://www.centos.org/download/</a></p>
-<p>1.1、选择虚拟机光驱插入镜像文件</p>
-<p>注意事项如下：不能有任何中文目录</p>
-<p>1.2、启动虚拟机</p>
-<p>1.3、出现以下界面选择第1项</p>
-<p>注意：</p>
-<pre><code>ctrl+G或者单击鼠标可以进入虚拟机当中，ctrl+alt可以把鼠标退出虚拟机以外
-
-然后回车或者等待倒数就可以进行安装了</code></pre><p>1.4、跳过检测(光盘)镜像</p>
-<p>1.5、选择下一步</p>
-<p>1.6、选择简体中文与选择下一步</p>
-<p>1.7、默认下一步</p>
-<p>1.8、默认下一步</p>
-<p>1.9、选择是</p>
-<p>1.10、默认下一步</p>
-<p>1.11、设置 root 用户密码</p>
-<p>1.12、选择所有磁盘空间</p>
-<p>1.13、看到以下界面时代表安装成功</p>
-<p>2、网络配置</p>
-<p>2.1、关闭Selinux</p>
-<p>注意：关闭子防火墙，不关闭可能影响nginx/apache、ftp、php、memcache、redis、mognoDB</p>
-<pre><code>shell&gt;# vi /etc/selinux/config</code></pre><p>2.2、修改Linux系统下的网卡</p>
-<p>将第一张网卡设置为静态IP，第二张网卡设置动态IP</p>
-<p>2.2.1、ifcfg-eth0(第一张网卡配置)</p>
-<pre><code>IPADDR=10.10.10.11    #IP地址
-NETMASK=255.255.255.0    #子掩码
-NETWORK=10.10.10.1    #网关
-
-shell&gt;# vi /etc/sysconfig/network-scripts/ifcfg-eth0</code></pre><p>2.2.2、ifcfg-eth1(第二张网卡配置)</p>
-<pre><code>shell&gt;# vi /etc/sysconfig/network-scripts/ifcfg-eth1</code></pre><p>2.3、关闭防火墙</p>
-<pre><code>shell&gt;# service iptables stop</code></pre><p>以上这种方式只是临时关闭防火墙，重启操作系统后防火墙又重新启动了；想永久关闭的话，就必须设置开机自动关闭防火墙操作如下：</p>
-<pre><code>shell&gt;# chkconfig iptables off</code></pre><p>注意：在学习或本地测试时可以关闭防火墙，在生产环境中防火墙是必须开启的；防火墙开启后，我们需要使用到的端口必须要在防火墙中设置规则，把这个规则称为：开放端口。</p>
-<p>2.4、修改虚拟机的网卡模式</p>
-<p>2.4.1、第一张网卡</p>
-<p>2.4.2、第二张网卡</p>
-<p>2.5、设置本地网络VM1网卡IP地址(windows)</p>
-<p>2.6、重启Linux操作系统</p>
-<pre><code>shell&gt;# reboot</code></pre><p>3、使用 cmder 连接Linux</p>
-<p>如果使用 cmder 连接Linux时，有可能会出现以下错误：</p>
-<p>解决方案：</p>
-<p>将保存在本地key清除即可</p>
-<pre><code>shell&gt;# ssh-keygen -R ip</code></pre><p>五、WEB环境搭建(重要)</p>
-<p>学习目标：了解 WEB 环境作用， WEB 环境的搭建</p>
-<p>概念</p>
-<pre><code>我们开发出来项目目的是为了什么？为了提供给更多用户的操作与使用，项目前期是在开发环境中运行，只能够是我们自己或同一个局域网的用户才操作；想让更多用户的操作与使用我们开发出来项目，就得把项目部署到线上(生产环境中)，前提得有一台允许外网访问的WEB，一般购买云主机默认只有一个操作系统，没有WEB服务，需要我们自己搭建WEB服务。</code></pre><p>步骤</p>
-<ol>
-<li>前期准备<ol>
-<li>安装底层软件库(底层库)</li>
-<li>虚拟内存(了解)<ol>
-<li>阿里云</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>安装 MySQL(5.7)<ol>
-<li>安装依赖库<ol>
-<li>rpm(ftp安装到一半，会提示它必须要依赖某包)、yum(成功率比较高)、源码编译安装(成功率30%)</li>
-<li>5.5以编译安装方式不是以 ./configure，cmake、boost依赖库(底层库)</li>
-</ol>
-</li>
-<li>安装mysql<ol>
-<li>建立一个目录</li>
-<li>下载</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>进行软件配置和环境检测  ./configure (cmake) — 生成 makeFile</li>
-<li>编译软件 – 读取 makeFile 文件，并生成二进制</li>
-<li>进行安装</li>
-</ol>
-</li>
-<li>配置<ol>
-<li>修改目录拥有者与所属组</li>
-<li>删除系统自带my.cnf</li>
-<li>进入MYSQL安装目录</li>
-<li>创建mysql配置文件</li>
-<li>初始化和启动</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>安装 PHP</li>
-<li>安装 Nginx</li>
-</ol>
-<p>1、前期准备</p>
-<p>1.1、底层软件库</p>
-<p>学习目标：了解底层软件库安装/更新与作用</p>
-<p>概述</p>
-<pre><code>Linux操作系统下，安装软件不管以哪种方式安装，安装包与安装包之间是需要依赖的，除依赖之外面，对软件包的版本也是有要求。</code></pre><p>运行以下命令确保底层软件库都已安装</p>
-<pre><code>shell# yum -y install gcc gcc-c++ autoconf automake zlib libxml2 libxml2-devel ncurses-devel libmcrypt libtool cmake bison make pcre pcre-devel libevent openssl openssl-devel gd-devel bzip2 bzip2-devel libcurl curl-devel python python-devel mysql-devel expat-devel</code></pre><p>1.2、虚拟内存</p>
-<p>学习目标：了解虚拟内存的作用与设置</p>
-<p>概念</p>
-<pre><code>源码编译安装 MySQL 对内存要求相对比较高，它需要内存2G或以上；在我们学习阶段只能购买1核1G的服务器，也想源码编译安装 MySQL哪怎么办，只能用空间换内存。</code></pre><p>如果服务器的物理内存小于2G，而且又没有设置虚拟内存的话，在编译安装MySQL的时候，就很容易发生以下报错：</p>
-<p>步骤</p>
-<ol>
-<li>查看内存情况</li>
-<li>创建swap文件</li>
-<li>激活</li>
-<li>设置开机自动创建</li>
-</ol>
-<p>解决方法：增加内存或者增加虚拟内存</p>
-<p>先用free指令查看内存情况</p>
-<pre><code>shell&gt;# free</code></pre><p>可以看到系统还没有设置虚拟内存，添加虚拟内存的方法如下：</p>
-<p>第一步：创建swap文件</p>
-<pre><code>shell&gt;# cd /var
-shell&gt;# dd if=/dev/zero of=swapfile bs=1024 count=2048000
-shell&gt;# mkswap swapfile</code></pre><p>第二步：激活</p>
-<pre><code>shell&gt;# swapon swapfile</code></pre><p>第三步：开机自动创建</p>
-<pre><code>shell&gt;# echo &quot;/var/swapfile swap swap defaults 0 0&quot; &gt;&gt; /etc/fstab</code></pre><p>例如：我要在/root 家目录创建一个txt，并写入”我是一个txt文件”</p>
-<p>2、安装 MySQL</p>
-<p>学习目标：了解源码编译安装 MySQL， MySQL配置</p>
-<p>概述</p>
-<pre><code>MySQL二进制文件可以 http://dev.mysql.com/downloads/mysql 或者 http://mirrors.sohu.com/mysql 去下载注意要下载与操作系统对应的版本及位数（32位或64位），编译安装需要下载源码版(Source Code)，此处以mysql-5.7.24tar.gz为例</code></pre><p>以下 安 装中 涉 及的 几点 需 要提 前 说明 的问 题 ：</p>
-<ul>
-<li>所有下载的文件将保存在 /root 目录下</li>
-<li>mysql 将以 mysql 用户运 行， 而且将加入 service 开机自动运行</li>
-<li>mysql 将被安装在 /usr/local/mysql/ 目录下</li>
-<li>mysql 默认安装使用 utf8 字符集</li>
-<li>mysql 的数据和日志文件保存在 /usr/local/mysql/data/ 目录下</li>
-<li>mysql 的配置文件保存于 /usr/local/mysql/etc/my.cnf</li>
-<li>mysql 的mysql.sock保存于 /usr/local/mysq/tmp/mysql.sock</li>
-<li>注意 从 MySQL 5.7.5 开 始 Boost 库是 必需 的</li>
-</ul>
-<p>步骤</p>
-<ol>
-<li>安装依赖库</li>
-<li>建立 MySQL 安装目录和用户</li>
-<li>下载 MySQL</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>环境检测</li>
-<li>编译软件</li>
-<li>进行安装</li>
-<li>配置MySQL</li>
-</ol>
-<p>2.2.1、安装依赖库</p>
-<p>学习目标：了解怎么使用 yum 命令检查软件是否安装</p>
-<p>概述</p>
-<pre><code>`MySQL从5.5版本开始，通过./configure进行编译配置方式已经被取消，取而代之的是cmake工具。需要下载CMake编译器、Boost库、ncurses库和GNU分析器生成器bison这4种工具，可以用yum install的方式安装cmake、bison、boost、ncurses`</code></pre><p>步骤</p>
-<ol>
-<li>使用 yum 源安装 cmake、bison、ncurses依赖库</li>
-<li>下载 Boost 依赖库</li>
-<li>解压 Boost 依赖库</li>
-<li>移动 Boost 依赖库到 /usr/local目录下，并重命名为 boost</li>
-</ol>
-<p>2.2.1.1、安装 cmake 和 bison 与 ncurses</p>
-<pre><code>shell&gt;# yum -y install cmake bison ncurses</code></pre><p>2.2.1.2、下载 Boost</p>
-<pre><code>shell&gt;# wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz</code></pre><p>有可能会报以下错误：</p>
-<p>解决方案</p>
-<pre><code>shell&gt;# yum -y install wget</code></pre><p>上传</p>
-<p>2.2.1.3、解压</p>
-<pre><code>shell&gt;# tar -zxvf boost_1_59_0.tar.gz</code></pre><p>2.2.1.4、移动</p>
-<pre><code>shell&gt;# mv boost_1_59_0 /usr/local/boost</code></pre><p>2.2.2、安装MySQL</p>
-<p>学习目标：掌握源码编译安装 MySQL</p>
-<p>概述</p>
-<pre><code>为什么使用源码编译安装 MySQL，不直接使用 yum 源安装 MySQL？虽然 yum 源安装也可以指定安装目录，但是默认会帮我们安装很多用不到的扩展，会占用我们磁盘空间。使用源码编译安装可以定制功能安装。</code></pre><p>步骤</p>
-<ol>
-<li>建立 MySQL 安装目录与用户</li>
-<li>下载 MySQL</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>进行软件配置和环境检测</li>
-<li>编译软件并且进行安装</li>
-</ol>
-<p>2.2.2.1、建立 MySQL 安装目录和用户</p>
-<p>在/usr/local/mysql建立【data】、【tmp】、【log】、【etc】4个目录</p>
-<pre><code>shell&gt;# mkdir -pv /usr/local/mysql</code></pre><p>进入mysql目录</p>
-<pre><code>shell&gt;# cd /usr/local/mysql</code></pre><p>创建 data tmp log etc 目录</p>
-<pre><code>shell&gt;# mkdir data tmp log etc</code></pre><p>创建用户组</p>
-<pre><code>shell&gt;# groupadd mysql</code></pre><p>创建用户名</p>
-<pre><code>shell&gt;# useradd -g mysql -s /usr/sbin/nologin mysql</code></pre><p>2.2.2.2、下载 MySQL</p>
-<pre><code>shell&gt;# cd ~
-shell&gt;# wget http://mirrors.sohu.com/mysql/MySQL-5.7/mysql-5.7.24.tar.gz</code></pre><p>注意：MySQL源码安装包在国外，下载会比较慢；我已经提前下载好了。</p>
-<p>2.2.2.3、上传</p>
-<p>2.2.2.4、解压</p>
-<pre><code>shell&gt;# tar -zxvf mysql-5.7.24.tar.gz</code></pre><p>2.2.2.5、进入目录</p>
-<pre><code>shell&gt;# cd mysql-5.7.24</code></pre><p>2.2.2.6、进行软件配置和环境检测</p>
-<pre><code>shell&gt;# cmake \
--DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
--DMYSQL_UNIX_ADDR=/usr/local/mysql/tmp/mysql.sock \
--DMYSQL_DATADIR=/usr/local/mysql/data \
--DSYSCONFDIR=/usr/local/mysql/etc \
--DMYSQL_USER=mysql \
--DDEFAULT_CHARSET=utf8 \
--DDEFAULT_COLLATION=utf8_general_ci \
--DWITH_EXTRA_CHARSETS:STRING=utf8,gbk \
--DWITH_DEBUG=0 \
--DWITH_MYISAM_STORAGE_ENGINE=1 \
--DWITH_INNOBASE_STORAGE_ENGINE=1 \
--DWITH_ARCHIVE_STORAGE_ENGINE=1 \
--DWITH_PARTITION_STORAGE_ENGINE=1 \
--DENABLED_LOCAL_INFILE=1 \
--DWITH_EMBEDDED_SERVER=1 \
--DMYSQL_USER=mysql \
--DWITH_BOOST=/usr/local/boost \
--DDOWNLOAD_BOOST=1</code></pre><p>以上内容的解释：</p>
-<p>shell&gt;# cmake</p>
-<pre><code>#设置安装目录
-
--DCMAKE_INSTALL_PREFIX=/usr/local/mysql
-
-#设置sock目录
-
--DMYSQL_UNIX_ADDR=/usr/local/mysql/tmp/mysql.sock
-
-#设置数据库存放目录
-
--DMYSQL_DATADIR=/usr/local/mysql/data
-
-#设置配置文件my.cnf存放目录
-
--DSYSCONFDIR=/usr/local/mysql/etc
-
-#设置mysql的默认使用用户
-
--DMYSQL_USER=mysql
-
-#设置默认字符集
-
--DDEFAULT_CHARSET=utf8
-
-#默认校对规则
-
--DDEFAULT_COLLATION=utf8_general_ci
-
-#指明安装额外字符集的支持
-
--DWITH_EXTRA_CHARSETS:STRING=utf8,gbk
-
-#去除debug模式
-
--DWITH_DEBUG=0
-
-#以下几条开启常用的引擎
-
--DWITH_MYISAM_STORAGE_ENGINE=1
-
--DWITH_INNOBASE_STORAGE_ENGINE=1
-
--DWITH_ARCHIVE_STORAGE_ENGINE=1
-
--DWITH_PARTITION_STORAGE_ENGINE=1
-
-#Enable LOAD DATA LOCAL INFILE（default：disabled）
-
--DENABLED_LOCAL_INFILE=1
-
-#使用一些字符函数的汇编版本
-
--DWITH_EMBEDDED_SERVER=1
-
--DMYSQL_USER=mysql
-
-#5.7编译需要boost类库，指明boost的路径
-
--DWITH_BOOST=/usr/local/boost
-
-#在以上路径如果没查找到boost会自动下载并解压(如事先已下载好，此句可略)
-
--DDOWNLOAD_BOOST=1</code></pre><p>2.2.2.7、编译软件并且进行安装</p>
-<pre><code>shell&gt;# make &amp;&amp; make install</code></pre><p>注意：</p>
-<pre><code>接下来可能需要耗较长时间，请耐心等待。另外如果过程中出现报错而中断，需要删除CMakeCache.txt文件后再执行 2.2.4步骤内容（没出错请不要执行以下两行指令）：</code></pre><p>shell&gt;# make clean</p>
-<p>shell&gt;# rm -rf CMakeCache.txt或者 shell&gt;# unlink CMakeCache.txt</p>
-<p>2.2.3、配置</p>
-<p>学习目标： MySQL 目录权限设置和配置 MySQL</p>
-<p>概述</p>
-<pre><code>MySQL 服务需要使用 mysql 用户与用户组来运行，我们安装 MySQL 时使用的是 root 用户，所以 mysql 安装目录默认的所有者与所属组都是 root，必须将它们修改为 mysql 才能运行 MySQL 服务。CentOS 系统默认自带了 mysql 配置文件，如果不将系统自带的 mysql 配置文件删除，则无法启动 mysql 服务，删除自带配置文件后，需要重新创建 mysql 配置文件，不创建也无法启动 mysql 服务。</code></pre><p>步骤</p>
-<ol>
-<li>修改拥有者与所属组</li>
-<li>删除系统自带配置文件</li>
-<li>创建 my.cnf 配置文件(进入 MySQL 安装目录下)</li>
-</ol>
-<p>2.2.3.1、使用递归，把 MySQL 目录所有者设置为 MySQL这个用户</p>
-<pre><code>shell&gt;# chown -R mysql:mysql /usr/local/mysql</code></pre><p>2.2.3.2、删除系统自带的 my.cnf 文件</p>
-<pre><code>shell&gt;# unlink /etc/my.cnf</code></pre><p>注意：</p>
-<pre><code>如果 /etc/my.cnf 存在的话，请删除。可以使用 whereis 查找 my.cnf 存在路径。</code></pre><p>2.2.3.3、进入 MySQL 安装目录下</p>
-<pre><code>shell&gt;# cd /usr/local/mysql</code></pre><p>重建 my.cnf 文件</p>
-<p>2.2.3.4、根据实际情况优化 MySQL 配置</p>
-<p>注意：以下命令是在 /usr/local/mysql/目录下执行(根据自己实际情况操作)</p>
-<pre><code>shell&gt;# vim etc/my.cnf</code></pre><p>大概内容如下(my.cnf 的示例配置)：</p>
-<pre><code>[client]
-default-character-set = utf8
-port = 3306
-socket = /usr/local/mysql/tmp/mysql.sock
-
-[mysqld]
-datadir =/usr/local/mysql/data
-port = 3306
-socket = /usr/local/mysql/tmp/mysql.sock
-user = mysql
-symbolic-links = 0
-pid-file = /usr/local/mysql/tmp/mysql.pid
-
-explicit_defaults_for_timestamp = true
-sql_mode = ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE,NO_AUTO_CREATE_USER
-
-slow_query_log = on
-slow_query_log_file = /usr/local/mysql/log/slow.log
-long_query_time = 2
-
-log_error = /usr/local/mysql/log/mysql.err</code></pre><p>2.2.3.5、初始化和启动</p>
-<p>学习目标：掌握 MySQL 初始化配置项、启动 MySQL、修改 root 密码、加入环境变量中，了解如何开放3306端口</p>
-<p>概述</p>
-<pre><code>在 MySQL5.7 以上有两种方式，一种是随机生成密码，另外一种是不生成密码，我们会使用第二种(不生成密码)，初始时不生成密码，则默认密码为空；MySQL 没有密码很不安全，如果开放了3306端口，其他人知道我们服务器的IP就很容易登陆到我们MySQL，他们就可以为所欲为，直接下需要为 MySQL 设置密码。
-
-为什么要将 MySQL 服务增加到开机自动启动？如果没有将 MySQL 服务增加到开机自启，我们每次重启服务器后都必须手动启动 MySQL服务，这样操作比较繁琐。
-
-为什么要将 MySQL 命令加入到环境变量中？只是为方便我们使用 mysql -uroot -proot 来管理 MySQL，如果没有设置到环境变量中，需要进入到 MySQL 安装目录下的 bin 目录下才能使用 mysql -uroot -proot 命令。</code></pre><p>步骤</p>
-<ol>
-<li>初始化 MySQL</li>
-<li>启动 MySQL</li>
-<li>修改 MySQL 密码</li>
-<li>增加到开机启动</li>
-<li>加入环境变量中</li>
-<li>开放 3306 端口(作为了解)</li>
-</ol>
-<p>2.2.3.5.1、初始化 MySQL 的基本表</p>
-<p>–inittialize会生成一个随机密码(~/.mysql_secret)，而–initialize-insecure不会生成密码</p>
-<pre><code>shell&gt;# /usr/local/mysql/bin/mysqld \
---initialize-insecure \
---basedir=/usr/local/mysql \
---datadir=/usr/local/mysql/data \
---user=mysql</code></pre><p>注意：</p>
-<pre><code>如果初始化出错，则需要用 rm -rf /usr/local/mysql/data/* 将 mysql 的 data 目录下的文件和目录都删除，然后再重新运行以上语句</code></pre><p>2.2.3.5.2、启动 MySQL</p>
-<pre><code>shell&gt;# /usr/local/mysql/bin/mysqld_safe &gt; /dev/null 2&gt;&amp;1 &amp;</code></pre><p>2.2.3.5.3、修改 MySQL 的 root 密码</p>
-<pre><code>shell&gt;# /usr/local/mysql/bin/mysqladmin -u root password 123456</code></pre><p>2.2.3.5.4、增加到开机启动</p>
-<pre><code>shell&gt;# cp /usr/local/mysql/support-files/mysql.server /etc/rc.d/init.d/mysqld</code></pre><p>然后将mysqld服务加入启动项：</p>
-<pre><code>shell&gt;# chkconfig --add mysqld</code></pre><p>设置为自启动：</p>
-<pre><code>shell&gt;# chkconfig --level 345 mysqld on</code></pre><p>–level 参数说明：</p>
-<p>–level&lt;等级代号&gt; 　指定读系统服务要在哪一个执行等级中开启或关毕。</p>
-<p>等级0表示：表示关机</p>
-<p>等级1表示：单用户模式</p>
-<p>等级2表示：无网络连接的多用户命令行模式</p>
-<p>等级3表示：有网络连接的多用户命令行模式</p>
-<p>等级4表示：不可用</p>
-<p>等级5表示：带图形界面的多用户模式</p>
-<p>等级6表示：重新启动</p>
-<p>2.2.3.5.4、将 MySQL 命令加入到环境变量中</p>
-<pre><code>shell&gt;# PATH=$PATH:/usr/local/mysql/bin</code></pre><p>为了重启后仍能有效：</p>
-<pre><code>shell&gt;# echo &apos;PATH=$PATH:/usr/local/mysql/bin&apos; &gt;&gt; /root/.bashrc</code></pre><p>2.2.3.5.5、如果需要对外开放 3306 端口</p>
-<pre><code>shell&gt;# iptables -I INPUT -p tcp --dport 3306 -j ACCEPT</code></pre><p>注意：不建议对面开放3306端口，为了安全起见</p>
-<p>如果 mysqld 服务正常运行中，但是执行 mysql 指令时报出以下错误：</p>
-<p>解决方案就是创建一个软链接</p>
-<pre><code>shell&gt;# mkdir -pv /var/lib/mysql
-shell&gt;# ln -s /usr/local/mysql/tmp/mysql.sock /var/lib/mysql/mysql.sock</code></pre><p>3、安装PHP</p>
-<p>学习目标：掌握源码编译安装PHP、FastCGI模式运行PHP、PHP配置，了解php-fpm 作用与 cgi 的区别</p>
-<p>概述</p>
-<p>php-fpm 提供了更好的 PHP 进程管理方式，可以有效控制内存和进程、可以平滑重载 PHP 配置。</p>
-<p>CGI 是什么</p>
-<pre><code>CGI 是一个协议，就好像我是广东人，相处了一个东北的女朋友，我们可以用户普通话交流，普通话这个语法规则就是一个协议，跟 CGI 一样，遵循这个 CGI 规则，我们都能够互相理解对方的意思，最后就是 nginx/apache 都能够理解 php 是啥。</code></pre><p>FastCGI 是什么</p>
-<pre><code>同 CGI，是一种通信协议，但比 CGI 在效率上做了一些优化，fast-cgi则是一个进程可以处理多个请求。</code></pre><p>php可以到 <a href="http://php.net/downloads.php" target="_blank" rel="noopener">http://php.net/downloads.php</a> 或者 <a href="http://mirrors.sohu.com/php/" target="_blank" rel="noopener">http://mirrors.sohu.com/php/</a> 去下 载,此处 以php-7.2.2.tar.gz为例 </p>
-<p>以下安装中涉及的几点需要提前说明的问题：</p>
-<ul>
-<li>所有下载的文件将保存在 /root 目录下</li>
-<li>php 将以 FastCGI模式运行，监听 9000 端口(默认端口)</li>
-<li>php 将被安装在 /usr/local/php 目录下</li>
-<li>php 的配置文件保存于 /usr/local/php/etc/php.ini</li>
-<li>php 的扩展库文件，如果可以的话，尽量放在 /usr/local/php/lib/php/extensions/ 目录</li>
-</ul>
-<p>注意：以www用户来运行PHP与nginx</p>
-<p>步骤</p>
-<ol>
-<li>检查与安装依赖库<ol>
-<li>检查依赖是否安装</li>
-<li>使用 yum 源安装依赖库</li>
-</ol>
-</li>
-<li>安装 PHP<ol>
-<li>下载</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>生成帮助文档(了解)</li>
-<li>进行软件的配置与环境检测</li>
-<li>编译并且进行安装</li>
-</ol>
-</li>
-<li>配置<ol>
-<li>复制配置文件<ol>
-<li>在解压目录中复制配置文件到/urs/local/php/etc/php.ini</li>
-</ol>
-</li>
-<li>修改配置文件 php.ini</li>
-<li>修改配置文件 php-fpm.conf</li>
-<li>创建用户组与用户名</li>
-<li>将 php-fpm 加入开机自动启动</li>
-</ol>
-</li>
-</ol>
-<p>3.1、检查与安装依赖库</p>
-<p>学习目录：了解怎么使用 rpm 命令检查软件是否安装</p>
-<p>概述</p>
-<pre><code>源码编译安装 PHP 需要依赖libxml2、libxml2-devvel、gd-devel启动库，在安装 PHP 之前必须先检查这些依赖是否都安装，如果没有安装直接使用 yum 源安装即可。</code></pre><p>步骤</p>
-<ol>
-<li>使用 rpm 命令检查 libxml2* 等依赖库是否安装</li>
-<li>使用 yum 源安装依赖库</li>
-</ol>
-<p>3.1.1、检查依赖库</p>
-<p>安装PHP之前，首先要检查安装 libxml2、libxml2-devvel、gd-devel</p>
-<pre><code>shell&gt;# rpm -qa | grep libxml2*
-shell&gt;# rpm -qa | grep gd-devel*</code></pre><p>如果没有安装，可以使用yum -y install命令进行安装。</p>
-<p>3.1.2、安装依赖库</p>
-<pre><code>shell&gt;# yum -y install libxml2 libxml2-devvel gd-devel</code></pre><p>3.2、安装 PHP</p>
-<p>学习目标：掌握源码编译安装 PHP</p>
-<p>概述</p>
-<pre><code>为什么选择源码编译安装 PHP？一台服务器同时运行多个项目，每个项目对 PHP 版本要求都不同，这时我们可以选择使用源码编译安装不同版本PHP，并以 FastCGI模式运行，为不同版本PHP设置不同的服务名称与不同的端口；以 FastCGI 模式运行，默认端口为：9000。</code></pre><p>步骤</p>
-<ol>
-<li>下载</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>生成帮助文档(可以忽略)</li>
-<li>进行软件的配置与环境检测</li>
-<li>编译软件并且进行安装</li>
-</ol>
-<p>3.2.1、下载</p>
-<pre><code>shell&gt;# cd ~
-shell&gt;# wget http://am1.php.net/distributions/php-7.2.2.tar.gz</code></pre><p>3.2.2、解压</p>
-<pre><code>shell&gt;# tar -zxvf php-7.2.2.tar.gz</code></pre><p>3.2.3、进入目录</p>
-<pre><code>shell&gt;# cd php-7.2.2</code></pre><p>3.2.4、将configure 参数及详情解析另存为一个文件，以供学习参考用</p>
-<pre><code>shell&gt;# ./configure --help &gt; php_configure.txt</code></pre><p>注意：这步可以忽略</p>
-<p>3.2.5、进行软件的配置与环境检测</p>
-<pre><code>shell&gt;# ./configure \
---prefix=/usr/local/php \
---with-config-file-path=/usr/local/php/etc \
---enable-fpm \
---enable-opcache \
---with-zlib-dir \
---with-bz2 \
---with-libxml-dir=/usr \
---with-gd \
---with-freetype-dir \
---with-jpeg-dir \
---with-png-dir \
---enable-mbstring \
---with-mysql=/usr/local/mysql \
---with-mysqli=/usr/local/mysql/bin/mysql_config \
---with-pdo-mysql=/usr/local/mysql \
---with-iconv \
---disable-ipv6 \
---enable-static \
---enable-inline-optimization \
---enable-sockets \
---enable-soap \
---with-openssl \
---with-curl</code></pre><p>以上配置项目说明以下：</p>
-<p>./configure \                                                # 检测环境，并生成makefile文件</p>
-<p>–prefix=/usr/local/php \                            # 指定php安装目录</p>
-<p>–with-config-file-path=/usr/local/php/etc \            # 设置php.ini配置文件存放的路径</p>
-<p>–enable-fpm \                                    # 开启PHP-FPM，用于控制PHP-CGI的FastCGI进程</p>
-<p>–enable-opcache \                                # PHP新增opcache功能</p>
-<p>–with-zlib-dir \                                    # 加载zlib库</p>
-<p>–with-bz2 \                                        # 加载bz2的压缩库</p>
-<p>–with-libxml-dir=/usr \                            # 加载xml库</p>
-<p>–with-gd \                                        # 加载gd库</p>
-<p>–with-freetype-dir \                                # 加载字体库</p>
-<p>–with-jpeg-dir \                                    # 加载jpeg库</p>
-<p>–with-png-dir \                                    # 加载png库</p>
-<p>–enable-mbstring \                                # 开启mbstring加密库</p>
-<p>–with-mysql=/usr/local/mysql \                    # 加载mysql，并指定mysql基本路径 注意：PHP7.0以(包含)不需要加上</p>
-<p>–with-mysqli=/usr/local/mysql/bin/mysql_config \    # 加载mysqli库，并指定mysql配置工具</p>
-<p>–with-pdo-mysql=/usr/local/mysql \                # 加载pdo对mysql的支持</p>
-<p>–with-iconv \                                        # 开启转换字符集</p>
-<p>–disable-ipv6 \                                    # 关闭ipv6支持</p>
-<p>–enable-static \                                    # 以静态方式编辑php库</p>
-<p>–enable-inline-optimization \                        # 开启优化线程</p>
-<p>–enable-sockets \                                # 开启sockets支持</p>
-<p>–enable-soap \                                    #开启soap对web service的支持</p>
-<p>–with-openssl \                                    # 开启ssl支持</p>
-<p>–with-curl                                        # 模拟浏览器</p>
-<p>3.2.6、编译软件并且进行安装</p>
-<pre><code>shell&gt;# make &amp;&amp; make install</code></pre><p>3.3、配置</p>
-<p>学习目标：掌握PHP配置与加入开机自动启动</p>
-<p>概述</p>
-<pre><code>源码编译安装 PHP 默认是没有配置文件，需要我们在解压出来目录中复制到PHP安装目录下的etc目录，因为安装时已经指定 PHP 配置文件路径。</code></pre><p>步骤</p>
-<ol>
-<li>复制配置文件</li>
-<li>修改配置文件 php.ini</li>
-<li>修改配置文件 php-fpm.conf</li>
-<li>创建用户组与用户名</li>
-<li>将 php-fpm 设置开机自动启动</li>
-</ol>
-<p>3.3.1、复制配置文件</p>
-<pre><code>shell&gt;# cp php.ini-production /usr/local/php/etc/php.ini
-
-
-
-shell&gt;# cp sapi/fpm/init.d.php-fpm /etc/rc.d/init.d/php-fpm</code></pre><p>赋予其可执行权限</p>
-<pre><code>shell&gt;# chmod +x /etc/rc.d/init.d/php-fpm</code></pre><p>拷贝产生 php-fpm 的配置文件</p>
-<pre><code>shell&gt;# cd /usr/local/php/etc
-shell&gt;# cp php-fpm.conf.default php-fpm.conf</code></pre><p>3.3.2、配置 php.ini</p>
-<pre><code>shell&gt;# vim php.ini</code></pre><p>找到 ;date.timezone = 修改为 date.timezone = Asia/Shanghai</p>
-<p>根据自己的需求调整以下选项的值</p>
-<p>error_reporting = E_ALL &amp; ~E_NOTICE &amp; ~E_STRICT &amp; ~E_DEPRECATED  ;开启php报错机制</p>
-<p>display_errors = On ;开启报错内容</p>
-<p>max_execution_time = 60  ;PHP运行时间默认30秒，将PHP脚本运行时间设置60秒</p>
-<p>max_input_time = 60</p>
-<p>memory_limit = 256M</p>
-<p>post_max_size = 256M</p>
-<p>upload_max_filesize = 256M</p>
-<p>3.3.3、配置 php-fpm.conf</p>
-<pre><code>shell&gt;# cd /usr/local/php/etc/php-fpm.d
-shell&gt;# cp www.conf.default www.conf
-
-
-
-shell&gt;# vim www.conf</code></pre><p>找到 user = nobody 和 group = nobody，将 nobody 改成 www</p>
-<p>找到 listen.owner=nobody 和 listen.group= nobody，将 nobody 改成 www</p>
-<p>3.3.4、创建用户组与用户名</p>
-<pre><code>shell&gt;# groupadd www
-shell&gt;# useradd -g www -s /usr/sbin/nologin www</code></pre><p>3.3.5、将 php-fpm 加入服务并自动启动</p>
-<pre><code>shell&gt;# service php-fpm start
-shell&gt;# chkconfig --add php-fpm
-shell&gt;# chkconfig --level 345 php-fpm on</code></pre><p>启动php</p>
-<p>添加自动启动</p>
-<p>4、安装 Nginx</p>
-<p>学习目录：掌握源码编译安装 Nginx 与配置虚拟主机</p>
-<p>概述</p>
-<p>Nginx 可以到 <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a> 下去，此处以 nginx-1.15.6.tar.gz 为例</p>
-<p>以下安装中涉及的几点需要提前说明的问题：</p>
-<p>所有下载文件将保存在 /root 目录</p>
-<p>nginx 将以 www 用户运行，而且将加入 service 开机自动运行</p>
-<p>nginx 将被安装在 /usr/local/nginx 目录下</p>
-<p>nginx 的每个网站将存放在 /mydata/wwwroot 目录下，默认网站为  /mydata/wwwroot/php34/www</p>
-<p>nginx 的配置文件保存于 /usr/local/nginx/conf/nginx.conf</p>
-<p>nginx 的临时目录都保存于 /usr/local/nginx/tmp/ 目录下</p>
-<p>步骤</p>
-<ol>
-<li>检查与安装依赖库<ol>
-<li>检查依赖库</li>
-<li>安装依赖库</li>
-</ol>
-</li>
-<li>安装 Nginx<ol>
-<li>创建目录</li>
-<li>下载 nginx</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>生成帮助文档</li>
-<li>进行软件配置和环境检测</li>
-<li>编译软件并且进行安装</li>
-</ol>
-</li>
-<li>配置 Nginx<ol>
-<li>简单配置<ol>
-<li>创建网站根目录</li>
-<li>开始配置</li>
-</ol>
-</li>
-<li>支持 PHP</li>
-<li>优化虚拟主机配置</li>
-</ol>
-</li>
-<li>nginx 管理<ol>
-<li>启动</li>
-<li>重载配置文件</li>
-<li>停止</li>
-<li>通知 nginx 关闭服务</li>
-<li>安装为服务<ol>
-<li>配置权限并添加到开机启动</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>与 ThinkPHP 的整合</li>
-<li>开放端口</li>
-</ol>
-<p>4.1、检查与安装依赖库</p>
-<p>学习目标：了解怎么使用 rpm 命令检查软件是否安装</p>
-<p>概述</p>
-<pre><code>源码编译安装 Nginx 需要依赖pcre、pcre-devel、libevent、openssl、openssl-devel启动库，在安装 Nginx 之前必须先检查这些依赖是否都安装，如果没有安装直接使用 yum 源安装即可。</code></pre><p>步骤</p>
-<ol>
-<li>检查依赖库</li>
-<li>安装依赖库</li>
-</ol>
-<p>4.1.1、检查依赖库</p>
-<p>安装 nginx 之前，首先要检查安装 pcre（正则表达式库）、pcre-devel 和 libevent（提高应用程序的性能）、make 以及 openssl、openssl-devel</p>
-<pre><code>shell&gt;# rpm -qa | grep pcre*
-shell&gt;# rpm -qa | grep libevent*
-shell&gt;# rpm -qa | grep openssl*</code></pre><p>如果没有安装，可以使用 yum -y install命令进行安装。</p>
-<p>4.1.2、安装依赖库</p>
-<pre><code>shell&gt;# yum -y install pcre pcre-devel libevent openssl openssl-devel</code></pre><p>4.2、安装 nginx</p>
-<p>学习目标：掌握源码编译安装 nginx</p>
-<p>概述</p>
-<pre><code>为什么选择源码编译安装 nginx？可以定制安装我们需要的功能模板，以方便管理。</code></pre><p>步骤</p>
-<ol>
-<li>创建目录</li>
-<li>下载 nginx</li>
-<li>解压</li>
-<li>进入目录</li>
-<li>生成帮助文档</li>
-<li>进行软件配置和环境检测</li>
-<li>编译软件并且进行安装</li>
-</ol>
-<p>4.2.1、创建目录</p>
-<pre><code>shell&gt;# mkdir -pv /usr/local/nginx/tmp</code></pre><p>4.2.2、下载  nginx</p>
-<pre><code>shell&gt;# cd ~
-shell&gt;# wget http://nginx.org/download/nginx-1.15.6.tar.gz</code></pre><p>上传</p>
-<p>4.2.3、解压</p>
-<pre><code>shell&gt;# tar -zxvf nginx-1.15.6.tar.gz</code></pre><p>4.2.4、进入目录</p>
-<pre><code>shell&gt;# cd nginx-1.15.6</code></pre><p>4.2.5、将 configure 参数及详情解析另存为一个文件，以供学习参考 用</p>
-<pre><code>shell&gt;# ./configure --help &gt; nginx_configure.txt</code></pre><p>4.2.6、进行软件配置和环境检测</p>
-<pre><code>./configure \
---prefix=/usr/local/nginx \
---user=www \
---group=www \
---with-http_ssl_module \
---with-http_flv_module \
---with-http_stub_status_module \
---with-http_gzip_static_module \
---with-http_realip_module \
---with-http_image_filter_module \
---with-pcre \
---http-client-body-temp-path=/usr/local/nginx/tmp/client_body_temp \
---http-fastcgi-temp-path=/usr/local/nginx/tmp/fastcgi_temp \
---http-proxy-temp-path=/usr/local/nginx/tmp/proxy_temp \
---http-uwsgi-temp-path=/usr/local/nginx/tmp/uwsgi_temp \
---http-scgi-temp-path=/usr/local/nginx/tmp/scgi_temp</code></pre><p>参数说明：</p>
-<pre><code>./configure \
---prefix=/usr/local/nginx \        # 指明安装目录
---user=www \                    # 默认的 nginx 使用的用户
---group=www \                    # 默认组
---with-http_ssl_module \
---with-http_flv_module \
---with-http_stub_status_module \
---with-http_gzip_static_module \
---with-http_realip_module \
---with-http_image_filter_module \    # 这个还需要安装gd库 yum -y install gd-devel
---with-pcre \
---http-client-body-temp-path=/usr/local/nginx/tmp/client_body_temp \
---http-fastcgi-temp-path=/usr/local/nginx/tmp/fastcgi_temp \
---http-proxy-temp-path=/usr/local/nginx/tmp/proxy_temp \
---http-uwsgi-temp-path=/usr/local/nginx/tmp/uwsgi_temp \
---http-scgi-temp-path=/usr/local/nginx/tmp/scgi_temp</code></pre><p>4.2.7、编译软件并且进行安装</p>
-<pre><code>shell&gt;# make &amp;&amp; make install</code></pre><p>4.3、配置</p>
-<p>学习目标：掌握 nginx 相关配置与创建虚拟主机</p>
-<p>概述</p>
-<pre><code>nginx 安装成功后，默认站点是在安装目录中的html目录，我们为了方便管理站点，将 /mydata/wwwroot 目录设置为专门存放所有站点；nginx 默认不支持 PHP 解析，也需要我们修改配置文件来支持。</code></pre><p>步骤</p>
-<ol>
-<li>简单配置<ol>
-<li>创建网站根目录</li>
-<li>开始配置</li>
-</ol>
-</li>
-<li>支持 PHP</li>
-<li>优化虚拟主机配置</li>
-</ol>
-<p>4.3.1、简单配置</p>
-<p>4.3.1.1、创建网站根目录</p>
-<pre><code>shell&gt;# mkdir /mydata/wwwroot
-shell&gt;# chown -R www:www /mydata/wwwroot
-shell&gt;# mkdir -pv /mydata/wwwroot/php34/www</code></pre><p>4.3.1.2、开始配置</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/nginx.conf</code></pre><ul>
-<li>在 http{} 代码段里添加 client_max_body_size 200m; 以支持 php 上传大文件。(请根据自己项目需求来定值)</li>
-</ul>
-<ul>
-<li>将第一个 server{} 代码段里的 location /{} 里面的 root 值改为 /mydata/wwwroot/php34/www。并在 index 的值 后面追加 index.php。然后将 root 和 index 都转移到 location 外面(同一个 server 代码段内可能需要多个 location，但每个 location 里面都要写 root 指令和 index 指令，就冗余了。所以将它们转移到 location 外面就可以消除此冗余)，然后同一 server 代码段里面的其他 root 指令注释掉</li>
-</ul>
-<p>4.3.2、支持 PHP</p>
-<p>在 server{}代码段里新增以下代码就可以支持 php 的访问了</p>
-<pre><code>location ~ \.php {
-    fastcgi_pass    127.0.0.1:9000;
-    fastcgi_index    index.php;
-    include            fastcgi.conf;
-}</code></pre><p>4.3.3、优化虚拟主机配置</p>
-<pre><code>`nginx.conf中的每个server{}代码段都是一个独立的虚拟主机配置。当配置多个虚拟主机时，需要在nginx.conf里定多个server{}`代码段，那么主配置文件就会变得重复、臃肿。所以建议，将 server{} 代码段都写在另一个文件(例如：vhost.conf 或 server.conf)或多个文件(例如：按客户或项目分组)，然后再用include 指令包含进来。</code></pre><p>本文档以 vhost.conf举例说明：</p>
-<p>nginx.conf的 server{}代码段都移走，换成一个include指令</p>
-<p>注意：在/usr/local/nginx/conf/目录创建vhost.conf文件；需要在/mydata/wwwroot目录创建itcast/www目录与phpshop.com目录</p>
-<p>1、创建 itcast/www</p>
-<p>2、创建 phpshop.com 目录</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/vhost.conf</code></pre><p>vhost.conf 的示例代码如下：</p>
-<pre><code># 默认网站
-server {
-    listen    80; #端口
-    server_name    localhost;    #域名
-    root    /mydata/wwwroot/itcast/www; #站点
-    index index.htm index.html index.php;    #入口文件
-    #支持PHP
-    location ~ \.php {
-        fastcgi_pass    127.0.0.1:9000;    #PHP进程
-        fastcgi_index    index.php;    # 入口文件
-        include            fastcgi.conf;    # 载入一些配置文件
-    }
-}
-
-# 电商
-server {
-    listen    80;
-    server_name    phpshop.com;
-    root    /mydata/wwwroot/phpshop.com;
-    index    index.htm index.html index.php;
-
-    location ~ \.php {
-        fastcgi_pass    127.0.0.1:9000;
-        fastcgi_index    index.php;
-        include            fastcgi.conf;
-    }
-}
-
-
-==有没有发现每个虚拟主机都需要配置 php 的代理转发，所以还可以再这样优化，将转发的指令移动到 fastcgi.conf里面==</code></pre><p>fastcgi.conf 的示例代码：</p>
-<pre><code># add by youlong from vhost.conf
-fastcgi_pass 127.0.0.1:9000;
-fastcgi_index index.php;
-
-
-shell&gt;# vim /usr/local/nginx/conf/fastcgi.conf</code></pre><p>有可能报以下错误</p>
-<p>因为fastcgi_pass 127.0.0.1:9000;与fastcgi_index index.php;已经重复出现，先检测vhost.conf文件有没有配置该项。</p>
-<p>如果再出现.pid文件找不到的话，</p>
-<p>vhost.conf的示例代码：</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/vhost.conf
-
-
-
-# 默认网站
-server {
-    listen    80;
-    server_name    localhost;
-    root    /mydata/wwwroot/itcast/www;
-    index index.htm index.html index.php;
-
-    location ~ \.php {
-        include            fastcgi.conf;
-    }
-}
-
-# 电商
-server {
-    listen    80;
-    server_name    phpshop.com;
-    root    /mydata/wwwroot/phpshop.com;
-    index    index.htm index.html index.php;
-
-    location ~ \.php {
-        include            fastcgi.conf;
-    }
-}</code></pre><p>4.4、nginx 管理</p>
-<p>学习目标：掌握启动、重载、停止、通知 nginx 关闭服务，了解如何安装为服务与设置开机自动启动</p>
-<p>概述</p>
-<pre><code>使用源码编译安装的 nginx 默认是不能使用 service 命令来启动 nginx 服务，需要安装为服务才行。</code></pre><p>步骤</p>
-<ol>
-<li>启动</li>
-<li>重载配置文件</li>
-<li>停止</li>
-<li>通知 nginx 关闭服务</li>
-<li>安装为服务<ol>
-<li>配置权限并添加到开机启动</li>
-</ol>
-</li>
-</ol>
-<p>4.4.1、启动</p>
-<pre><code>shell&gt;# /usr/local/nginx/sbin/nginx</code></pre><p>4.4.2、重载配置文件</p>
-<pre><code>shell&gt;# /usr/local/nginx/sbin/nginx -s reload</code></pre><p>注意：nginx服务必须启动，才能使用该。</p>
-<p>4.4.3、停止</p>
-<pre><code>shell&gt;# /usr/local/nginx/sbin/nginx -s stop</code></pre><p>4.4.4、通知nginx关闭服务</p>
-<pre><code>shell&gt;# /usr/local/nginx/sbin/nginx -s quit</code></pre><p>注意：nginx服务必须启动，才能使用该。</p>
-<p>4.4.4、安装为服务</p>
-<pre><code>shell&gt;# vim /etc/rc.d/init.d/nginx</code></pre><p>内容如下（特别是 chkconfig 和 description那两行代码，一定要写，否则无法加入服务）：</p>
-<pre><code>#!/bin/sh
-# chkconfig: - 85 15
-# description: nginx is a World Wide Web server. It is used to serve
-start() {
-    echo &apos;Starting Nginx ...&apos;
-    /usr/local/nginx/sbin/nginx &gt; /dev/null 2&gt;&amp;1 &amp;
-}
-
-stop() {
-    echo &apos;Stoping Nginx ...&apos;
-    /usr/local/nginx/sbin/nginx -s stop &gt; /dev/null 2&gt;&amp;1 &amp;
-}
-
-reload() {
-    echo &apos;Reloading Nginx ...&apos;
-    /usr/local/nginx/sbin/nginx -s reload
-}
-
-if [ $# -ne 1 ]
-    then
-        echo &apos;please input one params like start|restart|stop|reload&apos;
-    exit 1
-fi
-
-case &quot;$1&quot; in
-    &apos;start&apos;)
-        start
-    ;;
-
-    &apos;stop&apos;)
-        stop
-    ;;
-
-    &apos;restart&apos;)
-        stop
-        sleep 2
-        start
-    ;;
-
-    &apos;reload&apos;)
-        reload
-    ;;
-
-    &apos;*&apos;)
-        echo &apos;please input one params like start|restart|stop|reload&apos;
-    ;;
-esac</code></pre><p>4.4.4.1、配置权限并添加到开机启动</p>
-<pre><code>shell&gt;# chmod a+x /etc/rc.d/init.d/nginx
-shell&gt;# chkconfig --add nginx
-shell&gt;# chkconfig --level 345 nginx on</code></pre><p>以后就可以直接用以下指令来完成日常管理了：</p>
-<pre><code>shell&gt;# service nginx start        #启动
-shell&gt;# service nginx reload    #重载
-shell&gt;# service nginx stop        # 停止</code></pre><p>4.5、与 ThinkPHP 的整合</p>
-<p>学习目标：掌握 nginx 与 ThinkPHP 整合</p>
-<p>概述</p>
-<pre><code>    nginx 默认不支持 pathinfo 模式，如果想让 nginx 支持 pathinfo 模式，需要借助 fastcgi 模块自带 fastcgi_split_path_info 指令来解决此类问题。
-
-==如果希望 nginx 支持 ThinkPHP 的运行，还需要将 nginx 配置成支持 pathinfo 模式。==
-
-fastcgi 模块自带了一个 fastcgi_split_path_info 指令专门用来解决此类问题的，该指令会根据给定的正则表达式来分隔 URL，从而提取出脚本名和 pathinfo 信息，使用这个指令可以避免使用 if 语句，配置更简单。</code></pre><p>另外判断文件是否存在也有更简单的方法，使用 try_files 指令即可。</p>
-<p>本案例以 /mydata/wwwroot/phpshop.com 虚拟主机为例：</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/vhost.conf
-
-
-
-server {
-    ......
-    location / {
-        # 访问路径的文件不存在则重写 URL 转交给 ThinkPHP 处理
-        try_files $uri /index.php$uri;
-    }
-
-    location ~ .+\.php($|/) {
-        # 设置 PATH_INFO，注意 fastcgi_split_path_info 已经自动改写了 fastcgi_script_name 变量
-        # 后面不需要再改写 SCRIPT_FILENAME，SCRIPT_NAME 环境变量，所以必须在加载 fastcgi.conf 之前设置
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
-
-        # 加载 Nginx 默认&quot;服务器环境变量&quot;配置
-        include fastcgi.conf;
-    }
-}</code></pre><p>可将第二个 location 的内容剪切追加到 fastcgi.conf 文件的内容前面，以实现代码重用。</p>
-<p>本案例以 /mydata/wwwroot/phpshop.com 虚拟主机为例：</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/vhost.conf
-
-server {
-    listen 80;
-    server_name phpshop.com
-    root /mydata/wwwroot/phpshop.com/public;
-    index index.htm index.html index.php;
-    location ~ /\.ht {
-        deny all;
-    }
-
-    location / {
-        # 访问路径的文件不存在则重写 URL 转交给 ThinkPHP 处理
-        try_files $uri /index.php$uri;
-    }
-
-    location ~ .+\.php($|/) {
-        # 加载 Nginx 默认&quot;服务器环境变量&quot;配置
-        include fastcgi.conf;
-    }
-}
-
-shell&gt;# vim /usr/local/nginx/conf/fastcgi.conf
-
-fastcgi_split_path_info ^(.+.php)(/.*)$;
-fastcgi_param PATH_INFO $fastcgi_path_info;</code></pre><p>注意：每次更改了配置内容后，记得执行重载命令让配置生效。</p>
-<pre><code>shell&gt;# service nginx reload</code></pre><p>4.6、开放端口</p>
-<p>将 80 端口加入防火墙</p>
-<pre><code>shell&gt;# iptables -I INPUT -p tcp --dport 80 -j ACCEPT</code></pre><p>添加至自启动文件</p>
-<pre><code>shell&gt;# echo &apos;iptables -I INPUT -p tcp --dport 80 -j ACCEPT&apos; &gt;&gt; /etc/rc.d/rc.local</code></pre><p>六、网站的静态资源和 gzip 压缩</p>
-<p>学习目标：了解 nginx 压缩功能</p>
-<p>概述</p>
-<p>一般静态页面指没有和服务器互相交互的 html 页面。</p>
-<p>我们平常所说的 html、css、image、js、xml、json、视频、音乐等都属于静态资源。</p>
-<p>静态资源越大越多网页加载的速度就会越慢，因此有必要对静态资源进行压缩优化，这就可以为网站提速不少。</p>
-<p>然而有一些大型网站他们除了对静态资源压缩之外他们还会使用 CDN 静态资源服务器做支撑，但 CDN 服务器是需要一定的资金成本的。</p>
-<p>步骤</p>
-<ol>
-<li>开启压缩功能</li>
-<li>重启服务</li>
-</ol>
-<p>查看一个网站是否有启用静态资源压缩：</p>
-<pre><code>shell&gt;# curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://www.sohu.com&quot;</code></pre><p>在 Nginx 服务器中，我们可以通过开启 gzip 来对网站的静态资源进行压缩</p>
-<p>1、配置如下</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/nginx.conf
-
-
-
-http {
-    ......
-    #是否启动gzip压缩,on代表启动,off代表开启
-    gzip  on;
-    #需要压缩的常见静态资源
-    gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png video/mp4 video/mp3;
-    #由于nginx的压缩发生在浏览器端而微软的ie6很坑爹,会导致压缩后图片看不见所以该选项是禁止ie6发生压缩
-    gzip_disable &quot;MSIE [1-6]\.&quot;;
-    #如果文件大于1k就启动压缩
-    gzip_min_length 1k;
-    #以16k为单位,按照原始数据的大小以4倍的方式申请内存空间,一般此项不要修改
-    gzip_buffers 4 16k;
-    #压缩的等级,数字选择范围是1-9,数字越小压缩的速度越快,消耗cpu就越大
-    gzip_comp_level 2; 
-}</code></pre><p>2、重新加载</p>
-<pre><code>shell&gt;# service nginx reload</code></pre><p>注意：默认情况下 gzip 压缩必须是静态文件大于 1k 才会启动，如果文件小于 1k 则无法启动压缩，如下图所示：</p>
-<p>如果无法启动压缩，则 gzip 选项在 curl 命令中无法显示，如果成功如下图所示：</p>
-<pre><code>shell&gt;# curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://10.10.10.11/phpinfo.php&quot;</code></pre><p>七、使用缓存功能把静态资源缓存到客户端</p>
-<p>1、启动缓存功能的配置</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/vhost.conf
-
-# 设置需要压缩的文件类型
-location ~ .*\.(jpg|jpeg|gif|css|js|png|ico|mp3|mp4|swf|flv){
-     expires 10;  # 缓存10天
-}</code></pre><p>如果希望对静态文件缓存 10 天，设置为如下：</p>
-<p>保存并退出，然后重启 nginx 服务</p>
-<pre><code>shell&gt;# service nginx reload</code></pre><p>使用 lua 的 curl 测试如下：</p>
-<pre><code>curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://10.10.10.11/it.mp4&quot;</code></pre><p>注意：如果 Linux 时间不对要修改 Linux 中的系统时间和硬件的时间，否则缓存有问题</p>
-<p>八、服务器集群(了解)</p>
-<p>服务器(电脑主机)，安装许多软件，例如：php/apache/mysql/redis/memcache 等等</p>
-<p>这些软件是网站运行需要的</p>
-<p>网站运行经营的比较好的，每天就会有许多人员进行访问 pv (point view)：1000万</p>
-<p>可以查看PV值：<a href="http://alexa.chinaz.com/default.html" target="_blank" rel="noopener">http://alexa.chinaz.com/default.html</a></p>
-<p>1 天 3600 * 4 = 14400 秒，平均并发访问量：700 次，峰值：3000/4000/5000或以上并发量：服务器每秒被访问的次数</p>
-<p>现在服务器每天负载很高（工作量非常多）</p>
-<p>并发访问量高的时候，服务器要做优化（否则影响用户使用）：</p>
-<p>可以购买多个服务器来支撑网站运行，这个多服务器的组合就是”集群”</p>
-<p>九、负载均衡的分发实验(重要)</p>
-<p>学习目标：能够实现配置负载均衡器，了解正向代理和反向代理的作用</p>
-<p>1、正向代理和反向代理的原理图</p>
-<p>2、负载均衡的原理和作用</p>
-<p>应用场景</p>
-<p>正向代理：是为了请求访问不到的网站发起了代理，因此正向代理是多数应用是为了提供上网服务，我们说的翻墙就是一种正向代理，VPN就是正向代理的一种服务器软件</p>
-<p>反向代理：是为了实现负载均衡解决网站大访问量所应用的技术手， Nginx 就是一种能实现反向代理的服务器，因此 Nginx 成为反向代理服务器，由于反向代理服务器能实现负载均衡，所以也有人把反向代理服务器叫做负载均衡器。</p>
-<p>3、使用 nginx 部署一个负载均衡的实验</p>
-<p>3.1、负载均衡必须要有至少 3 台服务器</p>
-<p>Proxy(反向代理服务器)：10.10.10.11:80</p>
-<p>Lnmp1(Linux 的 php 环境)：10.10.10.11:81</p>
-<p>创建一个站目录，/mydata/wwwroot/81</p>
-<pre><code>shell&gt;# mkdir /mydata/wwwroot/81</code></pre><p>Lnmp2(Linux 的 php 环境)：10.10.10.11:82</p>
-<p>创建一个站目录，/mydata/wwwroot/82</p>
-<p>创建虚拟主机</p>
-<p>分别为81与82站点创建index.html文件，内容分ip:81与ip:82</p>
-<p>必须确保所有的服务器都处于开启状态</p>
-<p>3.2、修改 Proxy 服务器中 nginx.conf 文件内容</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/nginx.conf
-
-
-
-# 负载均衡的反向代理分发选项
-upstream web {
-    # 配置服务器地址
-    server ip地址 weight=1 max_fails=3 fail_timeout=20s;
-    server ip地址 weight=1 max_fails=3 fail_timeout=20s;
-}</code></pre><p>参数说明：</p>
-<p>weight=1：权重，如果分配的值越大，权重超高</p>
-<p>max_fails=3：最多连接失败次数为 3 次</p>
-<p>fail_timeout=20s：每次连接失败的时间</p>
-<p>3.3、修改 Proxy 服务器中 vhost.conf 文件内容</p>
-<pre><code>shell&gt;# vim /usr/local/nginx/conf/vhost.conf
-
-
-
-location / {
-    proxy_pass http://web/;
-}</code></pre><p>3.4、重新加载 nginx</p>
-<pre><code>shell&gt;# service nginx reload</code></pre><p>十、Lamp 和Lnmp 的区别</p>
-<p>1、Lamp 架构概述</p>
-<pre><code>LAMP（Linux+Apche+MySQL+PHP）网站架构是目前国际流行的 Web 框架，这个框架是经典且古老的框架，应该是拥有 PHP 开始这组合就是开始了，Lamp 最大特点是其面对解析程序执行的时候速度很快，因为 Apache 为算法而生，而其缺点在于使用模块加载显得有些臃肿，第一个扩展的修改 Apache 就需要重新加载一次，所以 Apache 在实际开发中其实不是为了提高访问量而生，而是为了提高自算法而生的。</code></pre><p>2、Lnmp 框架概述</p>
-<pre><code>Lnmp 是 Linux + Nginx + MySQL + PHP 的组合服务器架构，PHP修改配置文件可以无需重启 Nginx 服务，它管理 PHP 是依赖 PHP 的内存管理工具 php-fpm，所以当 PHP 的配置发生修改，Nginx 服务器是不需要重新启动去加载 PHP 的配置，只需要单纯重新启动 php-fpm 本身就可以完成 PHP 的配置。而 Nginx 服务器是一个反向代理的服务器软件，是为访问量而生的服务器软件。</code></pre><p>3、Lamp 和 Lnmp 的区别是什么</p>
-<pre><code>Lamp 为算法而生，所以如果一个网站的逻辑非常复杂，例如：股票交易、金融等适合采用 Lamp 架构，Lnmp 为访问量而生，如果访问量比较大适合采用 Lnmp，目前的流行的 Lamp  + Lnmp 两者结合使用。</code></pre><p>在现实开发中，如果希望 nginx 服务器和 Lamp 一起工作，那么我们就采用负载均衡，这也是工作用得最多的，工作中使用单独 Lnmp 环境其实并不是非常多，多数是 Lanmp 环境。</p>
-<p>十一、总结</p>
-<p>Nginx</p>
-<pre><code>web服务器？http与https协议
-
-反向代理
-
-负载均衡
-
-邮件服务器</code></pre><p>启动nginx</p>
-<pre><code>/usr/local/nginx/sbin/nginx    #启动  nginx
-
-/usr/local/nginx/sbin/nginx -s quit  #通知nginx关闭服务
-
-/usr/local/nginx/sbin/nginx -s reload    #重新加载 、热加载
-
-/usr/local/nginx/sbin/nginx -s stop # 停止nginx</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/01/nginx/" data-id="ck0af8mik000ag8uy0tots1ev" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/01/linux系统搭建和命令的使用/" data-id="ck0ajuevt0008s4uyzfs7j973" class="article-share-link">Share</a>
       
       
     </footer>
@@ -4089,6 +3314,10 @@ location / {
       <ul>
         
           <li>
+            <a href="/2019/09/08/虎-nginx/">&#39;虎-nginx&#39;</a>
+          </li>
+        
+          <li>
             <a href="/2019/09/08/虎-小程序02/">虎-小程序02</a>
           </li>
         
@@ -4102,10 +3331,6 @@ location / {
         
           <li>
             <a href="/2019/08/25/swoole1/">&#39;swoole1&#39;</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/01/rabbtMQ/">&#39;rabbtMQ&#39;</a>
           </li>
         
       </ul>
